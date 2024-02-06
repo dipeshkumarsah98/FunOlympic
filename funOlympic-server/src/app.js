@@ -1,9 +1,13 @@
 import "express-async-errors";
 
 import express from "express";
+import dotenv from "dotenv";
 import bodyParser from "body-parser";
 import notFoundHandler from "./middleware/notFoundHandler.middleware.js";
 import errorHandler from "./middleware/errorHandler.middleware.js";
+import apiRouter from "./routes/index.js";
+
+dotenv.config();
 
 const PORT = process.env.PORT || 8000;
 const app = express();
@@ -11,9 +15,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
+app.use("/api/v1", apiRouter);
 
 app.use(notFoundHandler); // Not found middleware. It will get triggered when user try to access invalid route.
 
