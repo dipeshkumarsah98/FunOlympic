@@ -1,7 +1,16 @@
+import { hashPassword } from "../../bcrypt.js";
 import db from "../config/db.js";
 
 const createUser = async (user) => {
-  return await db.users.create({ data: user });
+  const { password, ...details } = user;
+  const hashedPassword = await hashPassword(password);
+  return await db.users.create({
+    data: {
+      password: hashedPassword,
+      roles: "User",
+      ...details,
+    },
+  });
 };
 
 const getUserByEmail = async (email) => {
