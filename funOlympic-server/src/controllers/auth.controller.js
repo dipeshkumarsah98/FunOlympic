@@ -2,6 +2,7 @@ import { comparePassword } from "../../bcrypt.js";
 import ValidationError from "../errors/validationError.error.js";
 import * as userService from "../services/user.js";
 import { successResponse } from "../utils/successResponse.js";
+import { generateTokens } from "../utils/token.js";
 
 const signUp = async (req, res) => {
   const { ...details } = req.body;
@@ -42,13 +43,13 @@ const signIn = async (req, res) => {
     );
 
   // create jwt and sent to user
+  const tokens = generateTokens({
+    id: user.id,
+    roles: user.roles,
+    email: user.email,
+  });
 
-  res.json(
-    successResponse(200, "Ok", {
-      access: "abcd",
-      refresh: "xyz",
-    }),
-  );
+  res.json(successResponse(200, "Ok", tokens));
 };
 
 export { signUp, signIn };
