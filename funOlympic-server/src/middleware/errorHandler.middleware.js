@@ -6,7 +6,7 @@ const errorHandler = (error, req, res, next) => {
   if (error instanceof CustomError) {
     return res
       .status(error.statusCode)
-      .json(errorResponse(error.message, error.statusCode));
+      .json(errorResponse(error.message, error.statusCode, error?.details));
   }
 
   return res
@@ -15,8 +15,8 @@ const errorHandler = (error, req, res, next) => {
       errorResponse(
         "INTERNAL_SERVER_ERROR",
         "Internal Server Error",
-        "An unexpected error occurred"
-      )
+        "An unexpected error occurred",
+      ),
     );
 };
 

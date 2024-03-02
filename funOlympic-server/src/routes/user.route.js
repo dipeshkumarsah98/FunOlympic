@@ -1,11 +1,16 @@
 import { Router } from "express";
 import * as userController from "../controllers/user.controller.js";
+import schemaValidator from "../middleware/schemaValidator.js";
 
 const userRouter = Router();
 
 userRouter.get("/", userController.getAllUser);
 
-userRouter.post("/", userController.createUser);
+userRouter.post(
+  "/",
+  schemaValidator("/auth/signup"),
+  userController.createUser,
+);
 
 userRouter.get("/:id", userController.getUserById);
 

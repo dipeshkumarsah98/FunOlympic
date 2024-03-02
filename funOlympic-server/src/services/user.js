@@ -1,7 +1,11 @@
-import db from "../config/db";
+import db from "../config/db.js";
 
 const createUser = async (user) => {
   return await db.users.create({ data: user });
+};
+
+const getUserByEmail = async (email) => {
+  return await db.users.findFirst({ where: { email } });
 };
 
 const getUserById = async (id) => {
@@ -16,4 +20,4 @@ const getAllUser = async () => {
   return await db.users.findMany({});
 };
 
-export { createUser, getAllUser, getUserById, updateUserById };
+export { getUserByEmail, createUser, getAllUser, getUserById, updateUserById };
