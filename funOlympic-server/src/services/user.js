@@ -7,7 +7,7 @@ const createUser = async (user) => {
   return await db.users.create({
     data: {
       password: hashedPassword,
-      roles: "User",
+      roles: "Admin",
       ...details,
     },
   });

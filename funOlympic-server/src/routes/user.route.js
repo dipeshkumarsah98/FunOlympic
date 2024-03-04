@@ -1,10 +1,16 @@
 import { Router } from "express";
 import * as userController from "../controllers/user.controller.js";
 import schemaValidator from "../middleware/schemaValidator.js";
+import { checkRole, validateToken } from "../middleware/auth.middleware.js";
 
 const userRouter = Router();
 
-userRouter.get("/", userController.getAllUser);
+userRouter.get(
+  "/",
+  validateToken,
+  checkRole("admin"),
+  userController.getAllUser,
+);
 
 userRouter.post(
   "/",

@@ -18,9 +18,15 @@ const signUp = async (req, res) => {
     ...details,
   });
 
+  const tokens = await generateTokens({
+    id: user.id,
+    roles: user.roles,
+    email: user.email,
+  });
+
   const { password, ...rest } = user;
 
-  res.json(successResponse(200, "Ok", rest));
+  res.json(successResponse(200, "Ok", { user: { ...rest }, tokens }));
 };
 
 const signIn = async (req, res) => {
