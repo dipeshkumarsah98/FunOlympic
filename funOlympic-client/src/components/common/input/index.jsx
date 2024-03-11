@@ -1,24 +1,34 @@
-function Input(props) {
-  const { name, type, label, ...rest } = props;
-  return (
-    <div>
-      <label
-        htmlFor={name}
-        className="block text-sm font-medium leading-6 text-gray-900"
-      >
-        {label}
-      </label>
-      <div className="mt-2">
-        <input
-          id={name}
-          name={name}
-          type={type || "text"}
-          {...rest}
-          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-        />
+import React from "react";
+
+const Input = React.forwardRef(
+  ({ name, type, label, errors, ...rest }, ref) => {
+    const hasError = errors[name];
+    return (
+      <div>
+        <label
+          htmlFor={name}
+          className="block text-sm font-medium leading-6 text-gray-900"
+        >
+          {label}
+        </label>
+        <div className="mt-2">
+          <input
+            id={name}
+            name={name}
+            type={type || "text"}
+            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            ref={ref}
+            {...rest}
+          />
+        </div>
+        {hasError && (
+          <p className="pt-1 text-rose-500 text-sm">{errors[name].message}</p>
+        )}
       </div>
-    </div>
-  );
-}
+    );
+  },
+);
+
+// Input.displayName = "Input";
 
 export default Input;

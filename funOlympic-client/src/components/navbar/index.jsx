@@ -6,10 +6,12 @@ import { useState, useEffect } from "react";
 import { Dialog } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { navigation } from "@/constants/data";
+import { signOut, useSession } from "next-auth/react";
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isScrolling, setIsScrolling] = useState(false);
+  const { data: session, status } = useSession();
 
   const changeBackground = () => {
     if (window.scrollY >= 66) {
@@ -18,10 +20,13 @@ export default function Navbar() {
       setIsScrolling(false);
     }
   };
+
   useEffect(() => {
     changeBackground();
     window.addEventListener("scroll", changeBackground);
   });
+
+  const isLoggedIn = status === "authenticated";
 
   return (
     <header
@@ -69,18 +74,32 @@ export default function Navbar() {
                 </Link>
               ))}
 
-              <Link
-                href="/register"
-                className="text-sm font-semibold leading-6 text-gray-900"
-              >
-                Register
-              </Link>
-              <Link
-                href="/login"
-                className="text-sm font-semibold leading-6 text-gray-900"
-              >
-                Log in
-              </Link>
+              {!isLoggedIn && (
+                <Link
+                  href="/register"
+                  className="text-sm font-semibold leading-6 text-gray-900"
+                >
+                  Register
+                </Link>
+              )}
+              {!isLoggedIn && (
+                <Link
+                  href="/login"
+                  className="text-sm font-semibold leading-6 text-gray-900"
+                >
+                  Log in
+                </Link>
+              )}
+              {isLoggedIn && (
+                <span
+                  className="text-sm cursor-pointer font-semibold leading-6 text-gray-900"
+                  onClick={() => {
+                    signOut();
+                  }}
+                >
+                  Logout
+                </span>
+              )}
             </div>
           </nav>
         </div>
@@ -125,12 +144,24 @@ export default function Navbar() {
                 ))}
               </div>
               <div className="py-6">
-                <Link
-                  href="/login"
-                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                >
-                  Log in
-                </Link>
+                {isLoggedIn === false && (
+                  <Link
+                    href="/login"
+                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  >
+                    Log in
+                  </Link>
+                )}
+                {isLoggedIn && (
+                  <span
+                    onClick={() => {
+                      signOut();
+                    }}
+                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  >
+                    Logout
+                  </span>
+                )}
               </div>
             </div>
           </div>

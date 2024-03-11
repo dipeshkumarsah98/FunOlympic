@@ -1,61 +1,45 @@
+"use client";
 import Input from "@/components/common/input";
 import Link from "next/link";
+import { useForm } from "react-hook-form";
+import Snackbar from "@/components/common/snackbar";
+import useAuth from "@/lib/hooks/useAuth";
 
 // register form for sport live platform
-const formItem = [
-  {
-    id: 0,
-    label: "Full name",
-    name: "name",
-    type: "text",
-    required: true,
-    placeholder: "John Doe",
-  },
-  {
-    id: 1,
-    label: "Email address",
-    name: "email",
-    type: "email",
-    required: true,
-  },
-  {
-    id: 2,
-    label: "Contact number",
-    name: "contact",
-    type: "tel",
-    required: true,
-  },
-  {
-    id: 5,
-    label: "Country",
-    name: "country",
-    type: "text",
-    required: true,
-  },
-  {
-    id: 6,
-    label: "Sport",
-    name: "sport",
-    type: "text",
-    required: true,
-  },
-  {
-    id: 3,
-    label: "Password",
-    name: "password",
-    type: "password",
-    required: true,
-  },
-  {
-    id: 4,
-    label: "Confirm password",
-    name: "confirmPassword",
-    type: "password",
-    required: true,
-  },
-];
-
 const RegisterSection = () => {
+  const { register, handleSubmit, formState } = useForm();
+  const { errors, isSubmitting, isValid } = formState;
+  const { data, error, signUp } = useAuth();
+  const onSubmit = handleSubmit(async (credentials) => {
+    try {
+      await signUp({
+        name: credentials["full-name"],
+        email: credentials.email,
+        country: credentials.country,
+        password: credentials.password,
+        contact: credentials.contact,
+        sport: credentials.sport,
+      });
+      if (data) {
+        console.log("data is", data);
+        Snackbar.success("Account Created successfully");
+        return;
+      }
+      if (error) {
+        console.log("Error is", error);
+        Snackbar.error(error);
+        return;
+      }
+      console.log(credentials);
+    } catch (error) {
+      if (error) {
+        console.log("Error is", error);
+        Snackbar.error(error);
+        return;
+      }
+    }
+  });
+
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 ">
@@ -71,143 +55,111 @@ const RegisterSection = () => {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-lg">
-          <form className="space-y-6" action="#" method="POST">
-            <div>
-              <label
-                htmlFor="full-name"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                Full name
-              </label>
-              <div className="mt-2">
-                <input
-                  id="full-name"
-                  name="full-name"
-                  type="text"
-                  autoComplete="name"
-                  required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
-            <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                Email address
-              </label>
-              <div className="mt-2">
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
+          <form
+            className="space-y-6"
+            onSubmit={onSubmit}
+            action="#"
+            method="POST"
+          >
+            <Input
+              id="full-name"
+              name="full-name"
+              label="Full name"
+              type="text"
+              autoComplete="name"
+              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              errors={errors}
+              {...register("full-name", { required: "Full name is required" })}
+            />
+            <Input
+              id="email"
+              label="Email Address"
+              name="email"
+              type="email"
+              autoComplete="email"
+              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              errors={errors}
+              {...register("email", { required: "Email is required" })}
+            />
             <div>
               <div className="flex items-center gap-x-3 flex-col md:flex-row space-y-6 md:space-y-0 ">
                 <div className="w-full">
-                  <label
-                    htmlFor="Country"
-                    className="block text-sm font-medium leading-6 text-gray-900"
-                  >
-                    Country
-                  </label>
-                  <div className="mt-2">
-                    <input
-                      id="country"
-                      name="country"
-                      type="text"
-                      required
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    />
-                  </div>
+                  <Input
+                    label="Country"
+                    id="country"
+                    name="country"
+                    type="text"
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    errors={errors}
+                    {...register("country", {
+                      required: "Country is required",
+                    })}
+                  />
                 </div>
                 <div className="w-full">
-                  <label
-                    htmlFor="contact"
-                    className="block text-sm font-medium leading-6 text-gray-900"
-                  >
-                    Contact
-                  </label>
-                  <div className="mt-2">
-                    <input
-                      id="contact"
-                      name="contact"
-                      type="tel"
-                      autoComplete="tel"
-                      required
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    />
-                  </div>
+                  <Input
+                    id="contact"
+                    label="Contact"
+                    name="contact"
+                    type="tel"
+                    autoComplete="tel"
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    errors={errors}
+                    {...register("contact", {
+                      required: "contact is required",
+                    })}
+                  />
                 </div>
               </div>
             </div>
-            <div>
-              <label
-                htmlFor="sport"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                Sport
-              </label>
-              <div className="mt-2">
-                <input
-                  id="sport"
-                  name="sport"
-                  type="text"
-                  required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
+            <Input
+              id="sport"
+              name="sport"
+              label="Sport"
+              type="text"
+              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              errors={errors}
+              {...register("sport", {
+                required: "Sport is required",
+              })}
+            />
             <div>
               <div className="flex items-center flex-col md:flex-row space-y-6 md:space-y-0 gap-x-3">
                 <div className="w-full">
-                  <label
-                    htmlFor="password"
-                    className="block text-sm font-medium leading-6 text-gray-900"
-                  >
-                    Password
-                  </label>
-                  <div className="mt-2">
-                    <input
-                      id="password"
-                      name="password"
-                      type="password"
-                      autoComplete="current-password"
-                      required
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    />
-                  </div>
+                  <Input
+                    id="password"
+                    label="Password"
+                    name="password"
+                    type="password"
+                    autoComplete="current-password"
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    errors={errors}
+                    {...register("password", {
+                      required: "Password is required",
+                    })}
+                  />
                 </div>
                 <div className="w-full">
-                  <label
-                    htmlFor="cpassword"
-                    className="block text-sm font-medium leading-6 text-gray-900"
-                  >
-                    Confirm Password
-                  </label>
-                  <div className="mt-2">
-                    <input
-                      id="cpassword"
-                      name="cpassword"
-                      type="cpassword"
-                      autoComplete="current-password"
-                      required
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    />
-                  </div>
+                  <Input
+                    id="cpassword"
+                    name="cpassword"
+                    type="cpassword"
+                    autoComplete="current-password"
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    label="Confirm password"
+                    errors={errors}
+                    {...register("cpassword", {
+                      required: "confirm password is required",
+                    })}
+                  />
                 </div>
               </div>
             </div>
             <div>
               <button
                 type="submit"
-                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                className="flex disabled:bg-indigo-400 w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                disabled={!isValid}
               >
                 Create an account
               </button>

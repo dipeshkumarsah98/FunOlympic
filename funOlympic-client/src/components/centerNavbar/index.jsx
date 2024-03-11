@@ -7,11 +7,14 @@ import { navigation } from "@/constants/data";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import clsx from "clsx";
+import { signOut, useSession } from "next-auth/react";
 
 export default function CenterNavbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const path = usePathname();
+  const { data: session, status } = useSession();
 
+  const isLoggedIn = status === "authenticated";
   return (
     <header className="bg-white">
       <nav
@@ -52,22 +55,38 @@ export default function CenterNavbar() {
           ))}
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-x-12">
-          <Link
-            href="/register"
-            className={clsx("text-sm font-semibold leading-6 text-gray-900", {
-              "text-indigo-600": path === "/register",
-            })}
-          >
-            Register
-          </Link>
-          <Link
-            href="/login"
-            className={clsx("text-sm font-semibold leading-6 text-gray-900", {
-              "text-indigo-600": path === "/login",
-            })}
-          >
-            Log in
-          </Link>
+          {!isLoggedIn && (
+            <Link
+              href="/register"
+              className={clsx("text-sm font-semibold leading-6 text-gray-900", {
+                "text-indigo-600": path === "/register",
+              })}
+            >
+              Register
+            </Link>
+          )}
+          {!isLoggedIn && (
+            <Link
+              href="/login"
+              className={clsx("text-sm font-semibold leading-6 text-gray-900", {
+                "text-indigo-600": path === "/login",
+              })}
+            >
+              Log in
+            </Link>
+          )}
+          {isLoggedIn && (
+            <span
+              className={clsx(
+                "text-sm font-semibold leading-6 text-gray-900 cursor-pointer"
+              )}
+              onClick={() => {
+                signOut();
+              }}
+            >
+              Logout
+            </span>
+          )}
         </div>
       </nav>
       <Dialog
@@ -110,12 +129,25 @@ export default function CenterNavbar() {
                 ))}
               </div>
               <div className="py-6">
-                <Link
-                  href="/login"
-                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                >
-                  Log in
-                </Link>
+                {!isLoggedIn && (
+                  <Link
+                    href="/login"
+                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  >
+                    Log in
+                  </Link>
+                )}
+
+                {isLoggedIn && (
+                  <span
+                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                    onClick={() => {
+                      signOut();
+                    }}
+                  >
+                    Logout
+                  </span>
+                )}
               </div>
             </div>
           </div>
