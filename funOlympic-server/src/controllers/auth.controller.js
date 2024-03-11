@@ -37,7 +37,7 @@ const signIn = async (req, res) => {
   if (!user)
     throw new ValidationError(
       "Invalid email or password",
-      "Invalid email or password",
+      "Invalid email or password"
     );
 
   const isCorrectPassword = await comparePassword(password, user.password);
@@ -45,7 +45,7 @@ const signIn = async (req, res) => {
   if (!isCorrectPassword)
     throw new ValidationError(
       "Invalid email or password",
-      "Invalid email or password",
+      "Invalid email or password"
     );
 
   // create jwt and sent to user
@@ -55,7 +55,17 @@ const signIn = async (req, res) => {
     email: user.email,
   });
 
-  res.json(successResponse(200, "Ok", tokens));
+  res.json(
+    successResponse(200, "Ok", {
+      tokens,
+      user: {
+        name: user.name,
+        id: user.id,
+        role: user.roles,
+        email: user.email,
+      },
+    })
+  );
 };
 
 export { signUp, signIn };

@@ -14,6 +14,7 @@ model Users {
  id         String      @id @default(uuid())
  name       String  
  email      String
+ sport      String?
  phone      String
  country    String
  roles      String

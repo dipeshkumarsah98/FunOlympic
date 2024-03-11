@@ -1,7 +1,7 @@
 import Joi from "joi";
 
 const PASSWORD_REGEX = new RegExp(
-  "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!.@#$%^&*])(?=.{8,})",
+  "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!.@#$%^&*])(?=.{8,})"
 );
 
 const register = Joi.object().keys({
@@ -13,6 +13,7 @@ const register = Joi.object().keys({
   }),
   phone: Joi.string().required().min(10).max(10),
   country: Joi.string().required(),
+  sport: Joi.string().required(),
   password: Joi.string().pattern(PASSWORD_REGEX).min(8).required().messages({
     "string.min": `"password" should have a minimun lengt of {#limit}`,
     "string.empty": `"password" cannot be an empty field`,

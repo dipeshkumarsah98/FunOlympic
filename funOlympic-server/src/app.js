@@ -1,11 +1,12 @@
 import "express-async-errors";
 
 import express from "express";
-import dotenv from "dotenv";
 import bodyParser from "body-parser";
+import dotenv from "dotenv";
 import notFoundHandler from "./middleware/notFoundHandler.middleware.js";
 import errorHandler from "./middleware/errorHandler.middleware.js";
 import apiRouter from "./routes/index.js";
+import { corsHandler } from "./middleware/cors.middleware.js";
 
 dotenv.config();
 
@@ -13,6 +14,7 @@ const PORT = process.env.PORT || 8000;
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(corsHandler);
 app.use(bodyParser.json());
 
 app.use("/api/v1", apiRouter);
