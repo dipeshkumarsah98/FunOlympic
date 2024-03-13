@@ -20,9 +20,17 @@ model User {
  roles      Role @default(USER)
  password   String
  profile    profile?
+ livechat   livechat[]
+ comments   comments[]
+ message    message[]
  createdAt   DateTime   @default(now())
  updatedAt   DateTime   @updatedAt
  @@map("users")
+}
+
+enum Role {
+  USER
+  ADMIN
 }
 
 model profile {
@@ -32,7 +40,62 @@ model profile {
   userId Int @unique
 }
 
-enum Role {
-  USER
-  ADMIN
+model category {
+  id Int @id @default(autoincrement())
+  sport String
+  description String?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  events events?
+}
+
+model events {
+  id Int @id @default(autoincrement())
+	category category @relation(fields: [category_id], references: [id])
+  category_id Int @unique
+  eventTitle String
+  description String
+  time DateTime
+  thumbnail String
+  published Boolean
+  liveChatEnabled Boolean
+  streamLink String
+  comments comments[]
+  livechat livechat?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model livechat {
+  id Int @id @default(autoincrement())
+  events events @relation(fields: [event_id], references: [id])
+  user User @relation(fields: [user_id], references: [id])
+  message message @relation(fields: [message_id], references: [id])
+  message_id Int @unique
+  event_id Int @unique
+  user_id Int
+}
+
+model comments {
+  id Int @id @default(autoincrement())
+  events events @relation(fields: [event_id], references: [id])
+  user User @relation(fields: [user_id], references: [id])
+  message message @relation(fields: [message_id], references: [id])
+  message_id Int @unique
+  event_id Int
+  user_id Int
+}
+
+model message {
+  id Int @id @default(autoincrement())
+  user User @relation(fields: [user_id], references: [id])
+  messageType  messageType @default(COMMENT)
+  user_id Int
+  comments comments?
+  livechat livechat? 
+}
+
+enum messageType{
+  LIVECHAT
+  COMMENT
 }
