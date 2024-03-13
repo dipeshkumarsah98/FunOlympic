@@ -4,7 +4,7 @@ const Input = React.forwardRef(
   ({ name, type, label, errors, ...rest }, ref) => {
     const hasError = errors[name];
     return (
-      <div>
+      <div className="relative">
         <label
           htmlFor={name}
           className="block text-sm font-medium leading-6 text-gray-900"
@@ -22,13 +22,13 @@ const Input = React.forwardRef(
           />
         </div>
         {hasError && (
-          <p className="pt-1 text-rose-500 text-sm">{errors[name].message}</p>
+          <p className="pt-1 absolute text-rose-500 text-sm">
+            {errors[name].message}
+          </p>
         )}
       </div>
     );
-  },
+  }
 );
-
-// Input.displayName = "Input";
 
 export default Input;

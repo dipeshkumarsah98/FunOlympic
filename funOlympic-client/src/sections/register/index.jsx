@@ -1,42 +1,44 @@
 "use client";
+
+import axios from "@/lib/utils/axios";
 import Input from "@/components/common/input";
 import Link from "next/link";
-import { useForm } from "react-hook-form";
 import Snackbar from "@/components/common/snackbar";
-import useAuth from "@/lib/hooks/useAuth";
+import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 
-// register form for sport live platform
 const RegisterSection = () => {
-  const { register, handleSubmit, formState } = useForm();
-  const { errors, isSubmitting, isValid } = formState;
-  const { data, error, signUp } = useAuth();
+  const { register, handleSubmit, formState, watch } = useForm();
+  const { errors, isSubmitting } = formState;
+  const password = watch("password");
+  const router = useRouter();
+
   const onSubmit = handleSubmit(async (credentials) => {
     try {
-      await signUp({
+      console.log(credentials);
+      const res = await axios.post("/auth/signup", {
         name: credentials["full-name"],
         email: credentials.email,
         country: credentials.country,
         password: credentials.password,
-        contact: credentials.contact,
+        phone: credentials.contact,
         sport: credentials.sport,
       });
-      if (data) {
-        console.log("data is", data);
-        Snackbar.success("Account Created successfully");
+      if (res?.data?.payload) {
+        console.log(res.data.payload);
+        Snackbar.success(
+          "Account Created successfully, please check your email to verify your account"
+        );
+        router.push("/login");
         return;
       }
-      if (error) {
-        console.log("Error is", error);
-        Snackbar.error(error);
+    } catch (err) {
+      console.log("🚀 ~ onSubmit ~ err:", err);
+      if (err?.response?.data?.status === 400) {
+        Snackbar.error("User already exists");
         return;
       }
-      console.log(credentials);
-    } catch (error) {
-      if (error) {
-        console.log("Error is", error);
-        Snackbar.error(error);
-        return;
-      }
+      Snackbar.error("Something went wrong, please try again later");
     }
   });
 
@@ -69,7 +71,14 @@ const RegisterSection = () => {
               autoComplete="name"
               className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               errors={errors}
-              {...register("full-name", { required: "Full name is required" })}
+              {...register("full-name", {
+                required: "Full name is required",
+
+                minLength: {
+                  value: 5,
+                  message: "Full name must be at least 5 characters",
+                },
+              })}
             />
             <Input
               id="email"
@@ -93,6 +102,10 @@ const RegisterSection = () => {
                     errors={errors}
                     {...register("country", {
                       required: "Country is required",
+                      minLength: {
+                        value: 3,
+                        message: "Country must be at least 3 characters",
+                      },
                     })}
                   />
                 </div>
@@ -107,6 +120,10 @@ const RegisterSection = () => {
                     errors={errors}
                     {...register("contact", {
                       required: "contact is required",
+                      minLength: {
+                        value: 10,
+                        message: "Contact must be at least 10 digits",
+                      },
                     })}
                   />
                 </div>
@@ -121,6 +138,10 @@ const RegisterSection = () => {
               errors={errors}
               {...register("sport", {
                 required: "Sport is required",
+                minLength: {
+                  value: 3,
+                  message: "Sport must be at least 3 characters",
+                },
               })}
             />
             <div>
@@ -136,6 +157,10 @@ const RegisterSection = () => {
                     errors={errors}
                     {...register("password", {
                       required: "Password is required",
+                      minLength: {
+                        value: 8,
+                        message: "Password must be at least 8 characters",
+                      },
                     })}
                   />
                 </div>
@@ -143,25 +168,30 @@ const RegisterSection = () => {
                   <Input
                     id="cpassword"
                     name="cpassword"
-                    type="cpassword"
+                    type="password"
                     autoComplete="current-password"
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     label="Confirm password"
                     errors={errors}
-                    {...register("cpassword", {
-                      required: "confirm password is required",
-                    })}
+                    {...register(
+                      "cpassword",
+                      {
+                        required: "Confirm password is required",
+                      },
+                      (value) =>
+                        value === password || "The passwords do not match"
+                    )}
                   />
                 </div>
               </div>
             </div>
-            <div>
+            <div className="pt-4">
               <button
                 type="submit"
                 className="flex disabled:bg-indigo-400 w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                disabled={!isValid}
+                disabled={isSubmitting}
               >
-                Create an account
+                {isSubmitting ? "Loading... " : "Create an account"}
               </button>
             </div>
           </form>
