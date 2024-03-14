@@ -20,7 +20,6 @@ model User {
  roles      Role @default(USER)
  password   String
  profile    profile?
- comments   comments[]
  message    message[]
  createdAt   DateTime   @default(now())
  updatedAt   DateTime   @updatedAt
@@ -78,22 +77,20 @@ model livechat {
 model comments {
   id Int @id @default(autoincrement())
   events events @relation(fields: [event_id], references: [id])
-  user User @relation(fields: [user_id], references: [id])
   message message[]
   event_id Int
-  user_id Int
 }
 
 model message {
   id Int @id @default(autoincrement())
   user User @relation(fields: [user_id], references: [id])
-  livechat livechat @relation(fields: [livechat_id], references: [id])
-  comments comments @relation(fields: [comment_id], references: [id])
+  livechat livechat? @relation(fields: [livechat_id], references: [id])
+  comments comments? @relation(fields: [comment_id], references: [id])
 
   messageType  messageType @default(COMMENT)
   user_id Int
-  livechat_id Int
-  comment_id Int
+  livechat_id Int?
+  comment_id Int?
 }
 
 enum messageType{

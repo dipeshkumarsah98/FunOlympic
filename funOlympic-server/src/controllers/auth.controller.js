@@ -1,4 +1,4 @@
-import { comparePassword } from "../../bcrypt.js";
+import { comparePassword } from "../utils/bcrypt.js";
 import ValidationError from "../errors/validationError.error.js";
 import * as userService from "../services/user.js";
 import { successResponse } from "../utils/successResponse.js";
