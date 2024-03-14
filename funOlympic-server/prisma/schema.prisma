@@ -20,7 +20,6 @@ model User {
  roles      Role @default(USER)
  password   String
  profile    profile?
- livechat   livechat[]
  comments   comments[]
  message    message[]
  createdAt   DateTime   @default(now())
@@ -46,16 +45,16 @@ model category {
   description String?
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
-  events events?
+  events events[]
 }
 
 model events {
   id Int @id @default(autoincrement())
 	category category @relation(fields: [category_id], references: [id])
-  category_id Int @unique
+  category_id Int
   eventTitle String
   description String
-  time DateTime
+  time DateTime @default(now())
   thumbnail String
   published Boolean
   liveChatEnabled Boolean
@@ -68,20 +67,19 @@ model events {
 
 model livechat {
   id Int @id @default(autoincrement())
+  
   events events @relation(fields: [event_id], references: [id])
-  user User @relation(fields: [user_id], references: [id])
-  message message @relation(fields: [message_id], references: [id])
-  message_id Int @unique
+  
+  message message[]
+    
   event_id Int @unique
-  user_id Int
 }
 
 model comments {
   id Int @id @default(autoincrement())
   events events @relation(fields: [event_id], references: [id])
   user User @relation(fields: [user_id], references: [id])
-  message message @relation(fields: [message_id], references: [id])
-  message_id Int @unique
+  message message[]
   event_id Int
   user_id Int
 }
@@ -89,10 +87,13 @@ model comments {
 model message {
   id Int @id @default(autoincrement())
   user User @relation(fields: [user_id], references: [id])
+  livechat livechat @relation(fields: [livechat_id], references: [id])
+  comments comments @relation(fields: [comment_id], references: [id])
+
   messageType  messageType @default(COMMENT)
   user_id Int
-  comments comments?
-  livechat livechat? 
+  livechat_id Int
+  comment_id Int
 }
 
 enum messageType{
