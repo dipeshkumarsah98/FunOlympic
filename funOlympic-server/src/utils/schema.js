@@ -110,6 +110,22 @@ const eventUpdate = Joi.object().keys({
   }),
 });
 
+const createComment = Joi.object().keys({
+  body: Joi.string().required().messages({
+    "any.required": `"body" is a required field`,
+  }),
+  eventId: Joi.string().required().messages({
+    "any.required": `"eventId" is a required field`,
+  }),
+});
+const updateComment = Joi.object().keys({
+  body: Joi.string().messages({
+    "any.required": `"body" is a required field`,
+  }),
+  eventId: Joi.string().messages({
+    "any.required": `"eventId" is a required field`,
+  }),
+});
 export default {
   "/auth/signin": login,
   "/auth/signup": register,
@@ -117,4 +133,6 @@ export default {
   "/category/update": categoryUpdate,
   "/event/create": eventCreate,
   "/event/update": eventUpdate,
+  "/comment/create": createComment,
+  "/comment/update": updateComment,
 };

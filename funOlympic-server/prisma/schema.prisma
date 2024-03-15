@@ -89,6 +89,7 @@ model message {
 
   messageType  messageType @default(COMMENT)
   user_id Int
+  body        String
   livechat_id Int?
   comment_id Int?
 }
