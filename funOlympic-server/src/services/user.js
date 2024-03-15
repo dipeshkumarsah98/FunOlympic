@@ -1,4 +1,4 @@
-import { hashPassword } from "../../bcrypt.js";
+import { hashPassword } from "../utils/bcrypt.js";
 import db from "../config/db.js";
 
 const createUser = async (user) => {
