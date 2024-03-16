@@ -110,6 +110,23 @@ const eventUpdate = Joi.object().keys({
   }),
 });
 
+const createMessage = Joi.object().keys({
+  body: Joi.string().required().messages({
+    "any.required": `"body" is a required field`,
+  }),
+  eventId: Joi.number().required().messages({
+    "any.required": `"eventId" is a required field`,
+  }),
+  type: Joi.string().required().messages({
+    "any.required": `"type" is a required field`,
+  }),
+  userId: Joi.number().required().messages({
+    "any.required": `"userId" is a required field`,
+  }),
+  commentId: Joi.number().optional(),
+  liveId: Joi.number().optional(),
+});
+
 const createComment = Joi.object().keys({
   body: Joi.string().required().messages({
     "any.required": `"body" is a required field`,
@@ -143,4 +160,5 @@ export default {
   "/comment/create": createComment,
   "/comment/update": updateComment,
   "/comment/get-comments": getComment,
+  "/message/create": createMessage,
 };

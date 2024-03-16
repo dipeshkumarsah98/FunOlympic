@@ -27,7 +27,31 @@ const createOne = async (data) => {
 };
 
 const findOne = async (id) => {
-  return await db.events.findUnique({ where: { id } });
+  return await db.events.findUnique({
+    where: { id: +id },
+
+    include: {
+      category: true,
+      comments: {
+        include: {
+          message: {
+            include: {
+              user: true,
+            },
+          },
+        },
+      },
+      livechat: {
+        include: {
+          message: {
+            include: {
+              user: true,
+            },
+          },
+        },
+      },
+    },
+  });
 };
 
 const findAll = async () => {
