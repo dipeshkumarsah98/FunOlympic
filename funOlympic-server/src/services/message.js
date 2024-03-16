@@ -25,7 +25,7 @@ const createMessage = async (data) => {
 
     const livechat = await db.livechat.create({
       data: {
-        event_id: +eventId,
+        event_id: eventId,
       },
     });
 
