@@ -34,7 +34,7 @@ enum Role {
 model profile {
   id Int @id @default(autoincrement())
   bio String
-  user User @relation(fields: [userId], references: [id])
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId Int @unique
 }
 
@@ -49,8 +49,8 @@ model category {
 
 model events {
   id Int @id @default(autoincrement())
-	category category @relation(fields: [category_id], references: [id])
-  category_id Int
+	category category? @relation(fields: [category_id], references: [id], onDelete: SetNull)
+  category_id Int?
   eventTitle String
   description String
   time DateTime @default(now())
@@ -67,7 +67,7 @@ model events {
 model livechat {
   id Int @id @default(autoincrement())
   
-  events events @relation(fields: [event_id], references: [id])
+  events events @relation(fields: [event_id], references: [id], onDelete: Cascade)
   
   message message[]
     
@@ -76,16 +76,16 @@ model livechat {
 
 model comments {
   id Int @id @default(autoincrement())
-  events events @relation(fields: [event_id], references: [id])
+  events events @relation(fields: [event_id], references: [id], onDelete: Cascade)
   message message[]
   event_id Int
 }
 
 model message {
   id Int @id @default(autoincrement())
-  user User @relation(fields: [user_id], references: [id])
-  livechat livechat? @relation(fields: [livechat_id], references: [id])
-  comments comments? @relation(fields: [comment_id], references: [id])
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  livechat livechat? @relation(fields: [livechat_id], references: [id], onDelete: Cascade)
+  comments comments? @relation(fields: [comment_id], references: [id] , onDelete: Cascade)
 
   messageType  messageType @default(COMMENT)
   user_id Int

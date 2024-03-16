@@ -35,4 +35,19 @@ const updateOne = async (req, res) => {
   res.json(successResponse(200, "Ok", category));
 };
 
-export { findOne, findAll, createOne, updateOne };
+const deleteOne = async (req, res) => {
+  const { id } = req.params;
+  if (!id) throw new ValidationError("Id is required", "Id is required");
+
+  const doesExist = await categoryService.getCategoryById(+id);
+  if (!doesExist)
+    throw new ValidationError(
+      "Category does not exist",
+      "Category does not exist"
+    );
+
+  const data = await categoryService.deleteCategory(id);
+  res.json(successResponse(204, "Deleted", data));
+};
+
+export { findOne, findAll, createOne, updateOne, deleteOne };

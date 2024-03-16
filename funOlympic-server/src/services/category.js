@@ -23,4 +23,14 @@ const getAllCategory = async () => {
   return await db.category.findMany({});
 };
 
-export { createCategory, getAllCategory, getCategoryById, updateCategoryById };
+const deleteCategory = async (id) => {
+  return await db.category.delete({ where: { id: +id } });
+};
+
+export {
+  createCategory,
+  deleteCategory,
+  getAllCategory,
+  getCategoryById,
+  updateCategoryById,
+};

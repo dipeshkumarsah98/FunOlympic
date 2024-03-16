@@ -25,4 +25,10 @@ eventRouter.patch(
   eventController.updateOne
 );
 
+eventRouter.delete(
+  "/:id",
+  validateToken,
+  checkRole("admin"),
+  eventController.deleteOne
+);
 export default eventRouter;

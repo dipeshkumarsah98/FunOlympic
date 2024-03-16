@@ -25,4 +25,11 @@ categoryRouter.patch(
   categoryController.updateOne
 );
 
+categoryRouter.delete(
+  "/:id",
+  validateToken,
+  checkRole("admin"),
+  categoryController.deleteOne
+);
+
 export default categoryRouter;

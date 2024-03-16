@@ -35,4 +35,16 @@ const updateOne = async (req, res) => {
   res.json(successResponse(200, "Ok", event));
 };
 
-export { findOne, findAll, createOne, updateOne };
+const deleteOne = async (req, res) => {
+  const { id } = req.params;
+  if (!id) throw new ValidationError("Id is required", "Id is required");
+
+  const doesExist = await eventService.findOne(+id);
+  if (!doesExist)
+    throw new ValidationError("Event does not exist", "Event does not exist");
+
+  const data = await eventService.deleteOne(id);
+  res.json(successResponse(204, "Deleted", data));
+};
+
+export { findOne, findAll, createOne, updateOne, deleteOne };

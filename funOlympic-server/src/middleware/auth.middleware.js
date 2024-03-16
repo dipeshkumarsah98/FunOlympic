@@ -13,7 +13,7 @@ const validateToken = (req, res, next) => {
   if (!token) {
     throw new UnauthorizedError(
       "Access Denied: No token provided.",
-      "Access Denied: Please provide valid credentials or contact support for assistance with API authorization.",
+      "Access Denied: Please provide valid credentials or contact support for assistance with API authorization."
     );
   }
   Jwt.verify(token, key, (err, user) => {
@@ -21,7 +21,7 @@ const validateToken = (req, res, next) => {
     if (err) {
       throw new UnauthorizedError(
         "Access Denied: Token is invalid or expired.",
-        "Access Denied: Please provide valid token or generate new one.",
+        "Access Denied: Please provide valid token or generate new one."
       );
     } else {
       // provided token is valid
@@ -43,13 +43,9 @@ const checkRole = (role) => async (req, res, next) => {
   if (!user) {
     throw new UnauthorizedError(
       "Access Denied: No token provided.",
-      "Access Denied: Please provide valid credentials or contact support for assistance with API authorization.",
+      "Access Denied: Please provide valid credentials or contact support for assistance with API authorization."
     );
   }
-
-  console.log(
-    `Role of user ${user.email} is ${user.roles.toLocaleLowerCase()}`,
-  );
 
   if (
     user.roles.toLocaleLowerCase() === "admin" ||
@@ -59,7 +55,7 @@ const checkRole = (role) => async (req, res, next) => {
   } else {
     throw new UnauthorizedError(
       "Sorry you do not have access to this route",
-      "Sorry you do not have access to this route",
+      "Sorry you do not have access to this route"
     );
   }
 };

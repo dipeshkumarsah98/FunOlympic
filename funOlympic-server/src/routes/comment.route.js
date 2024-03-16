@@ -19,4 +19,6 @@ commentRouter.post(
   commentController.findOne
 );
 
+commentRouter.delete("/:id", validateToken, commentController.deleteOne);
+
 export default commentRouter;

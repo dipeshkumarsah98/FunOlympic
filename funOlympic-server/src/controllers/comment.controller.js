@@ -18,4 +18,12 @@ const findOne = async (req, res) => {
   res.json(successResponse(200, "Ok", commentResponse));
 };
 
-export { createOne, findOne };
+const deleteOne = async (req, res) => {
+  const { id } = req.params;
+  if (!id) throw new ValidationError("Id is required", "Id is required");
+
+  const data = await commentService.deleteComment(id);
+  res.json(successResponse(204, "Deleted", data));
+};
+
+export { createOne, findOne, deleteOne };

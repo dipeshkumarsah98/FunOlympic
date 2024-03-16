@@ -35,7 +35,11 @@ const findAll = async () => {
 };
 
 const updateOne = async (id, data) => {
-  return await db.events.update({ where: { id }, data });
+  return await db.events.update({ where: { id: +id }, data });
 };
 
-export { createOne, findOne, findAll, updateOne };
+const deleteOne = async (id) => {
+  return await db.events.delete({ where: { id: +id } });
+};
+
+export { createOne, findOne, findAll, updateOne, deleteOne };

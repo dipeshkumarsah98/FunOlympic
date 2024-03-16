@@ -1,4 +1,4 @@
-import db from "../config/db";
+import db from "../config/db.js";
 
 const createComment = async (detail) => {
   return await db.comments.upsert({
@@ -26,4 +26,12 @@ const getComments = async (eventId) => {
   });
 };
 
-export { createComment, getComments };
+const deleteComment = async (id) => {
+  return await db.comments.delete({
+    where: {
+      id: +id,
+    },
+  });
+};
+
+export { createComment, getComments, deleteComment };
