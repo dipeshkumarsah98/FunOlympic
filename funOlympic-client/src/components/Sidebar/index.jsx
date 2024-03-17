@@ -313,7 +313,11 @@ function SidebarWrapper({ children }) {
           </Menu>
         </div>
         <main className="py-10 lg:pl-72">
-          <div className="px-4 sm:px-6 lg:px-8">{children}</div>
+          <div className="px-4 sm:px-6 lg:px-8">
+            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+              <div className="mx-auto max-w-5xl my-0 sm:my-10">{children}</div>
+            </div>
+          </div>
         </main>
       </div>
     </>
