@@ -30,4 +30,20 @@ const getAllUser = async () => {
   return await db.user.findMany({});
 };
 
-export { getUserByEmail, createUser, getAllUser, getUserById, updateUserById };
+const deleteUser = async (userId) => {
+  try {
+    const data = await db.user.delete({ where: { id: userId } });
+    return data;
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
+export {
+  getUserByEmail,
+  createUser,
+  getAllUser,
+  getUserById,
+  updateUserById,
+  deleteUser,
+};

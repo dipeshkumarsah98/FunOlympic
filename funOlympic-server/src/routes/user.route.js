@@ -9,15 +9,23 @@ userRouter.get(
   "/",
   validateToken,
   checkRole("admin"),
-  userController.getAllUser,
+  userController.getAllUser
 );
 
 userRouter.post(
   "/",
+  validateToken,
   schemaValidator("/auth/signup"),
-  userController.createUser,
+  userController.createUser
 );
 
-userRouter.get("/:id", userController.getUserById);
+userRouter.get("/:id", validateToken, userController.getUserById);
+
+userRouter.delete(
+  "/:id",
+  validateToken,
+  checkRole("admin"),
+  userController.deleteUser
+);
 
 export default userRouter;

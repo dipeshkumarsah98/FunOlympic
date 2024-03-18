@@ -11,10 +11,11 @@ import {
   UsersIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
-
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
+import { signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const navigation = [
   { name: "Users", href: "/dashboard/users", icon: UsersIcon, current: true },
@@ -37,10 +38,6 @@ const navigation = [
     current: false,
   },
 ];
-const userNavigation = [
-  { name: "Your profile", href: "#" },
-  { name: "Sign out", href: "#" },
-];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -48,7 +45,14 @@ function classNames(...classes) {
 
 function SidebarWrapper({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const router = useRouter();
+  const { data } = useSession();
   const pathName = usePathname();
+
+  const handleSignOut = () => {
+    signOut();
+    router.push("/", { replace: true });
+  };
 
   return (
     <>
@@ -212,7 +216,7 @@ function SidebarWrapper({ children }) {
                         className="ml-3 text-sm font-semibold leading-6 text-gray-900"
                         aria-hidden="true"
                       >
-                        Admin User Name
+                        {data.user?.name}
                       </span>
                       <ChevronUpIcon
                         className="ml-2 h-5 w-5 text-gray-400"
@@ -230,21 +234,25 @@ function SidebarWrapper({ children }) {
                     leaveTo="transform opacity-0 scale-95"
                   >
                     <Menu.Items className="absolute -top-20 right-10 z-10 mt-2.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
-                      {userNavigation.map((item) => (
-                        <Menu.Item key={item.name}>
-                          {({ active }) => (
-                            <a
-                              href={item.href}
-                              className={classNames(
-                                active ? "bg-gray-50" : "",
-                                "block px-3 py-1 text-sm leading-6 text-gray-900"
-                              )}
-                            >
-                              {item.name}
-                            </a>
+                      <Menu.Item>
+                        <button
+                          className={classNames(
+                            "block px-3 py-1 text-sm leading-6 text-gray-900"
                           )}
-                        </Menu.Item>
-                      ))}
+                        >
+                          Profile
+                        </button>
+                      </Menu.Item>
+                      <Menu.Item>
+                        <button
+                          onClick={() => handleSignOut()}
+                          className={classNames(
+                            "block px-3 py-1 text-sm leading-6 text-gray-900"
+                          )}
+                        >
+                          Sign Out
+                        </button>
+                      </Menu.Item>
                     </Menu.Items>
                   </Transition>
                 </Menu>
@@ -278,7 +286,7 @@ function SidebarWrapper({ children }) {
                   className="ml-4 text-sm font-semibold leading-6 text-gray-900"
                   aria-hidden="true"
                 >
-                  Tom Cook
+                  {data.user?.name}
                 </span>
                 <ChevronDownIcon
                   className="ml-2 h-5 w-5 text-gray-400"
@@ -296,21 +304,19 @@ function SidebarWrapper({ children }) {
               leaveTo="transform opacity-0 scale-95"
             >
               <Menu.Items className="absolute right-0 z-10 mt-2.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
-                {userNavigation.map((item) => (
-                  <Menu.Item key={item.name}>
-                    {({ active }) => (
-                      <a
-                        href={item.href}
-                        className={classNames(
-                          active ? "bg-gray-50" : "",
-                          "block px-3 py-1 text-sm leading-6 text-gray-900"
-                        )}
-                      >
-                        {item.name}
-                      </a>
-                    )}
-                  </Menu.Item>
-                ))}
+                <Menu.Item>
+                  <button className="block px-3 py-1 text-sm leading-6 text-gray-900">
+                    Your profile
+                  </button>
+                </Menu.Item>
+                <Menu.Item>
+                  <button
+                    onClick={() => handleSignOut()}
+                    className="block px-3 py-1 text-sm leading-6 text-gray-900"
+                  >
+                    Sign Out
+                  </button>
+                </Menu.Item>
               </Menu.Items>
             </Transition>
           </Menu>
