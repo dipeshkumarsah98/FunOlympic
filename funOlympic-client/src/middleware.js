@@ -39,7 +39,6 @@ export async function middleware(request) {
     const { user, tokens } = session;
 
     const token = tokens.accessToken;
-    const role = user.role.toLowerCase();
 
     // If no token exists, redirect to login
     if (!token) {
@@ -51,6 +50,7 @@ export async function middleware(request) {
         matchesWildcard(request.nextUrl.pathname, pattern)
       )
     ) {
+      const role = user.role.toLowerCase();
       if (role !== "admin") {
         return NextResponse.redirect(
           `${process.env.NEXT_PUBLIC_BASE_URL}/access-denied`

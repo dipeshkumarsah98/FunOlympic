@@ -15,6 +15,11 @@ export default function CenterNavbar() {
   const { data: session, status } = useSession();
 
   const isLoggedIn = status === "authenticated";
+
+  let isAdmin = false;
+  if (isLoggedIn) {
+    isAdmin = session.user.role.toLocaleLowerCase() === "admin";
+  }
   return (
     <header className="bg-white">
       <nav
@@ -22,14 +27,14 @@ export default function CenterNavbar() {
         aria-label="Global"
       >
         <div className="flex lg:flex-1">
-          <a href="#" className="-m-1.5 p-1.5">
+          <Link href="/" className="-m-1.5 p-1.5">
             <span className="sr-only">FunOlympic</span>
             <img
               className="h-8 w-auto"
               src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-              alt=""
+              alt="fun Olympic logo"
             />
-          </a>
+          </Link>
         </div>
         <div className="flex lg:hidden">
           <button
@@ -55,6 +60,14 @@ export default function CenterNavbar() {
           ))}
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-x-12">
+          {isAdmin && (
+            <Link
+              href="/dashboard/users"
+              className={clsx("text-sm font-semibold leading-6 text-gray-900")}
+            >
+              Admin
+            </Link>
+          )}
           {!isLoggedIn && (
             <Link
               href="/register"
@@ -128,6 +141,14 @@ export default function CenterNavbar() {
                   </Link>
                 ))}
               </div>
+              {isAdmin && (
+                <Link
+                  href="/dashboard/users"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                >
+                  Admin
+                </Link>
+              )}
               <div className="py-6">
                 {!isLoggedIn && (
                   <Link
