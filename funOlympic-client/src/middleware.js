@@ -1,7 +1,6 @@
 import { getToken } from "next-auth/jwt";
-import { signOut } from "next-auth/react";
 import { NextResponse } from "next/server";
-import { verifyJwtToken } from "./lib/utils/verifyToken";
+
 // Add whatever paths you want to PROTECT here
 const authRoutes = ["/account/*"];
 const adminRoutes = ["/admin/*", "/dashboard/*"];
