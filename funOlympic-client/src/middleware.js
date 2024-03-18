@@ -2,7 +2,7 @@ import { getToken } from "next-auth/jwt";
 import { NextResponse } from "next/server";
 
 // Add whatever paths you want to PROTECT here
-const authRoutes = ["/account/*"];
+const authRoutes = ["/dashboard/*"];
 const adminRoutes = ["/admin/*", "/dashboard/*"];
 
 // Function to match the * wildcard character
@@ -22,16 +22,23 @@ export async function middleware(request) {
     request.nextUrl.pathname + request.nextUrl.search
   }`;
 
+  console.log("url", request.nextUrl.pathname);
+  if (request.nextUrl.pathname === "/dashboard") {
+    return NextResponse.redirect(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/dashboard/users`
+    );
+  }
+
+  const session = await getToken({
+    req: request,
+    secret: process.env.NEXTAUTH_SECRET,
+  });
+
   if (
     authRoutes.some((pattern) =>
       matchesWildcard(request.nextUrl.pathname, pattern)
     )
   ) {
-    const session = await getToken({
-      req: request,
-      secret: process.env.NEXTAUTH_SECRET,
-    });
-
     if (!session) {
       return NextResponse.redirect(LOGIN);
     }
@@ -39,18 +46,19 @@ export async function middleware(request) {
     const { user, tokens } = session;
 
     const token = tokens.accessToken;
-    const role = user.role.toLowerCase();
 
     // If no token exists, redirect to login
     if (!token) {
       console.log("Token not found so redirect to login page");
       return NextResponse.redirect(LOGIN);
     }
+
     if (
       adminRoutes.some((pattern) =>
         matchesWildcard(request.nextUrl.pathname, pattern)
       )
     ) {
+      const role = user.role.toLowerCase();
       if (role !== "admin") {
         return NextResponse.redirect(
           `${process.env.NEXT_PUBLIC_BASE_URL}/access-denied`

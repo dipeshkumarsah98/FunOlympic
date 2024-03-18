@@ -27,7 +27,10 @@ export default function Navbar() {
   });
 
   const isLoggedIn = status === "authenticated";
-  const isAdmin = session.user.role.toLocaleLowerCase() === "admin";
+  let isAdmin = false;
+  if (isLoggedIn) {
+    isAdmin = session.user.role.toLocaleLowerCase() === "admin";
+  }
 
   return (
     <header
@@ -152,6 +155,14 @@ export default function Navbar() {
                   </Link>
                 ))}
               </div>
+              {isAdmin && (
+                <Link
+                  href="/dashboard/users"
+                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                >
+                  Admin
+                </Link>
+              )}
               <div className="py-6">
                 {isLoggedIn === false && (
                   <Link
