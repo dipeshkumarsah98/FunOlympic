@@ -28,9 +28,14 @@ const updateOne = async (req, res) => {
   const { id } = req.params;
   if (!id) throw new ValidationError("Id is required", "Id is required");
 
-  const { ...details } = req.body;
-  const event = await eventService.updateOne(id, {
+  const { category, ...details } = req.body;
+  const event = await eventService.updateOne(+id, {
     ...details,
+    category: {
+      connect: {
+        id: +category,
+      },
+    },
   });
   res.json(successResponse(200, "Ok", event));
 };

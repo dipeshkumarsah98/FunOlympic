@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import Snackbar from "@/components/common/snackbar";
 import Input from "@/components/common/input";
-import useAuthFetch from "@/lib/hooks/useSignup";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -133,7 +132,6 @@ function LoginSection() {
     </>
   );
 }
-
 
 export default function Login() {
   return <LoginSection />;

@@ -74,8 +74,11 @@ const eventCreate = Joi.object().keys({
     "any.required": `"categoryId" is a required field`,
   }),
 
-  time: Joi.string().messages({
-    "any.required": `"time" is a required field`,
+  endDate: Joi.string().required().messages({
+    "any.required": `"endDate" is a required field`,
+  }),
+  startDate: Joi.string().required().messages({
+    "any.required": `"startDate" is a required field`,
   }),
 });
 
@@ -101,12 +104,15 @@ const eventUpdate = Joi.object().keys({
     "any.required": `"steamLink" is a required field`,
   }),
 
-  categoryId: Joi.string().messages({
+  category: Joi.string().messages({
     "any.required": `"categoryId" is a required field`,
   }),
 
-  time: Joi.string().messages({
-    "any.required": `"time" is a required field`,
+  endDate: Joi.string().messages({
+    "any.required": `"endDate" is a required field`,
+  }),
+  startDate: Joi.string().messages({
+    "any.required": `"startDate" is a required field`,
   }),
 });
 

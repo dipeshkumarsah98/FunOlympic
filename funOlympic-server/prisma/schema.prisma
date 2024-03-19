@@ -53,7 +53,8 @@ model events {
   category_id Int?
   eventTitle String
   description String
-  time DateTime @default(now())
+  startDate DateTime  @default(now())
+  endDate DateTime    @default(now())
   thumbnail String
   published Boolean
   liveChatEnabled Boolean
