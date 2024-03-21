@@ -29,7 +29,11 @@ export default function CenterNavbar() {
         <div className="flex lg:flex-1">
           <Link href="/" className="-m-1.5 p-1.5">
             <span className="sr-only">FunOlympic</span>
-            <img className="h-8 w-auto" src={logoLink} alt="fun Olympic logo" />
+            <img
+              className="h-10 w-auto"
+              src={logoLink}
+              alt="fun Olympic logo"
+            />
           </Link>
         </div>
         <div className="flex lg:hidden">

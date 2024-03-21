@@ -16,6 +16,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { logoLink } from "@/constants/data";
 
 const navigation = [
   { name: "Users", href: "/dashboard/users", icon: UsersIcon, current: true },
@@ -114,8 +115,8 @@ function SidebarWrapper({ children }) {
                     <div className="flex h-16 shrink-0 items-center">
                       <img
                         className="h-8 w-auto"
-                        src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                        alt="Your Company"
+                        src={logoLink}
+                        alt="Fun-Olympic Logo"
                       />
                     </div>
                     <nav className="flex flex-1 flex-col">
@@ -166,8 +167,8 @@ function SidebarWrapper({ children }) {
                 className="h-8 w-auto"
                 height="32"
                 width="32"
-                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                alt="Your Company"
+                src={logoLink}
+                alt="Fun-Olympic Logo"
               />
             </Link>
             <nav className="flex flex-1 flex-col">
