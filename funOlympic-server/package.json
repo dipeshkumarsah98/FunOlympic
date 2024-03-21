@@ -22,7 +22,10 @@
     "express": "^4.18.2",
     "express-async-errors": "^3.1.1",
     "joi": "^17.12.2",
-    "jsonwebtoken": "^9.0.2"
+    "jsonwebtoken": "^9.0.2",
+    "mailgen": "^2.0.28",
+    "nodemailer": "^6.9.13",
+    "otplib": "^12.0.1"
   },
   "devDependencies": {
     "nodemon": "^3.0.3",

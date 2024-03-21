@@ -9,14 +9,16 @@ const createOne = async (data) => {
     liveChatEnabled,
     streamLink,
     categoryId,
-    time,
+    startDate,
+    endDate,
   } = data;
   const event = await db.events.create({
     data: {
       eventTitle: title,
       description,
       thumbnail,
-      time,
+      startDate,
+      endDate,
       published,
       liveChatEnabled,
       streamLink,

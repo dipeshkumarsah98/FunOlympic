@@ -3,61 +3,28 @@
 import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
-
-const people = [
-  {
-    id: 1,
-    name: "Lindsay Walton",
-    title: "Front-end Developer",
-    phone: "+1 202-555-0170",
-    country: "United States",
-    department: "Optimization",
-    email: "lindsay.walton@example.com",
-    role: "User",
-    image:
-      "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-  },
-  {
-    id: 2,
-    name: "Hero",
-    title: "Front-end Developer",
-    phone: "+1 202-555-0170",
-    country: "United States",
-    department: "Optimization",
-    email: "lindsay.walton@example.com",
-    role: "User",
-    image:
-      "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-  },
-  {
-    id: 3,
-    name: "Lindsay Walton",
-    title: "Front-end Developer",
-    phone: "+1 202-555-0170",
-    country: "United States",
-    department: "Optimization",
-    email: "lindsay.walton@example.com",
-    role: "User",
-    image:
-      "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-  },
-  {
-    id: 4,
-    name: "Hero",
-    title: "Front-end Developer",
-    phone: "+1 202-555-0170",
-    country: "United States",
-    department: "Optimization",
-    email: "lindsay.walton@example.com",
-    role: "User",
-    image:
-      "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-  },
-];
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
+import Snackbar from "@/components/common/snackbar";
 
 export default function UserPage() {
+  const axios = useAxiosAuth();
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [userId, setUserId] = useState(null);
+
+  const fetchUsers = async () => {
+    const { data } = await axios.get("/user");
+    return data?.payload.data;
+  };
+
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: ["fetch-users"],
+    queryFn: fetchUsers,
+  });
+
+  if (isError) {
+    Snackbar.error(error.response?.data?.message || error.message);
+  }
 
   const handleDeleteProcess = (id) => {
     setUserId(id);
@@ -71,95 +38,16 @@ export default function UserPage() {
         setOpen={setConfirmDelete}
         userId={userId}
       />
-      <div className="flex items-center justify-between ">
-        <div className="sm:flex-auto">
-          <h1 className="text-base font-bold leading-6 text-gray-900">
-            All Users
-          </h1>
-        </div>
-      </div>
+
+      <UserHeading />
+
       <div className="mt-8 flow-root">
         <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-            <table className="min-w-full divide-y divide-gray-300">
-              <thead>
-                <tr>
-                  <th
-                    scope="col"
-                    className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0"
-                  >
-                    Name
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                  >
-                    Phone
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                  >
-                    Country
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                  >
-                    Role
-                  </th>
-                  <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-0">
-                    <button className="sr-only">Delete</button>
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-200 bg-white">
-                {people.map((person) => (
-                  <tr key={person.id}>
-                    <td className="whitespace-nowrap py-5 pl-4 pr-3 text-sm sm:pl-0">
-                      <div className="flex items-center">
-                        <div className="h-11 w-11 flex-shrink-0">
-                          <img
-                            className="h-11 w-11 rounded-full"
-                            src={person.image}
-                            alt={person.name}
-                          />
-                        </div>
-                        <div className="ml-4">
-                          <div className="font-medium text-gray-900">
-                            {person.name}
-                          </div>
-                          <div className="mt-1 text-gray-500">
-                            {person.email}
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                      <div className="text-gray-900">{person.phone}</div>
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                      <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
-                        {person.country}
-                      </span>
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                      {person.role}
-                    </td>
-                    <td className="relative whitespace-nowrap py-5 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                      <button
-                        href="#"
-                        // here we should pass user id to handleDeleteProcess
-                        onClick={() => handleDeleteProcess(person.email)}
-                        className="block rounded-md bg-rose-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-rose-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                      >
-                        Delete<span className="sr-only">, {person.name}</span>
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            {(isLoading || isError) && <LoadingTable />}
+            {data && (
+              <UserTable data={data} handleDelete={handleDeleteProcess} />
+            )}
           </div>
         </div>
       </div>
@@ -167,14 +55,155 @@ export default function UserPage() {
   );
 }
 
-const DeleteDialog = ({ open, setOpen, userId }) => {
-  const cancelButtonRef = useRef(null);
-  // delete user post request
+const UserHeading = () => {
+  return (
+    <div className="flex items-center justify-between ">
+      <div className="sm:flex-auto">
+        <h1 className="text-base font-bold leading-6 text-gray-900">
+          All Users
+        </h1>
+      </div>
+    </div>
+  );
+};
 
-  const handleDelete = () => {
-    console.log("delete user", userId);
+const UserTable = ({ data, handleDelete }) => {
+  const cols = ["Phone", "Country", "Role"];
+  return (
+    <table className="min-w-full divide-y divide-gray-300 w-full">
+      <thead>
+        <tr>
+          <th
+            scope="col"
+            className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0"
+          >
+            Name
+          </th>
+          {cols.map((col) => (
+            <th
+              scope="col"
+              className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+              key={col}
+            >
+              {col}
+            </th>
+          ))}
+
+          <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-0">
+            <button className="sr-only">Delete</button>
+          </th>
+        </tr>
+      </thead>
+      <tbody className="divide-y divide-gray-200 bg-white">
+        {data.map((person) => (
+          <UserTableItem
+            key={person.id}
+            handleDelete={handleDelete}
+            person={person}
+          />
+        ))}
+      </tbody>
+    </table>
+  );
+};
+
+const UserTableItem = ({ person, handleDelete }) => {
+  const { id, name, email, phone, country, roles } = person;
+  return (
+    <tr>
+      <td className="whitespace-nowrap py-5 pl-4 pr-3 text-sm sm:pl-0">
+        <div className="flex items-center">
+          <div className="h-11 w-11 flex-shrink-0">
+            <img
+              className="h-11 w-11 rounded-full"
+              src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+              alt={name}
+            />
+          </div>
+          <div className="ml-4">
+            <div className="font-medium text-gray-900">{name}</div>
+            <div className="mt-1 text-gray-500">{email}</div>
+          </div>
+        </div>
+      </td>
+      <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
+        <div className="text-gray-900">{phone}</div>
+      </td>
+      <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
+        <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
+          {country}
+        </span>
+      </td>
+      <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
+        {roles}
+      </td>
+      <td className="relative whitespace-nowrap py-5 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
+        <button
+          href="#"
+          onClick={() => handleDelete(id)}
+          className="block rounded-md bg-rose-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-rose-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+        >
+          Delete<span className="sr-only">, {name}</span>
+        </button>
+      </td>
+    </tr>
+  );
+};
+
+const LoadingTable = () => {
+  return (
+    <div className="animate-pulse space-y-3">
+      <div className="flex items-center gap-4">
+        {Array.from({ length: 4 }).map((_, i) => {
+          return <div key={i} className="bg-gray-500 h-5 w-full rounded"></div>;
+        })}
+      </div>
+
+      {Array.from({ length: 4 }).map((_, i) => {
+        return (
+          <div key={i} className="flex items-center gap-4">
+            {Array.from({ length: 4 }).map((_, i) => {
+              return (
+                <div
+                  key={i}
+                  className="bg-gray-400 h-3 w-full rounded-md"
+                ></div>
+              );
+            })}
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
+const DeleteDialog = ({ open, setOpen, userId }) => {
+  const axios = useAxiosAuth();
+  const queryClient = useQueryClient();
+  const cancelButtonRef = useRef(null);
+
+  const deleteUser = async (id) => {
+    const { data } = await axios.delete(`/user/${id}`);
+    return data?.payload?.data;
+  };
+
+  const { isPending, isError, error, mutate } = useMutation({
+    mutationFn: (id) => deleteUser(id),
+    mutationKey: ["delete-user"],
+    onSuccess: () => {
+      Snackbar.success(`User deleted successfully`);
+      queryClient.invalidateQueries({ queryKey: ["fetch-users"] });
+    },
+  });
+
+  const handleDelete = (id) => {
+    mutate(id);
     setOpen(false);
   };
+
+  if (isError) {
+    Snackbar.error(error.response?.data?.message || error.message);
+  }
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -237,9 +266,10 @@ const DeleteDialog = ({ open, setOpen, userId }) => {
                   <button
                     type="button"
                     className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
-                    onClick={handleDelete}
+                    onClick={() => handleDelete(userId)}
+                    disabled={isPending}
                   >
-                    Delete
+                    {isPending ? "Deleting..." : "Delete"}
                   </button>
                   <button
                     type="button"

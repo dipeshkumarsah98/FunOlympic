@@ -5,8 +5,9 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { Dialog } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { navigation } from "@/constants/data";
+import { logoLink, navigation } from "@/constants/data";
 import { signOut, useSession } from "next-auth/react";
+import Image from "next/image";
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -35,7 +36,7 @@ export default function Navbar() {
   return (
     <header
       className={clsx(
-        `inset-x-0 top-0 z-50 fixed transition-all duration-100 ease-in-out`,
+        `inset-x-0 font-intel top-0 z-50 fixed transition-all duration-100 ease-in-out`,
         {
           "bg-white": isScrolling,
         }
@@ -51,14 +52,16 @@ export default function Navbar() {
             className="flex items-center justify-between lg:justify-start"
             aria-label="Global"
           >
-            <a href="#" className="-m-1.5 p-1.5">
+            <Link href="/" className="-m-1.5 p-1.5">
               <span className="sr-only">FunOlymic</span>
-              <img
-                alt="FunOlympic"
-                className="h-8 w-auto"
-                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-              />
-            </a>
+              <img alt="FunOlympic" className="h-10 w-auto" src={logoLink} />
+              {/* <Image
+                alt="fun-olympic"
+                src={"/logo.png"}
+                width={500}
+                height={500}
+              /> */}
+            </Link>
             <button
               type="button"
               className="-m-2.5 rounded-md p-2.5 text-gray-700 lg:hidden"
