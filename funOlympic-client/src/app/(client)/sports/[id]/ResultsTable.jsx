@@ -1,8 +1,10 @@
 import Tab from "@/components/Tabs";
 
 // #TODO move this to component
-const EventsTable = ({eventData}) => {
+const ResultsTable = ({eventData}) => {
   return (
+    <div style={{paddingRight: "70px"}}>
+    <Tab/>
     <div className="px-5 sm:px-6 lg:px-8">
       <div className="mt-8 flow-root">
         <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -17,7 +19,7 @@ const EventsTable = ({eventData}) => {
                     Description                 
                   </th>
                   <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                    Time
+                    Results
                   </th>
                   <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                     Teams
@@ -49,6 +51,7 @@ const EventsTable = ({eventData}) => {
         </div>
       </div>
     </div>
+    </div>
 )}
 
-export default EventsTable;
+export default ResultsTable;
