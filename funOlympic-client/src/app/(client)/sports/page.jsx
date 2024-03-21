@@ -1,116 +1,77 @@
-export default function Sports() {
-  const sports = [
-    {
-      id: 1,
-      name: 'Football',
-      href: '#',
-      time: 'Time: 6:00 (+5:45 GMT)',
-      imageSrc: 'https://cdn.pixabay.com/photo/2022/03/08/15/44/boy-7056003_1280.jpg',
-      imageAlt: 'Tall slender porcelain bottle with natural clay textured body and cork stopper.',
-    },
-    {
-      id: 2,
-      name: 'Nomad Tumbler',
-      href: '#',
-      time: '$35',
-      imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-02.jpg',
-      imageAlt: 'Olive drab green insulated bottle with flared screw lid and flat top.',
-    },
-    {
-      id: 3,
-      name: 'Focus Paper Refill',
-      href: '#',
-      time: '$89',
-      imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-03.jpg',
-      imageAlt: 'Person using a pen to cross a task off a productivity paper card.',
-    },
-    {
-      id: 4,
-      name: 'Machined Mechanical Pencil',
-      href: '#',
-      time: '$35',
-      imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg',
-      imageAlt: 'Hand holding black machined steel mechanical pencil with brass tip and top.',
-    },
+"use client";
 
-		{
-      id: 5,
-      name: 'Machined Mechanical Pencil',
-      href: '#',
-      time: '$35',
-      imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg',
-      imageAlt: 'Hand holding black machined steel mechanical pencil with brass tip and top.',
-    },
+import Snackbar from '@/components/common/snackbar';
+import axios from '@/lib/utils/axios';
+import Link  from "next/link"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { TrophyIcon, CalendarDaysIcon } from '@heroicons/react/24/outline';
 
-    {
-      id: 6,
-      name: 'Machined Mechanical Pencil',
-      href: '#',
-      time: '$35',
-      imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg',
-      imageAlt: 'Hand holding black machined steel mechanical pencil with brass tip and top.',
-    },
 
-    {
-      id: 7,
-      name: 'Football',
-      href: '#',
-      time: 'Time: 6:00 (+5:45 GMT)',
-      imageSrc: 'https://cdn.pixabay.com/photo/2022/03/08/15/44/boy-7056003_1280.jpg',
-      imageAlt: 'Tall slender porcelain bottle with natural clay textured body and cork stopper.',
-    },
+const Sports = () => {
 
-    {
-      id: 8,
-      name: 'Machined Mechanical Pencil',
-      href: '#',
-      time: '$35',
-      imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg',
-      imageAlt: 'Hand holding black machined steel mechanical pencil with brass tip and top.',
-    },
+  const fetchSports = async () => {
+  const { data } = await axios.get("/category");
+  debugger
+  return data?.payload.data
+  }
 
-    {
-      id: 9,
-      name: 'Machined Mechanical Pencil',
-      href: '#',
-      time: '$35',
-      imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg',
-      imageAlt: 'Hand holding black machined steel mechanical pencil with brass tip and top.',
-    },
+  const {data, isLoading, isError, error} = useQuery({
+  queryKey: ["fetch-sports"],
+  queryFn: fetchSports
+  })
 
-    {
-      id: 10,
-      name: 'Football',
-      href: '#',
-      time: 'Time: 6:00 (+5:45 GMT)',
-      imageSrc: 'https://cdn.pixabay.com/photo/2022/03/08/15/44/boy-7056003_1280.jpg',
-      imageAlt: 'Tall slender porcelain bottle with natural clay textured body and cork stopper.',
-    },
-  ]
+  if (isError) {
+  Snackbar.error(error.response?.data?.message || error.message);
+  }
 
   return (
-    <>
-		  <div className="bg-white">
-		    <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-          <h1 className="mb-10 text-lg">All Sports</h1>
-            <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
-              {sports.map((sport) => (
-                <a key={sport.id} href={`/sports/${sport.id}`} className="group">
-                  <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
-                    <img
-                      src={sport.imageSrc}
-                      alt={sport.imageAlt}
-                      className="h-full w-full object-cover object-center group-hover:opacity-75"
-                    />
-                  </div>
-                  <h3 className="mt-4 text-sm text-gray-700">{sport.name}</h3>
-                  <p className="mt-1 text-lg font-medium text-gray-900">{sport.time}</p>
-                </a>
-          ))}
+    <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <ul role="list" className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {data && data.map((sport) => (
+        <li key={sport.id} className="col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow">
+          
+            <Link href={`/sports/${sport.id}`}>
+          <div className="flex w-full items-center justify-between space-x-6 p-6">
+            <div className="flex-1 truncate">
+              <div className="flex items-center space-x-3">
+                <h3 className="truncate text-sm font-medium text-gray-900">{sport.sport}</h3>
+                <span className="inline-flex flex-shrink-0 items-center rounded-full bg-red-50 px-1.5 py-0.5 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/20">
+                  Watch Live
+                </span>
+              </div>
+              <p className="mt-1 truncate text-sm text-gray-500">{sport.description}</p>
+            </div>
+
+            <img className="h-10 w-10 flex-shrink-0 rounded-full bg-gray-300" src={sport.imageUrl} alt="" />
           </div>
-			  </div>
-		  </div>
-    </>
+          </Link>
+          
+          <div>
+            <div className="-mt-px flex divide-x divide-gray-200">
+              <div className="flex w-0 flex-1">
+                <a href={`/sports/${sport.id}`} className="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-900"
+                  >
+                  <CalendarDaysIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                  Event Schedule
+                </a>
+              </div>
+              <div className="-ml-px flex w-0 flex-1">
+                <a
+                  href={`/sports/${sport.id}`}
+                  className=" relative inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-br-lg border border-transparent py-4 text-sm font-semibold text-gray-900"
+                >
+                  <TrophyIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                  See results
+                </a>
+              </div>
+            </div>
+          </div> 
+        </li>
+      ))}
+      
+    </ul>
+    </div>
   );
 }
 
+export default Sports;
