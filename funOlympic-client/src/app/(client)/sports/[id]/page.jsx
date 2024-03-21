@@ -1,12 +1,54 @@
-import EventsTable from "./EventsTable";
+"use client";
 
-const sportPage = ({params}) => {
+import { useParams }  from 'next/navigation'
+import { useQuery } from "@tanstack/react-query";
+import axios from '@/lib/utils/axios';
+import Snackbar from '@/components/common/snackbar';
+import TableSection from './TableSection';
+
+const sportPage = ({ }) => {
+  const { id } = useParams();
+  
+  const fetchSport = async () => {
+    const { data } = await axios.get(`/category/${id}`);
+    return data?.payload.data
+  }
+
+  const fetchEvents = async () => {
+    const { data } = await axios.get(`/event`);
+    return data?.payload.data;
+  };
+
+  const {data: sportData, isLoading: isSportLoading, isError: isSportError, error: sportError} = useQuery({
+    queryKey: ["fetch-sport"],
+    queryFn: fetchSport
+  })
+
+  const {
+    data: events,
+    isLoading,
+    isError,
+    error: eventsError,
+  } = useQuery({
+    queryKey: [`fetch-events`],
+    queryFn: fetchEvents,
+  });
+  
+  if (isSportError) {
+    Snackbar.error(sportError.response?.data.message || sportError.message);
+  }
+
+  if (eventsError) {
+      Snackbar.error(eventsError.response?.data.message || eventsError.message);
+  }
+
+  
   return (
       <div class="pb-80 pt-16 sm:pb-40 sm:pt-24 lg:pb-48 lg:pt-40">
         <div class="relative mx-auto max-w-7xl px-4 sm:static sm:px-6 lg:px-8">
           <div class="sm:max-w-lg">
-            <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">Football</h1>
-              <p class="mt-4 text-xl text-gray-500">Football is a family of team sports that involve, to varying degrees, kicking a ball to score a goal. Unqualified, the word football normally means the form of football that is the most popular where the word is used. Sports commonly called football include association football (known as soccer in Australia, Canada, South Africa, the United States, and sometimes in Ireland and New Zealand); Australian rules football; Gaelic football; gridiron football (specifically American football, Arena football, or Canadian football); International rules football; rugby league football; and rugby union football. These various forms of football share, to varying degrees, common origins and are known as "football codes".</p>
+            <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">{sportData?.sport}</h1>
+              <p class="mt-4 text-xl text-gray-500">{sportData?.description}</p>
           </div>
         <div>
         <div class="mt-10">
@@ -43,12 +85,11 @@ const sportPage = ({params}) => {
               </div>
             </div>
           </div>
-
           <a href="#" class="inline-block rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-center font-medium text-white hover:bg-indigo-700">See All Events </a>
         </div>
       </div>
     </div>
-    <EventsTable />
+    <TableSection eventData={events} />
     </div>
   )
 }

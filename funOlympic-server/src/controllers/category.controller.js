@@ -5,8 +5,9 @@ import * as categoryService from "../services/category.js";
 const findOne = async (req, res) => {
   const { id } = req.params;
   if (!id) throw new ValidationError("Id is required", "Id is required");
-
-  const category = await categoryService.getCategoryById(id);
+  const catId = parseInt(id);
+  
+  const category = await categoryService.getCategoryById(catId);
   res.json(successResponse(200, "Ok", category));
 };
 

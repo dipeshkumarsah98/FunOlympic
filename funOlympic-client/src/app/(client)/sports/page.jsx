@@ -3,26 +3,25 @@
 import Snackbar from '@/components/common/snackbar';
 import axios from '@/lib/utils/axios';
 import Link  from "next/link"
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { TrophyIcon, CalendarDaysIcon } from '@heroicons/react/24/outline';
 
 
 const Sports = () => {
-
+  
   const fetchSports = async () => {
   const { data } = await axios.get("/category");
-  debugger
-  return data?.payload.data
+    return data?.payload.data
   }
 
-  const {data, isLoading, isError, error} = useQuery({
+const {data, isLoading, isError, error} = useQuery({
   queryKey: ["fetch-sports"],
   queryFn: fetchSports
-  })
+})
 
-  if (isError) {
+if (isError) {
   Snackbar.error(error.response?.data?.message || error.message);
-  }
+}
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8">
