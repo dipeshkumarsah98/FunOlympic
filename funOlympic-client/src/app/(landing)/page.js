@@ -1,9 +1,12 @@
+import Carousel, { StatsSection } from "@/components/landing/carousel";
 import HeroSection from "@/components/landing/heroSection";
 
 export default function Home() {
   return (
     <main className="">
-      <HeroSection />
+      {/* <HeroSection /> */}
+      <Carousel />
+      <StatsSection />
     </main>
   );
-};
+}

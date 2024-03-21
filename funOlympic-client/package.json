@@ -17,6 +17,8 @@
     "axios": "^1.6.7",
     "boring-avatars": "^1.10.1",
     "clsx": "^2.1.0",
+    "flowbite": "^2.3.0",
+    "flowbite-react": "^0.7.5",
     "i": "^0.3.7",
     "jsonwebtoken": "^9.0.2",
     "next": "14.1.0",

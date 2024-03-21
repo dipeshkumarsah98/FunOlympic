@@ -245,7 +245,7 @@ const RegisterSection = () => {
             <div className="pt-4">
               <button
                 type="submit"
-                className="flex disabled:bg-indigo-400 w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                className="disabled:bg-orange-400 w-full justify-center btn-primary bg-orange-500"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? "Loading... " : "Create an account"}

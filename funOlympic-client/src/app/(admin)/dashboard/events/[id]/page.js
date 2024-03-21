@@ -150,11 +150,11 @@ function EventDetails() {
 
   const EventHeading = () => {
     return (
-      <div>
-        <h2 className="text-base font-bold leading-6 text-gray-900">
-          Event Details
+      <>
+        <h2 className="text-lg font-bold leading-6 font-mono text-gray-900">
+          Update event details
         </h2>
-        <p className="mt-1 text-left text-sm leading-6 text-gray-500">
+        <p className="mt-1 text-sm leading-6 text-gray-500 font-intel">
           This information will be displayed publicly so be careful what you
           share.
         </p>
@@ -204,7 +204,7 @@ function EventDetails() {
             )}
 
             {eventDetail && (
-              <dl className="mt-6 space-y-6 divide-y divide-gray-100 border-t border-gray-200 text-sm leading-6">
+              <dl className="mt-6 space-y-6 divide-y divide-gray-100 border-t border-gray-200 text-sm font-intel leading-6">
                 {Object.keys(data).map((key) => {
                   if (key === "thumbnail") {
                     return (
@@ -258,7 +258,7 @@ function EventDetails() {
 
           {eventDetail && (
             <div>
-              <dl className="mt-6 space-y-6 divide-y divide-gray-100 border-t border-gray-200 text-sm leading-6">
+              <dl className="mt-6 space-y-6 divide-y divide-gray-100 border-t border-gray-200 text-sm leading-6 font-intel">
                 <ToggleSwitch enabled={published} setEnabled={setPublished}>
                   Published
                 </ToggleSwitch>

@@ -1,6 +1,6 @@
 import "../globals.css";
 import Footer from "@/components/footer";
-import Navbar from "@/components/navbar";
+import Navbar, { NavbarKsav } from "@/components/navbar";
 import Providers from "@/lib/providers";
 import { getServerSession } from "next-auth";
 import { options } from "../api/auth/[...nextauth]/options";
@@ -16,7 +16,8 @@ export default async function RootLayout({ children }) {
     <html lang="en" className="h-full">
       <body className={"h-full"}>
         <Providers authSession={session}>
-          <Navbar />
+          {/* <Navbar /> */}
+          <NavbarKsav />
           {children}
           <Footer />
         </Providers>

@@ -33,7 +33,7 @@ export default function EventPage() {
         <div className="sm:flex-auto">
           <div className="flex items-center justify-between">
             <h1 className="text-base font-bold leading-6 text-gray-900">
-              Event List
+              All Event List
             </h1>
             <button onClick={() => setNewEvent(true)} className="btn-primary">
               Add Event

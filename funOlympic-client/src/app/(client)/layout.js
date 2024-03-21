@@ -4,6 +4,7 @@ import CenterNavbar from "@/components/centerNavbar";
 import Providers from "@/lib/providers";
 import { getServerSession } from "next-auth";
 import { options } from "../api/auth/[...nextauth]/options";
+import { NavbarKsav } from "@/components/navbar";
 
 export const metadata = {
   title: "FunOlympic",
@@ -16,7 +17,8 @@ export default async function RootLayout({ children }) {
     <html lang="en" className="h-full">
       <body className={"h-full"}>
         <Providers authSession={session}>
-          <CenterNavbar />
+          {/* <CenterNavbar /> */}
+          <NavbarKsav />
           {children}
           <Footer />
         </Providers>

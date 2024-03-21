@@ -60,7 +60,7 @@ const UserHeading = () => {
     <div className="flex items-center justify-between ">
       <div className="sm:flex-auto">
         <h1 className="text-base font-bold leading-6 text-gray-900">
-          All Users
+          List of Users
         </h1>
       </div>
     </div>
@@ -68,7 +68,7 @@ const UserHeading = () => {
 };
 
 const UserTable = ({ data, handleDelete }) => {
-  const cols = ["Phone", "Country", "Role"];
+  const cols = ["Contact", "Country", "Role"];
   return (
     <table className="min-w-full divide-y divide-gray-300 w-full">
       <thead>
@@ -77,7 +77,7 @@ const UserTable = ({ data, handleDelete }) => {
             scope="col"
             className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0"
           >
-            Name
+            Full Name
           </th>
           {cols.map((col) => (
             <th
@@ -130,9 +130,7 @@ const UserTableItem = ({ person, handleDelete }) => {
         <div className="text-gray-900">{phone}</div>
       </td>
       <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-        <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
-          {country}
-        </span>
+        {country}
       </td>
       <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
         {roles}
@@ -143,7 +141,7 @@ const UserTableItem = ({ person, handleDelete }) => {
           onClick={() => handleDelete(id)}
           className="block rounded-md bg-rose-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-rose-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
         >
-          Delete<span className="sr-only">, {name}</span>
+          Remove<span className="sr-only">, {name}</span>
         </button>
       </td>
     </tr>
