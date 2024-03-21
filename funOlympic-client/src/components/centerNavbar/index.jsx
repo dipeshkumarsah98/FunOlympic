@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Dialog } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { navigation } from "@/constants/data";
+import { logoLink, navigation } from "@/constants/data";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import clsx from "clsx";
@@ -23,17 +23,13 @@ export default function CenterNavbar() {
   return (
     <header className="bg-white">
       <nav
-        className="flex items-center justify-between p-6 lg:px-8"
+        className="flex items-center font-intel justify-between p-6 lg:px-8"
         aria-label="Global"
       >
         <div className="flex lg:flex-1">
           <Link href="/" className="-m-1.5 p-1.5">
             <span className="sr-only">FunOlympic</span>
-            <img
-              className="h-8 w-auto"
-              src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-              alt="fun Olympic logo"
-            />
+            <img className="h-8 w-auto" src={logoLink} alt="fun Olympic logo" />
           </Link>
         </div>
         <div className="flex lg:hidden">

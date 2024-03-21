@@ -1,4 +1,5 @@
 import UnauthorizedError from "../errors/unauthorizedError.error.js";
+import { verifyOtp } from "../utils/otp.js";
 import Jwt from "jsonwebtoken";
 
 /**
@@ -60,4 +61,21 @@ const checkRole = (role) => async (req, res, next) => {
   }
 };
 
-export { validateToken, checkRole };
+/**
+ *
+ * Validate the OTP token
+ */
+const validateOtp = (req, res, next) => {
+  const { token } = req.body;
+  const isValidToken = verifyOtp(token);
+
+  if (!isValidToken)
+    throw new ValidationError(
+      "Token is expired or invalid.",
+      "Token is expired or invalid."
+    );
+
+  next();
+};
+
+export { validateToken, checkRole, validateOtp };

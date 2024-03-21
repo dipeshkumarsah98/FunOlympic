@@ -6,30 +6,49 @@ import Link from "next/link";
 import Snackbar from "@/components/common/snackbar";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import VerifyModal from "@/components/verifyOpt";
+import { useState } from "react";
 
 const RegisterSection = () => {
   const { register, handleSubmit, formState, watch } = useForm();
   const { errors, isSubmitting } = formState;
   const password = watch("password");
   const router = useRouter();
+  const [credentials, setCredentials] = useState(null);
+  const [open, setOpen] = useState(false);
 
-  const onSubmit = handleSubmit(async (credentials) => {
+  const handleChange = (open) => {
+    setOpen(open);
+  };
+
+  const handleResendClick = async () => {
     try {
-      console.log(credentials);
-      const res = await axios.post("/auth/signup", {
-        name: credentials["full-name"],
-        email: credentials.email,
-        country: credentials.country,
-        password: credentials.password,
-        phone: credentials.contact,
-        sport: credentials.sport,
+      const res = await axios.post("/auth/send-otp", {
+        email: credentials?.email,
+      });
+      if (res?.status === 201) {
+        Snackbar.success("Verification code sent successfully.");
+        localStorage.removeItem("countdownSeconds");
+        return;
+      }
+    } catch {
+      Snackbar.error("Something went wrong, Please try again later");
+    }
+  };
+
+  const onSubmit = handleSubmit(async (details) => {
+    try {
+      const res = await axios.post("/auth/send-otp", {
+        email: details.email,
+        name: details["full-name"],
       });
       if (res?.data?.payload) {
-        console.log(res.data.payload);
         Snackbar.success(
-          "Account Created successfully, please check your email to verify your account"
+          "Complete Verification Process by entering OTP sent to your email"
         );
-        router.push("/login");
+        setCredentials(details);
+        // router.push("/login");
+        handleChange(true);
         return;
       }
     } catch (err) {
@@ -42,6 +61,36 @@ const RegisterSection = () => {
     }
   });
 
+  const handleVerifyClick = async (otp) => {
+    try {
+      const payloadData = {
+        name: credentials["full-name"],
+        email: credentials.email,
+        country: credentials.country,
+        password: credentials.password,
+        phone: credentials.contact,
+        sport: credentials.sport,
+        token: otp,
+      };
+      const res = await axios.post("/auth/signup", {
+        ...payloadData,
+      });
+      if (res?.status === 200) {
+        Snackbar.success("User successfully registered!");
+        localStorage.removeItem("countdownSeconds");
+        router.push("/login");
+      }
+    } catch (err) {
+      if (err?.response?.status === 400) {
+        Snackbar.error(
+          "The provided verification code is either expired or invalid. Please try again!"
+        );
+        return;
+      }
+      Snackbar.error("Something went wrong, Please try again later");
+    }
+  };
+
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 ">
@@ -51,12 +100,19 @@ const RegisterSection = () => {
             src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
             alt="Your Company"
           />
-          <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+          <h2 className="mt-10 font-poppins text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
             Create an account
           </h2>
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-lg">
+          <VerifyModal
+            handleChange={handleChange}
+            open={open}
+            email={credentials?.email ?? ""}
+            handleResendLink={handleResendClick}
+            handleVerifyClick={handleVerifyClick}
+          />
           <form
             className="space-y-6"
             onSubmit={onSubmit}
@@ -196,7 +252,7 @@ const RegisterSection = () => {
             </div>
           </form>
 
-          <p className="mt-10 text-center text-sm text-gray-500">
+          <p className="mt-10 font-intel text-center text-sm text-gray-500">
             Already have an account?{" "}
             <Link
               href="/login"
@@ -210,7 +266,6 @@ const RegisterSection = () => {
     </>
   );
 };
-
 
 export default function Register() {
   return <RegisterSection />;
