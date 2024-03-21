@@ -1,10 +1,19 @@
 import createJob from "../config/queue.config.js";
-import { RESET_OTP, SENT_OTP } from "../constants/mail.constant.js";
+import {
+  RESET_OTP,
+  SENT_OTP,
+  PASSWORD_UPDATE,
+  WELCOME,
+} from "../constants/mail.constant.js";
 
 // { name, email }
-// const sendWelcome = (welcomeMailerDto) => {
-//   createJob(WELCOME_MSG, welcomeMailerDto);
-// };
+const sendWelcome = (welcomeMailerDto) => {
+  createJob(WELCOME, welcomeMailerDto);
+};
+
+const sendPasswordUpdate = (passwordUpdateDto) => {
+  createJob(PASSWORD_UPDATE, passwordUpdateDto);
+};
 
 // { name, email, otp }
 const sendOtp = (otpDto) => {
@@ -16,4 +25,4 @@ const sendResetOtp = (resetOtp) => {
   createJob(RESET_OTP, resetOtp);
 };
 
-export { sendOtp, sendResetOtp };
+export { sendOtp, sendResetOtp, sendWelcome, sendPasswordUpdate };

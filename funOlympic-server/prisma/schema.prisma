@@ -21,6 +21,7 @@ model User {
  password   String
  profile    profile?
  message    message[]
+ resetRequest Boolean @default(false)
  createdAt   DateTime   @default(now())
  updatedAt   DateTime   @updatedAt
  @@map("users")

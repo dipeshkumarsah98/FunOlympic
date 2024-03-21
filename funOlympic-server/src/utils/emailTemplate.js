@@ -12,6 +12,47 @@ const MailGenerator = new Mailgen({
   },
 });
 
+export function sendWelcomeTemplate(welcomeDto) {
+  const { email, name } = welcomeDto;
+
+  const template = {
+    body: {
+      name,
+      title: `Welcome to ${APP_NAME}`,
+      intro: `You have successfully created an account on ${APP_NAME}`,
+      dictionary: {
+        name,
+        email,
+      },
+      outro: "Thank you for joining with us",
+    },
+  };
+
+  return MailGenerator.generate(template);
+}
+
+export function sendPasswordUpdateTemplate(dto) {
+  const { name, email, password } = dto;
+  const date = new Date();
+
+  const template = {
+    body: {
+      name,
+      title: `Your password has been updated successfully.`,
+      intro: `${name}, The password for email <strong> ${email} </strong> has been successfully updated. Here are the details:`,
+      dictionary: {
+        name,
+        email,
+        password,
+        date,
+      },
+      outro: `If you don't recognize this action, we recommend you do an additional password reset. If you need assistance, please connect with our Support team. <br />`,
+    },
+  };
+
+  return MailGenerator.generate(template);
+}
+
 export function sendOtpTemplate(otpMailerDto) {
   const { name, otp } = otpMailerDto;
 
@@ -38,19 +79,19 @@ export function sendOtpTemplate(otpMailerDto) {
 }
 
 export function sendPasswordResetTemplate(passwordResetDto) {
-  const { name, email, opt } = passwordResetDto;
+  const { email, otp } = passwordResetDto;
 
   const template = {
     body: {
-      name,
+      email,
       title: `Reset your password`,
       intro: `If you are not trying to reset your password please ignore this mail.`,
       action: {
-        instructions: `<br><strong>You can reset your password using the button below. Your email will be expired in 3 Minute</strong>`,
+        instructions: `<br><strong>You can reset your password using the below OTP. Your OTP will be expired in 5 Minute</strong>`,
         button: {
           color: "#414141",
-          text: "Reset Password",
-          link: `https://${CLIENT_URL}/passwordReset?token=${opt}`,
+          text: otp,
+          link: `#`,
         },
       },
       outro:

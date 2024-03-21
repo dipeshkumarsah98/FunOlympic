@@ -1,6 +1,17 @@
 import Queue from "bull";
-import { passwordResetOtpJob, processOtpJob } from "../utils/jobProcessor.js";
-import { MAIL_QUEUE, RESET_OTP, SENT_OTP } from "../constants/mail.constant.js";
+import {
+  processPasswordResetOtpJob,
+  processOtpJob,
+  processPasswordUpdateJob,
+  processWelcomeJob,
+} from "../utils/jobProcessor.js";
+import {
+  MAIL_QUEUE,
+  RESET_OTP,
+  SENT_OTP,
+  PASSWORD_UPDATE,
+  WELCOME,
+} from "../constants/mail.constant.js";
 
 const REDIS_HOST = process.env.REDIS_HOST;
 const REDIS_PORT = process.env.REDIS_PORT;
@@ -26,7 +37,9 @@ emailQueue.on("failed", (job, error) => {
 });
 
 emailQueue.process(SENT_OTP, processOtpJob);
-emailQueue.process(RESET_OTP, passwordResetOtpJob);
+emailQueue.process(RESET_OTP, processPasswordResetOtpJob);
+emailQueue.process(WELCOME, processWelcomeJob);
+emailQueue.process(PASSWORD_UPDATE, processPasswordUpdateJob);
 
 export default function createJob(name, data) {
   const options = {

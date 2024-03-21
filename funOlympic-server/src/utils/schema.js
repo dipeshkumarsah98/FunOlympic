@@ -159,18 +159,43 @@ const updateComment = Joi.object().keys({
 });
 
 const registerOtp = Joi.object().keys({
-  email: Joi.string().messages({
+  email: Joi.string().required().messages({
     "any.required": `"email" is a required field`,
   }),
-  name: Joi.string().messages({
+  name: Joi.string().required().messages({
     "any.required": `"name" is a required field`,
   }),
 });
+const resetOtp = Joi.object().keys({
+  email: Joi.string().required().messages({
+    "any.required": `"email" is a required field`,
+  }),
+});
 
+const verifyResetOtp = Joi.object().keys({
+  email: Joi.string().required().messages({
+    "any.required": `"email" is a required field`,
+  }),
+  token: Joi.string().required().messages({
+    "any.required": `"token" is a required field`,
+  }),
+});
+
+const resetPassword = Joi.object().keys({
+  id: Joi.string().required().messages({
+    "any.required": `"id" is a required field`,
+  }),
+  password: Joi.string().min(8).required().messages({
+    "any.required": `"password" is a required field`,
+  }),
+});
 export default {
   "/auth/signin": login,
   "/auth/signup": register,
-  "/auth/send-otp": registerOtp,
+  "/auth/send-signup-otp": registerOtp,
+  "/auth/send-reset-otp": resetOtp,
+  "/auth/verify-reset-otp": verifyResetOtp,
+  "/auth/reset-password": resetPassword,
   "/category/create": categoryCreate,
   "/category/update": categoryUpdate,
   "/event/create": eventCreate,
