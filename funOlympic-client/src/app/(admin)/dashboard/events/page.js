@@ -41,6 +41,7 @@ export default function EventPage() {
           </div>
           {isLoading && <p>Loading...</p>}
           {data && <Event events={data} />}
+          {data?.length === 0 && <p>No events available</p>}
         </div>
       </div>
     </div>

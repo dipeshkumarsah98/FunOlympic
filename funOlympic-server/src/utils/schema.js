@@ -130,8 +130,8 @@ const createMessage = Joi.object().keys({
   userId: Joi.number().required().messages({
     "any.required": `"userId" is a required field`,
   }),
-  commentId: Joi.number().optional(),
-  liveId: Joi.number().optional(),
+  commentId: Joi.any().optional(),
+  liveId: Joi.any().optional(),
 });
 
 const createComment = Joi.object().keys({

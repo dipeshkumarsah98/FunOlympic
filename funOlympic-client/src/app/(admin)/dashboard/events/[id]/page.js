@@ -3,14 +3,15 @@
 import clsx from "clsx";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { Switch } from "@headlessui/react";
 import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { CategorySelect } from "../page";
 import { useQueryClient } from "@tanstack/react-query";
-
 import Snackbar from "@/components/common/snackbar";
+import Link from "next/link";
+
 function EventDetails() {
   const { id } = useParams();
   const [updateState, setUpdateState] = useState(false);
@@ -22,6 +23,7 @@ function EventDetails() {
   const [liveChat, setLiveChat] = useState(true);
   const axios = useAxiosAuth();
   const queryClient = useQueryClient();
+  const router = useRouter();
 
   const fetchData = async () => {
     const { data } = await axios.get(`/event/${id}`);
@@ -30,6 +32,11 @@ function EventDetails() {
 
   const updateDetails = async (data) => {
     const res = await axios.patch(`/event/${id}`, data);
+    return res?.data?.payload.data;
+  };
+
+  const deleteEvent = async () => {
+    const res = await axios.delete(`/event/${id}`);
     return res?.data?.payload.data;
   };
 
@@ -52,19 +59,13 @@ function EventDetails() {
     queryFn: fetchData,
   });
 
-  if (isError) {
-    Snackbar.error(
-      "Something went wrong, Please check your internet connection"
-    );
-    return;
-  }
-
   const { isPending, mutate } = useMutation({
     mutationFn: updateDetails,
     mutationKey: ["update-event"],
     onSuccess: () => {
       Snackbar.success("Event updated successfully");
       queryClient.invalidateQueries([`event-${id}`]);
+      router.push("/dashboard/events");
     },
     onError: () => {
       Snackbar.error(
@@ -73,8 +74,31 @@ function EventDetails() {
     },
   });
 
+  const { mutate: deleteEventMutation, isPending: deleteLoading } = useMutation(
+    {
+      mutationFn: deleteEvent,
+      mutationKey: ["delete-event"],
+      onSuccess: () => {
+        Snackbar.success("Event deleted successfully");
+        queryClient.invalidateQueries(["fetch-events"]);
+      },
+      onError: () => {
+        Snackbar.error(
+          "Something went wrong, Please check your internet connection"
+        );
+      },
+    }
+  );
+
+  if (isError) {
+    Snackbar.error(
+      "Something went wrong, Please check your internet connection"
+    );
+    return;
+  }
+
   useEffect(() => {
-    if (eventDetail === undefined) return;
+    if (eventDetail === undefined || eventDetail === null) return;
     setData({
       category: eventDetail.category.sport,
       title: eventDetail.eventTitle,
@@ -126,22 +150,24 @@ function EventDetails() {
 
   const EventHeading = () => {
     return (
-      <>
+      <div>
         <h2 className="text-base font-bold leading-6 text-gray-900">
           Event Details
         </h2>
-        <p className="mt-1 text-sm leading-6 text-gray-500">
+        <p className="mt-1 text-left text-sm leading-6 text-gray-500">
           This information will be displayed publicly so be careful what you
           share.
         </p>
-      </>
+      </div>
     );
   };
 
   const ButtonGroup = () => {
     return (
       <div className="flex items-center justify-between">
-        <button className="btn-danger">Cancel</button>
+        <Link href="/dashboard/events" className="btn-normal">
+          Cancel
+        </Link>
         <button className="btn-primary" onClick={() => handleSubmit()}>
           {isPending ? "Saving changes..." : "Save changes"}
         </button>
@@ -154,7 +180,15 @@ function EventDetails() {
       <main className=" lg:flex-auto">
         <div className="mx-auto max-w-2xl space-y-16 sm:space-y-20 lg:mx-0 lg:max-w-none">
           <div>
-            <EventHeading />
+            <div className="flex items-center justify-between">
+              <EventHeading />
+              <button
+                onClick={() => deleteEventMutation()}
+                className="btn-danger"
+              >
+                {deleteLoading ? "Deleting..." : "Delete"}
+              </button>
+            </div>
             {eventDetail && categories && (
               <EventUpdate
                 open={updateState}

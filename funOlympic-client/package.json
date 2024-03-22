@@ -27,7 +27,8 @@
     "react-avatar": "^5.0.3",
     "react-dom": "^18",
     "react-hook-form": "^7.51.0",
-    "react-otp-input": "^3.1.1"
+    "react-otp-input": "^3.1.1",
+    "react-player": "^2.15.1"
   },
   "devDependencies": {
     "@tanstack/eslint-plugin-query": "^5.20.1",

@@ -1,12 +1,15 @@
 import db from "../config/db.js";
 
 const createComment = async (detail) => {
-  return await db.comments.upsert({
-    create: {
+  return await db.comments.create({
+    data: {
       message: {
-        connectOrCreate: {
-          create: {
-            body: detail?.body,
+        create: {
+          body: detail?.body,
+          user: {
+            connect: {
+              id: +detail?.userId,
+            },
           },
         },
       },

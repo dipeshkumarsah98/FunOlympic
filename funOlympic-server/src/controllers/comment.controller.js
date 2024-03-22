@@ -7,6 +7,7 @@ const createOne = async (req, res) => {
 
   const commentResponse = await commentService.createComment({
     ...details,
+    userId: req.user.id,
   });
   res.json(successResponse(201, "Created", commentResponse));
 };
