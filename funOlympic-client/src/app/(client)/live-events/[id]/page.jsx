@@ -6,10 +6,9 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import ReactPlayer from "react-player";
 import Snackbar from "@/components/common/snackbar";
 import Link from "next/link";
-import { Fragment, useState } from "react";
-
-import { Listbox, Transition } from "@headlessui/react";
+import { useState } from "react";
 import { useSession } from "next-auth/react";
+import Avatar from "boring-avatars";
 
 function EventDetails() {
   const { id } = useParams();
@@ -47,67 +46,108 @@ function EventDetails() {
   //   const filteredData = data?.filter((event) => event.published);
   const filteredData = data;
   const commentMessages = eventDetail?.comments[0]?.message || null;
-  console.log("🚀 ~ EventDetails ~ commentMessages:", commentMessages);
 
-  if (isLoading) return <div className="font-sans text-2xl">Loading...</div>;
+  const CommentSection = () => (
+    <div>
+      <CommentBox
+        commentId={
+          eventDetail?.comments?.length > 0 ? eventDetail.comments[0].id : null
+        }
+        eventId={id}
+      />
+      <br />
+      {commentMessages && <Comment comments={commentMessages} />}
+    </div>
+  );
+
+  const VideoDetails = () => (
+    <>
+      <ReactPlayer
+        // playing={true}
+        controls={true}
+        url={eventDetail?.streamLink}
+        style={{ width: "100%", height: "100%" }}
+      />
+      <div className="flex justify-between">
+        <h1 className="text-lg md:text-[20px] my-5 font-roboto font-bold leading-10 text-gray-900">
+          {eventDetail?.eventTitle}
+        </h1>
+        <div className="px-3 py-2 my-5 w-fit h-fit text-sm font-roboto text-white bg-blue-500 rounded-full">
+          {eventDetail?.category?.sport}
+        </div>
+      </div>
+      <hr />
+      {/* description */}
+      <div className="my-2 font-roboto">
+        <p className="my-2">
+          <strong>Published At: </strong>
+          {new Date(eventDetail?.updatedAt).toDateString()}
+        </p>
+        <p className="font-bold mb-1">Description: </p>
+        {eventDetail?.description}
+      </div>
+    </>
+  );
+
+  const VideoSection = () => (
+    <div className="w-fit ">
+      <VideoDetails />
+
+      {/* Comments sections */}
+      <h3 className="mt-5 mb-2 font-roboto font-bold text-[20px]">
+        {eventDetail.comments[0]?.message?.length || 0} Comments
+      </h3>
+
+      <hr />
+      <CommentSection />
+    </div>
+  );
+
+  const LoadingSection = () => (
+    <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+      <div className="flex gap-5">
+        <div className="w-1/2 animate-pulse space-y-3">
+          <div className="w-full h-80 bg-gray-200"></div>
+          <div className="w-2/4 h-5 bg-gray-200"></div>
+          <div className="w-3/4 h-5 bg-gray-200"></div>
+          <div className="w-full h-5 bg-gray-200"></div>
+          <div className="w-full h-5 bg-gray-200"></div>
+          <div className="w-full h-5 bg-gray-200"></div>
+          <br />
+          <div className="w-2/4 h-5 bg-gray-200"></div>
+          <div className="flex gap-4">
+            <div className="w-20 h-20 rounded-full bg-gray-200"></div>
+            <div className="w-full h-52 bg-gray-200"></div>
+          </div>
+        </div>
+        {/* right section */}
+        <div className="w-1/2 space-y-3">
+          <div className="w-80 h-6 animate-pulse bg-gray-200"></div>
+          <div className="w-full h-96 animate-pulse bg-gray-200"></div>
+          <br />
+          <div className="w-80 h-6 animate-pulse bg-gray-200"></div>
+          <div className="grid grid-cols-2 gap-3 w-full">
+            <div className="animate-plus w-full h-72 bg-gray-200"></div>
+            <div className="animate-plus w-full h-72 bg-gray-200"></div>
+            <div className="animate-plus w-full h-72 bg-gray-200"></div>
+            <div className="animate-plus w-full h-72 bg-gray-200"></div>
+          </div>
+        </div>
+      </div>
+      {/* <div className="font-sans text-2xl">Loading...</div> */}
+    </div>
+  );
+
+  if (isLoading || isError) return <LoadingSection />;
+
   return (
     <>
       <div className="bg-white">
         <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
           <div className="flex flex-col lg:flex-row gap-5">
             {/* left side view */}
-            <div className="w-fit">
-              <ReactPlayer
-                playing={true}
-                controls={true}
-                url={eventDetail?.streamLink}
-                style={{ width: "100%", height: "100%" }}
-              />
-              <div className="flex items-center justify-between">
-                <h1 className="text-4xl my-5  font-intel font-bold leading-10 text-gray-900">
-                  {eventDetail?.eventTitle}
-                </h1>
-                <div className="px-3 py-2 w-fit text-sm text-white bg-blue-500 rounded-full">
-                  {eventDetail?.category?.sport}
-                </div>
-              </div>
-              <hr />
-              {/* description */}
-              <div className="my-2 font-inter">
-                <p className="my-2">
-                  <strong>Published At: </strong>
-                  {new Date(eventDetail?.updatedAt).toDateString()}
-                </p>
-                <p className="font-bold mb-1">Description: </p>
-                {eventDetail?.description}
-              </div>
+            <VideoSection />
 
-              {/* Comments sections */}
-              <h3 className="mt-5 mb-2 font-bold  font-intel text-lg">
-                {eventDetail.comments[0]?.message?.length || 0} Comments
-              </h3>
-
-              <hr />
-              <div>
-                {/* Event comments */}
-                <CommentBox
-                  commentId={
-                    eventDetail?.comments?.length > 0
-                      ? eventDetail.comments[0].id
-                      : null
-                  }
-                  eventId={id}
-                />
-                <br />
-                {commentMessages &&
-                  commentMessages.map((message) => (
-                    <div key={message.id} className="my-2">
-                      <p className="font-bold">{message.user.name}</p>
-                      <p>{message.body}</p>
-                    </div>
-                  ))}
-              </div>
-            </div>
             {/* right side view */}
             <div>
               <h2 className=" text-xl mb-3 font-intel font-bold leading-6 text-gray-900">
@@ -138,13 +178,13 @@ const EventCard = ({ events }) => {
             </div>
             <div className="mt-4 flex gap-2 justify-between">
               <div>
-                <h3 className="text-sm font-bold text-gray-700">
+                <h3 className="text-sm font-roboto font-bold text-gray-700">
                   <p>
                     <span aria-hidden="true" className="absolute inset-0" />
                     {event.eventTitle}
                   </p>
                 </h3>
-                <p className="mt-1 text-sm text-gray-500">
+                <p className="mt-1 text-sm font-roboto text-gray-500">
                   {event.description.slice(0, 100)}
                 </p>
               </div>
@@ -172,6 +212,7 @@ function CommentBox({ eventId, commentId }) {
     mutationFn: postComment,
     mutationKey: ["post-comment"],
     onSuccess: () => {
+      setComment("");
       Snackbar.success("Comment posted successfully");
       queryClient.invalidateQueries([`event-${eventId}`]);
     },
@@ -202,15 +243,18 @@ function CommentBox({ eventId, commentId }) {
   return (
     <div className="flex items-start space-x-4">
       <div className="flex-shrink-0">
-        <img
-          className="inline-block h-10 w-10 rounded-full"
-          src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-          alt=""
-        />
+        <div className="h-10 w-10">
+          <Avatar
+            size={48}
+            name="Mary Harris"
+            variant="beam"
+            colors={["#92A1C6", "#146A7C", "#F0AB3D", "#C271B4", "#C20D90"]}
+          />
+        </div>
       </div>
       <div className="min-w-0 flex-1">
         <form action="#" onSubmit={handleSubmit} className="relative">
-          <div className="overflow-hidden rounded-lg shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-indigo-600">
+          <div className="overflow-hidden font-roboto rounded-lg shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-indigo-600">
             <label htmlFor="comment" className="sr-only">
               Add your comment
             </label>
@@ -218,10 +262,11 @@ function CommentBox({ eventId, commentId }) {
               rows={3}
               name="comment"
               id="comment"
-              className="block w-full resize-none border-0 bg-transparent py-1.5 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+              className="block w-full resize-none font-roboto border-0 bg-transparent py-1.5 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
               placeholder="Add your comment..."
               onChange={(e) => setComment(e.target.value)}
-              defaultValue={""}
+              defaultValue={comment}
+              value={comment}
             />
 
             {/* Spacer element to match the height of the toolbar */}
@@ -242,13 +287,63 @@ function CommentBox({ eventId, commentId }) {
             >
               <button
                 type="submit"
-                className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                className="inline-flex items-center font-roboto
+                 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline 
+                 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 {isPending ? "Posting.." : "Post"}
               </button>
             </div>
           </div>
         </form>
+      </div>
+    </div>
+  );
+}
+
+function Comment({ comments }) {
+  return (
+    <div className="my-6">
+      <h3 className="sr-only">Recent comments</h3>
+
+      <div className="flow-root">
+        <div
+          className="-my-12 divide-y font-inter
+         divide-gray-200"
+        >
+          {comments.map((comment) => (
+            <div key={comment.id} className="py-10">
+              <div className="flex font-roboto items-center">
+                <div className="h-12 w-12">
+                  <Avatar
+                    size={48}
+                    name="Margaret Brent"
+                    variant="beam"
+                    colors={[
+                      "#92A1C6",
+                      "#146A7C",
+                      "#F0AB3D",
+                      "#C271B4",
+                      "#C20D90",
+                    ]}
+                  />
+                </div>
+                <div className="ml-4">
+                  <h4 className="text-[13px] font-bold text-gray-900">
+                    {comment.user.name}
+                  </h4>
+                  <div className="mt-1 flex items-center">
+                    <p className="font-roboto text-xs">2 Days ago</p>
+                  </div>
+                </div>
+              </div>
+              <div
+                className="mt-4 space-y-6 text-base italic text-gray-600"
+                dangerouslySetInnerHTML={{ __html: comment.body }}
+              />
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -15,7 +15,8 @@ module.exports = {
       },
       fontFamily: {
         intel: ["Intel", "sans-serif"],
-        poppins: ["Poppins", "sans-serif"],
+        poppins: ["Roboto", "sans-serif"],
+        roboto: ["Roboto", "sans-serif"],
       },
     },
   },

@@ -58,7 +58,7 @@ const Event = ({ events }) => {
               <img
                 src={event.thumbnail}
                 alt={event.eventTitle}
-                className="h-full w-full object-cover object-center lg:h-full lg:w-full"
+                className="h-full w-full object-contain object-fill lg:h-full lg:w-full"
               />
             </div>
             <div className="mt-4 flex gap-2 justify-between">
@@ -69,23 +69,10 @@ const Event = ({ events }) => {
                     {event.eventTitle}
                   </p>
                 </h3>
-                <p className="mt-1 text-sm text-gray-500">
+                <p className="mt-1 text-justify text-sm text-gray-500">
                   {event.description}
                 </p>
               </div>
-              <p
-                className={clsx(
-                  "text-xs font-medium text-white bg-green-50 px-2 py-1 rounded h-fit ",
-                  {
-                    "bg-red-400": !event.published,
-                  },
-                  {
-                    "bg-green-400": event.published,
-                  }
-                )}
-              >
-                {event.published ? "Published" : "Not Published"}
-              </p>
             </div>
           </Link>
         </div>

@@ -27,7 +27,7 @@ export default function EventPage() {
         <div className="px-4 sm:px-6 lg:px-8 ">
           <div className="flex items-center justify-between ">
             <div className="sm:flex-auto">
-              <h1 className="text-4xl py-3 font-intel font-bold leading-6 text-gray-900">
+              <h1 className="text-[20px] py-3 font-intel font-bold leading-6 text-gray-900">
                 Event List
               </h1>
               <hr />
@@ -51,7 +51,7 @@ const Event = ({ events }) => {
               <img
                 src={event.thumbnail}
                 alt={event.eventTitle}
-                className="h-full w-full object-cover object-center lg:h-full lg:w-full"
+                className="h-full w-full object-fill lg:h-full lg:w-full"
               />
             </div>
             <div className="mt-4 flex gap-2 justify-between">
