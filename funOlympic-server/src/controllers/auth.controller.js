@@ -33,7 +33,6 @@ const sendResetOtp = async (req, res) => {
     email: user.email,
     otp,
   });
-  sendOtp(email);
 
   res.json(successResponse(200, "Ok", { message: "OTP sent to your email" }));
 };
@@ -127,7 +126,7 @@ const verifyResetOtp = async (req, res) => {
   res.json(
     successResponse(200, "Ok", {
       message: "Your password reset request has been sent to the admin!",
-    })
+    }),
   );
 };
 
@@ -139,7 +138,7 @@ const signIn = async (req, res) => {
   if (!user)
     throw new ValidationError(
       "Invalid email or password",
-      "Invalid email or password"
+      "Invalid email or password",
     );
 
   const isCorrectPassword = await comparePassword(password, user.password);
@@ -147,7 +146,7 @@ const signIn = async (req, res) => {
   if (!isCorrectPassword)
     throw new ValidationError(
       "Invalid email or password",
-      "Invalid email or password"
+      "Invalid email or password",
     );
 
   // create jwt and sent to user
@@ -166,7 +165,7 @@ const signIn = async (req, res) => {
         role: user.roles,
         email: user.email,
       },
-    })
+    }),
   );
 };
 
