@@ -13,7 +13,8 @@ import VerifyModal from "@/components/verifyOpt";
 import { useMutation } from "@tanstack/react-query";
 import { Transition, Dialog } from "@headlessui/react";
 import axios from "@/lib/utils/axios";
-
+import ReCAPTCHA from "react-google-recaptcha";
+import { verifyCaptcha } from "@/action";
 function LoginSection() {
   const { register, handleSubmit, formState } = useForm();
   const { errors, isSubmitting, isValid } = formState;
@@ -22,6 +23,15 @@ function LoginSection() {
   const [open, setOpen] = useState(false);
   const [otpModal, setOtpModal] = useState(false);
   const [credential, setCredential] = useState({});
+  const recaptchaRef = useRef(null);
+  const [isVerified, setIsverified] = useState(false);
+
+  async function handleCaptchaSubmission(token) {
+    // Server function to verify captcha
+    await verifyCaptcha(token)
+      .then(() => setIsverified(true))
+      .catch(() => setIsverified(false));
+  }
 
   const handleChange = (val) => {
     setOtpModal(val);
@@ -179,10 +189,19 @@ function LoginSection() {
                   { minLength: 6 },
                 )}
               />
+              <ReCAPTCHA
+                sitekey={"6Ld7iqIpAAAAALGVbHP5iSMTm3G-iPKfxfFjY7yY"}
+                ref={recaptchaRef}
+                onChange={handleCaptchaSubmission}
+              />
             </div>
 
             <div>
-              <button type="submit" disabled={!isValid} className="btn-primary">
+              <button
+                type="submit"
+                disabled={!isValid && !isVerified}
+                className="btn-primary"
+              >
                 {isSubmitting ? "Loading.." : "Sign in"}
               </button>
             </div>
