@@ -44,7 +44,7 @@ function LoginSection() {
       });
       if (res?.status === 200) {
         Snackbar.success(
-          "Complete Verification Process by entering OTP sent to your email",
+          "Complete Verification Process by entering OTP sent to your email"
         );
         setCredential({
           email,
@@ -78,7 +78,7 @@ function LoginSection() {
       }
     } catch (error) {
       Snackbar.error(
-        "Something went wrong, Please check your internet connection",
+        "Something went wrong, Please check your internet connection"
       );
     }
   });
@@ -102,7 +102,7 @@ function LoginSection() {
     } catch (err) {
       if (err?.response?.status === 400) {
         Snackbar.error(
-          "The provided verification code is either expired or invalid. Please try again!",
+          "The provided verification code is either expired or invalid. Please try again!"
         );
         return;
       }
@@ -186,11 +186,11 @@ function LoginSection() {
                   {
                     required: "Password is required",
                   },
-                  { minLength: 6 },
+                  { minLength: 6 }
                 )}
               />
               <ReCAPTCHA
-                sitekey={"6Ld7iqIpAAAAALGVbHP5iSMTm3G-iPKfxfFjY7yY"}
+                sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
                 ref={recaptchaRef}
                 onChange={handleCaptchaSubmission}
               />
@@ -238,7 +238,7 @@ function ResetModal({ setOpen, open, setCredential, setOtpModal }) {
     mutationKey: ["send-reset-otp"],
     onSuccess: () => {
       Snackbar.success(
-        `Complete Verification Process by entering OTP sent to your email`,
+        `Complete Verification Process by entering OTP sent to your email`
       );
 
       setCredential({
