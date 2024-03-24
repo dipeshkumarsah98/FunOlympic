@@ -69,7 +69,7 @@ function EventDetails() {
     },
     onError: () => {
       Snackbar.error(
-        "Something went wrong, Please check your internet connection"
+        "Something went wrong, Please check your internet connection",
       );
     },
   });
@@ -84,15 +84,15 @@ function EventDetails() {
       },
       onError: () => {
         Snackbar.error(
-          "Something went wrong, Please check your internet connection"
+          "Something went wrong, Please check your internet connection",
         );
       },
-    }
+    },
   );
 
   if (isError) {
     Snackbar.error(
-      "Something went wrong, Please check your internet connection"
+      "Something went wrong, Please check your internet connection",
     );
     return;
   }
@@ -158,7 +158,7 @@ function EventDetails() {
           This information will be displayed publicly so be careful what you
           share.
         </p>
-      </div>
+      </>
     );
   };
 
@@ -293,7 +293,7 @@ const ToggleSwitch = ({ enabled, setEnabled, children }) => {
             {
               "bg-indigo-600": enabled,
               "bg-gray-200": !enabled,
-            }
+            },
           )}
         >
           <span
@@ -303,7 +303,7 @@ const ToggleSwitch = ({ enabled, setEnabled, children }) => {
               {
                 "translate-x-3.5": enabled,
                 "translate-x-0": !enabled,
-              }
+              },
             )}
           />
         </Switch>

@@ -18,12 +18,13 @@ export function StatsSection() {
     <div className="bg-gray-50 pt-12 sm:pt-16">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-4xl text-center">
-          <h2 className="text-3xl font-poppins font-bold tracking-tight text-gray-900 sm:text-4xl">
-            Trusted by people from over 2 years
+          <h2 className="text-3xl font-roboto font-bold tracking-tight text-gray-900 sm:text-4xl">
+            Our <span className="italic text-orange-500">Performance</span>: By
+            the Numbers
           </h2>
-          <p className="mt-3 text-xl text-gray-500 sm:mt-4 font-intel">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-            Repellendus repellat laudantium.
+          <p className="mt-3 text-xl text-gray-500 sm:mt-4 font-roboto">
+            A snapshot of our reliability and commitment to providing
+            round-the-clock, exceptional service to a growing audience.
           </p>
         </div>
       </div>
@@ -35,7 +36,7 @@ export function StatsSection() {
               <dl className="rounded-lg bg-white shadow-lg sm:grid sm:grid-cols-3">
                 <div className="flex flex-col border-b border-gray-100 p-6 text-center sm:border-0 font-inter sm:border-r">
                   <dt className="order-2 mt-2 text-lg font-medium leading-6 text-gray-500 font-intel">
-                    Up time
+                    Uptime: Uninterrupted Service
                   </dt>
                   <dd className="order-1 text-5xl font-bold tracking-tight text-orange-500 font-inter">
                     100%
@@ -43,7 +44,7 @@ export function StatsSection() {
                 </div>
                 <div className="flex flex-col border-b border-t border-gray-100 p-6 text-center sm:border-0 sm:border-l sm:border-r">
                   <dt className="order-2 mt-2 text-lg font-medium leading-6 text-gray-500 font-intel">
-                    Customer support
+                    Customer Support: Always Available
                   </dt>
                   <dd className="order-1 text-5xl font-bold tracking-tight text-orange-500 font-inter ">
                     24/7
@@ -51,7 +52,7 @@ export function StatsSection() {
                 </div>
                 <div className="flex flex-col border-t border-gray-100 p-6 text-center sm:border-0 font-intel sm:border-l">
                   <dt className="order-2 mt-2 text-lg font-medium leading-6 text-gray-500 font-intel">
-                    Audience
+                    Audience: Strong Community Base
                   </dt>
                   <dd className="order-1 text-5xl font-bold tracking-tight text-orange-500 font-intel">
                     100k

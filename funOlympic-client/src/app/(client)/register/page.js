@@ -45,7 +45,7 @@ const RegisterSection = () => {
       });
       if (res?.data?.payload) {
         Snackbar.success(
-          "Complete Verification Process by entering OTP sent to your email"
+          "Complete Verification Process by entering OTP sent to your email",
         );
         setCredentials(details);
         // router.push("/login");
@@ -84,7 +84,7 @@ const RegisterSection = () => {
     } catch (err) {
       if (err?.response?.status === 400) {
         Snackbar.error(
-          "The provided verification code is either expired or invalid. Please try again!"
+          "The provided verification code is either expired or invalid. Please try again!",
         );
         return;
       }
@@ -102,7 +102,8 @@ const RegisterSection = () => {
             alt="Fun-Olympic Logo"
           />
           <h2 className="mt-10 font-poppins text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-            Create an account
+            Sign up to get most <br />
+            of Fun Olympic
           </h2>
         </div>
 
@@ -236,7 +237,7 @@ const RegisterSection = () => {
                         required: "Confirm password is required",
                       },
                       (value) =>
-                        value === password || "The passwords do not match"
+                        value === password || "The passwords do not match",
                     )}
                   />
                 </div>
@@ -259,7 +260,7 @@ const RegisterSection = () => {
               href="/login"
               className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
             >
-              Login now
+              Sign in
             </Link>
           </p>
         </div>

@@ -29,7 +29,7 @@ function EventDetails() {
 
   if (isError) {
     Snackbar.error(
-      "Something went wrong, Please check your internet connection"
+      "Something went wrong, Please check your internet connection",
     );
     return;
   }
@@ -68,7 +68,7 @@ function EventDetails() {
         url={eventDetail?.streamLink}
         style={{ width: "100%", height: "100%" }}
       />
-      <div className="flex justify-between">
+      <div className="flex justify-between bg-gray-100 rounded-2xl px-3 py-2 my-3">
         <h1 className="text-lg md:text-[20px] my-5 font-roboto font-bold leading-10 text-gray-900">
           {eventDetail?.eventTitle}
         </h1>
@@ -78,7 +78,7 @@ function EventDetails() {
       </div>
       <hr />
       {/* description */}
-      <div className="my-2 font-roboto">
+      <div className="my-2 font-roboto bg-gray-100 rounded-2xl px-3 py-2">
         <p className="my-2">
           <strong>Published At: </strong>
           {new Date(eventDetail?.updatedAt).toDateString()}
@@ -150,8 +150,8 @@ function EventDetails() {
 
             {/* right side view */}
             <div>
-              <h2 className=" text-xl mb-3 font-intel font-bold leading-6 text-gray-900">
-                Similar events
+              <h2 className=" text-xl mb-3 font-roboto font-bold leading-6 text-gray-900">
+                Recommended events
               </h2>
               <hr />
               {filteredData && <EventCard events={filteredData} />}
@@ -165,11 +165,14 @@ function EventDetails() {
 
 const EventCard = ({ events }) => {
   return (
-    <div className="grid grid-cols-1 gap-x-6 gap-y-10 md:grid-cols-2 xl:grid-cols-2 xl:gap-x-8">
+    <div className="grid grid-cols-1 gap-x-6 gap-y-3 md:grid-cols-1 xl:grid-cols-1 xl:gap-x-8">
       {events.map((event) => (
         <div key={event.id} className="group relative">
-          <Link href={`live-events/${event.id}`}>
-            <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
+          <Link
+            className="flex gap-4 rounded-sm px-2 py-2 hover:bg-orange-100"
+            href={`/live-events/${event.id}`}
+          >
+            <div className="aspect-h-1 aspect-w-1 w-1/2 overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-32">
               <img
                 src={event.thumbnail}
                 alt={event.eventTitle}

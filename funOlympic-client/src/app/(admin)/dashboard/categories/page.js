@@ -10,35 +10,14 @@ import { Fragment, useRef, useState } from "react";
 import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
 import { useForm } from "react-hook-form";
 
-const projects = [
+const people = [
   {
-    name: "Graph API",
-    initials: "GA",
-    href: "#",
-    members: 16,
-    bgColor: "bg-pink-600",
+    name: "Lindsay Walton",
+    title: "Front-end Developer",
+    email: "lindsay.walton@example.com",
+    role: "Member",
   },
-  {
-    name: "Component Design",
-    initials: "CD",
-    href: "#",
-    members: 12,
-    bgColor: "bg-purple-600",
-  },
-  {
-    name: "Templates",
-    initials: "T",
-    href: "#",
-    members: 16,
-    bgColor: "bg-yellow-500",
-  },
-  {
-    name: "React Components",
-    initials: "RC",
-    href: "#",
-    members: 8,
-    bgColor: "bg-green-500",
-  },
+  // More people...
 ];
 
 export default function Categories() {
@@ -68,50 +47,59 @@ export default function Categories() {
   return (
     <div className="relative">
       <AddNewCategory open={open} setOpen={setOpen} />
-      <h2 className="text-sm font-medium text-gray-500">
+      <h2 className="text-lg  font-roboto font-medium text-gray-500">
         Available Categories
       </h2>
-
-      <ul
-        role="list"
-        className="mt-3 grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4"
-      >
-        {categories.map((category) => (
-          <li
-            key={category.id}
-            className="col-span-1 overflow-hidden flex rounded-md shadow-sm"
-          >
-            <Avatar
-              color={Avatar.getRandomColor("sitebase", [
-                "red",
-                "green",
-                "blue",
-              ])}
-              name={category.sport}
-            />
-
-            <div className="flex flex-1 items-center justify-between truncate rounded-r-md border-b border-r border-t border-gray-200 bg-white">
-              <div className="flex-1 truncate px-4 py-2 text-sm">
-                <p className="font-medium text-gray-900 hover:text-gray-600">
+      <div className="-mx-4 mt-8 sm:-mx-0">
+        <table className="min-w-full divide-y divide-gray-300">
+          <thead>
+            <tr>
+              <th
+                scope="col"
+                className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0"
+              >
+                Id
+              </th>
+              <th
+                scope="col"
+                className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0"
+              >
+                Title
+              </th>
+              <th
+                scope="col"
+                className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 sm:table-cell"
+              >
+                description
+              </th>
+              <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-0">
+                <span className="sr-only">Delete</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody className="divide-y font-roboto divide-gray-200 bg-white">
+            {categories.map((category) => (
+              <tr key={category.id}>
+                <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
+                  {category.id}
+                </td>
+                <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
                   {category.sport}
-                </p>
-              </div>
-              <div className="flex-shrink-0 pr-2">
-                <button
-                  type="button"
-                  className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-transparent bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                >
-                  <span className="sr-only">Open options</span>
-                  <EllipsisVerticalIcon
-                    className="h-5 w-5"
-                    aria-hidden="true"
-                  />
-                </button>
-              </div>
-            </div>
-          </li>
-        ))}
-      </ul>
+                </td>
+                <td className="hidden whitespace-nowrap px-3 py-4 text-sm text-gray-500 sm:table-cell">
+                  {category.description}
+                </td>
+                <td className="whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
+                  <button className="btn-danger ">
+                    Delete <span className="sr-only">, {category.sport}</span>
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
       <div className="mt-5 flex items-center justify-between">
         <span></span>
         <button className="btn-primary" onClick={() => setOpen(true)}>

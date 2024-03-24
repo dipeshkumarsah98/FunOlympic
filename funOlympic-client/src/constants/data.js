@@ -2,6 +2,7 @@ export const navigation = [
   { name: "Home", href: "/" },
   { name: "Sports", href: "/sports" },
   { name: "Live Events", href: "/live-events" },
+  { name: "About", href: "/about" },
 ];
 
 export const carouselItems = [

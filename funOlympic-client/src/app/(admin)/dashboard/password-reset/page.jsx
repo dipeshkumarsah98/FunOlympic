@@ -53,7 +53,8 @@ export default function PasswordReset() {
       />
       <hr />
       {users && users.length === 0 && <EmptyState />}
-      {users && (
+
+      {/* users && (
         <ul role="list" className="divide-y divide-gray-100">
           {users.map((user) => (
             <li
@@ -97,6 +98,76 @@ export default function PasswordReset() {
             </li>
           ))}
         </ul>
+      ) */}
+
+      {users && (
+        <div className="-mx-4 mt-8 sm:-mx-0">
+          <table className="min-w-full divide-y divide-gray-300">
+            {users.length > 0 && (
+              <thead>
+                <tr>
+                  <th
+                    scope="col"
+                    className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0"
+                  >
+                    Id
+                  </th>
+                  <th
+                    scope="col"
+                    className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0"
+                  >
+                    Name
+                  </th>
+                  <th
+                    scope="col"
+                    className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 sm:table-cell"
+                  >
+                    Email
+                  </th>
+                  <th
+                    scope="col"
+                    className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 sm:table-cell"
+                  >
+                    Requested on
+                  </th>
+                  <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-0">
+                    <span className="sr-only">Delete</span>
+                  </th>
+                </tr>
+              </thead>
+            )}
+            <tbody className="divide-y font-roboto divide-gray-200 bg-white">
+              {users &&
+                users.map((user) => {
+                  return (
+                    <tr key={user.id} className="">
+                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
+                        {user.id}
+                      </td>
+                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
+                        {user.name}
+                      </td>
+                      <td className="hidden whitespace-nowrap px-3 py-4 text-sm text-gray-500 sm:table-cell">
+                        {user.email}
+                      </td>
+                      <td className="hidden whitespace-nowrap px-3 py-4 text-sm text-gray-500 sm:table-cell">
+                        {new Date(user.updatedAt).toDateString()}
+                      </td>
+                      <td className="whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
+                        <button
+                          onClick={() => handleUpdate(user.id)}
+                          className="btn-primary "
+                        >
+                          Update password
+                          <span className="sr-only">, {"dipesh"}</span>
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
+            </tbody>
+          </table>
+        </div>
       )}
     </>
   );

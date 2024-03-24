@@ -50,11 +50,11 @@ export default function EventPage() {
 
 const Event = ({ events }) => {
   return (
-    <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+    <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
       {events.map((event) => (
-        <div key={event.id} className="group relative">
+        <div key={event.id} className="group  relative">
           <Link href={`events/${event.id}`}>
-            <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
+            <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-72">
               <img
                 src={event.thumbnail}
                 alt={event.eventTitle}
@@ -70,7 +70,7 @@ const Event = ({ events }) => {
                   </p>
                 </h3>
                 <p className="mt-1 text-justify text-sm text-gray-500">
-                  {event.description}
+                  {event.description.slice(0, 100)}
                 </p>
               </div>
             </div>
@@ -332,7 +332,7 @@ function ToggleButton({ children, enabled, setEnabled }) {
           {
             "bg-indigo-600": enabled,
             "bg-gray-200": !enabled,
-          }
+          },
         )}
       >
         <span
@@ -342,7 +342,7 @@ function ToggleButton({ children, enabled, setEnabled }) {
             {
               "translate-x-5": enabled,
               "translate-x-0": !enabled,
-            }
+            },
           )}
         />
       </Switch>
@@ -411,7 +411,7 @@ export function CategorySelect({
                           {
                             "text-white": active,
                             "text-indigo-600": !active,
-                          }
+                          },
                         )}
                       >
                         <CheckIcon className="h-5 w-5" aria-hidden="true" />

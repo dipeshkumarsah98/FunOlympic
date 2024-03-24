@@ -131,7 +131,7 @@ function SidebarWrapper({ children }) {
                                     item.current
                                       ? "bg-gray-50 text-orange-600"
                                       : "text-gray-700 hover:text-orange-600 hover:bg-gray-50",
-                                    "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
+                                    "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold",
                                   )}
                                 >
                                   <item.icon
@@ -139,7 +139,7 @@ function SidebarWrapper({ children }) {
                                       item.current
                                         ? "text-orange-600"
                                         : "text-gray-400 group-hover:text-orange-600",
-                                      "h-6 w-6 shrink-0"
+                                      "h-6 w-6 shrink-0",
                                     )}
                                     aria-hidden="true"
                                   />
@@ -160,9 +160,12 @@ function SidebarWrapper({ children }) {
         {/* Static sidebar for desktop */}
         <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
           {/* Sidebar component, swap this element with another sidebar if you like */}
-          <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-indigo-600 px-6">
-            <Link href="/" className="flex h-16 shrink-0 items-center">
-              <img className="w-20" src={logoLink} alt="Fun-Olympic Logo" />
+          <div className="flex grow flex-col items-center gap-y-5 overflow-y-auto border-r border-gray-200 bg-gray-600 px-6">
+            <Link
+              href="/"
+              className="flex h-32 w-32 rounded-full bg-white  shrink-0 items-center"
+            >
+              <img className="w-32" src={logoLink} alt="Fun-Olympic Logo" />
             </Link>
             <nav className="flex flex-1 flex-col">
               <ul role="list" className="flex flex-1 flex-col gap-y-7">
@@ -175,9 +178,9 @@ function SidebarWrapper({ children }) {
                           href={item.href}
                           className={classNames(
                             pathName === item.href
-                              ? "bg-indigo-700 text-white"
-                              : "text-indigo-200 hover:text-white hover:bg-indigo-700",
-                            "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
+                              ? "bg-orange-500 text-white"
+                              : "text-indigo-200 hover:text-white hover:bg-orange-500",
+                            "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold",
                           )}
                         >
                           <item.icon
@@ -185,7 +188,7 @@ function SidebarWrapper({ children }) {
                               pathName === item.href
                                 ? "text-white-600"
                                 : "text-gray-400 group-hover:text-white",
-                              "h-6 w-6 shrink-0"
+                              "h-6 w-6 shrink-0",
                             )}
                             aria-hidden="true"
                           />
@@ -231,7 +234,7 @@ function SidebarWrapper({ children }) {
                       <Menu.Item>
                         <button
                           className={classNames(
-                            "block px-3 py-1 text-sm leading-6 text-gray-900"
+                            "block px-3 py-1 text-sm leading-6 text-gray-900",
                           )}
                         >
                           Profile
@@ -241,7 +244,7 @@ function SidebarWrapper({ children }) {
                         <button
                           onClick={() => handleSignOut()}
                           className={classNames(
-                            "block px-3 py-1 text-sm leading-6 text-gray-900"
+                            "block px-3 py-1 text-sm leading-6 text-gray-900",
                           )}
                         >
                           Sign Out

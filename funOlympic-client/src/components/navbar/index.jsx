@@ -40,7 +40,7 @@ export default function Navbar() {
         `inset-x-0 font-intel top-0 z-50 fixed transition-all duration-100 ease-in-out`,
         {
           "bg-white": isScrolling,
-        }
+        },
       )}
     >
       <div className="mx-auto max-w-7xl">

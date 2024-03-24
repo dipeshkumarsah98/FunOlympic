@@ -1,11 +1,16 @@
 "use client";
 
 import { Fragment, useRef, useState } from "react";
+import { EnvelopeIcon, PhoneIcon } from "@heroicons/react/20/solid";
 import { Dialog, Transition } from "@headlessui/react";
-import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
+import {
+  ExclamationTriangleIcon,
+  TrashIcon,
+} from "@heroicons/react/24/outline";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
 import Snackbar from "@/components/common/snackbar";
+import Avatar from "boring-avatars";
 
 export default function UserPage() {
   const axios = useAxiosAuth();
@@ -69,6 +74,7 @@ const UserHeading = () => {
 
 const UserTable = ({ data, handleDelete }) => {
   const cols = ["Contact", "Country", "Role"];
+  /*
   return (
     <table className="min-w-full divide-y divide-gray-300 w-full">
       <thead>
@@ -104,6 +110,88 @@ const UserTable = ({ data, handleDelete }) => {
         ))}
       </tbody>
     </table>
+  );
+    */
+
+  return (
+    <ul
+      role="list"
+      className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 w-full"
+    >
+      {data.map((person) => (
+        <li
+          key={person.id}
+          className="col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-white text-center shadow"
+        >
+          <div className="flex items-center flex-1 flex-col p-8">
+            <Avatar
+              size={90}
+              name="Maya Angelou"
+              variant="beam"
+              colors={["#92A1C6", "#146A7C", "#F0AB3D", "#C271B4", "#C20D90"]}
+            />
+            <h3 className="mt-6 text-sm font-medium text-gray-900">
+              {person.name}
+            </h3>
+            <dl className="mt-1 flex flex-grow flex-col justify-between">
+              <dt className="sr-only">Title</dt>
+              <dd className="text-sm text-gray-500">{person.email}</dd>
+              <dt className="sr-only">Role</dt>
+              <dd className="mt-3">
+                <span className="inline-flex items-center rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
+                  {person.roles}
+                </span>
+              </dd>
+            </dl>
+          </div>
+          <div>
+            <div className="-mt-px flex gap-2 divide-x divide-gray-200">
+              <div className="flex w-0 flex-1">
+                <button className="btn-normal w-full !flex !items-center !justify-center gap-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-4 h-4"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                    />
+                  </svg>
+                  Make Admin
+                </button>
+              </div>
+              <div className="-ml-px flex w-0 flex-1">
+                <button
+                  onClick={() => handleDelete(person.id)}
+                  className="btn-primary !flex !items-center !justify-center gap-2 w-full"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-4 h-4"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"
+                    />
+                  </svg>
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        </li>
+      ))}
+    </ul>
   );
 };
 
