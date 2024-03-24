@@ -33,8 +33,8 @@ const navigation = [
     current: false,
   },
   {
-    name: "Schedule",
-    href: "/dashboard/schedules",
+    name: "Password reset",
+    href: "/dashboard/password-reset",
     icon: ChartPieIcon,
     current: false,
   },

@@ -37,7 +37,7 @@ const processPasswordResetOtpJob = async (job) => {
     return await mailer.sendMail(message);
   } catch (error) {
     console.log(
-      `Failed to send payment confirmation mail to '${job.data.email}'`
+      `Failed to send reset password OTP mail to '${job.data.email}'`
     );
   }
 };
