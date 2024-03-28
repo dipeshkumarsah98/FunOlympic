@@ -7,7 +7,7 @@ import Jwt from "jsonwebtoken";
  */
 const validateToken = (req, res, next) => {
   // getting token from header
-  const key = process.env.JWT_SECRET_KEY;
+  const key = process.env.JWT_SECRET_KEY || 'absc';
   const authHeader = req.headers.authorization;
   // the request header contains the token "Bearer <token>", split the string and use the second value in the split array.
   const token = authHeader ? authHeader.split(" ")[1] : null;

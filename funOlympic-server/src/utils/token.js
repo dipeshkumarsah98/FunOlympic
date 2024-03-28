@@ -1,8 +1,8 @@
 import jwt from "jsonwebtoken";
 
-const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
-const ACCESSTOKENEXPIRETIME = process.env.ACCESSTOKENEXPIRETIME;
-const REFRESHTOKENEXPIRETIME = process.env.REFRESHTOKENEXPIRETIME;
+const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY || 'absc';
+const ACCESSTOKENEXPIRETIME = process.env.ACCESSTOKENEXPIRETIME || '5h';
+const REFRESHTOKENEXPIRETIME = process.env.REFRESHTOKENEXPIRETIME || '6h';
 
 /**
  * Generate jwt accessToken

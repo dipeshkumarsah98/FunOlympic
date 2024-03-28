@@ -39,7 +39,6 @@ const sendResetOtp = async (req, res) => {
 
 const sendOtp = (email, name = "") => {
   const otp = generateOtp();
-
   mailService.sendOtp({
     email,
     name,
