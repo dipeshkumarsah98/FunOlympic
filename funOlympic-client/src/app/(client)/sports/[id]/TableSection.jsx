@@ -8,7 +8,7 @@ const TableSection = ({ eventData }) => {
 
   const tabs = [
     { id: 0, name: 'Event Schedule', href: '#', current: activeTab === 0 },
-    { id: 1, name: 'See Results', href: '#', current: activeTab === 1 },
+    // { id: 1, name: 'See Results', href: '#', current: activeTab === 1 },
   ];
 
   const handleTabClick = (e, tabId) => {
