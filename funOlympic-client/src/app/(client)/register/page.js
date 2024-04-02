@@ -7,8 +7,10 @@ import Snackbar from "@/components/common/snackbar";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import VerifyModal from "@/components/verifyOpt";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { logoLink } from "@/constants/data";
+import ReCAPTCHA from "react-google-recaptcha";
+import { verifyCaptcha } from "@/action";
 
 const RegisterSection = () => {
   const { register, handleSubmit, formState, watch } = useForm();
@@ -17,11 +19,19 @@ const RegisterSection = () => {
   const router = useRouter();
   const [credentials, setCredentials] = useState(null);
   const [open, setOpen] = useState(false);
+  const [isVerified, setIsverified] = useState(false);
+  const recaptchaRef = useRef(null);
 
   const handleChange = (open) => {
     setOpen(open);
   };
 
+  async function handleCaptchaSubmission(token) {
+    // Server function to verify captcha
+    await verifyCaptcha(token)
+      .then(() => setIsverified(true))
+      .catch(() => setIsverified(false));
+  }
   const handleResendClick = async () => {
     try {
       const res = await axios.post("/auth/send-otp", {
@@ -242,11 +252,19 @@ const RegisterSection = () => {
                 </div>
               </div>
             </div>
+            <div className="my-2 w-full">
+              <ReCAPTCHA
+                className="min-w-full"
+                sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+                ref={recaptchaRef}
+                onChange={handleCaptchaSubmission}
+              />
+            </div>
             <div className="pt-4">
               <button
                 type="submit"
                 className="flex disabled:bg-indigo-400 w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                disabled={isSubmitting}
+                disabled={!isVerified}
               >
                 {isSubmitting ? "Loading... " : "Create an account"}
               </button>
