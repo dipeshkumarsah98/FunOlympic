@@ -199,7 +199,7 @@ function LoginSection() {
             <div>
               <button
                 type="submit"
-                disabled={!isValid && !isVerified}
+                disabled={!(isValid && isVerified)}
                 className="btn-primary"
               >
                 {isSubmitting ? "Loading.." : "Sign in"}
