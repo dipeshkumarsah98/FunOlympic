@@ -6,8 +6,8 @@ import {
   sendWelcomeTemplate,
 } from "./emailTemplate.js";
 
-const EMAIL_ADDRESS = process.env.EMAIL_ADDRESS;
-const APP_NAME = process.env.APP_NAME;
+const EMAIL_ADDRESS = process.env.EMAIL_ADDRESS || "prabessh.dev@gmail.com";
+const APP_NAME = process.env.APP_NAME || "funOlympics";
 
 const processOtpJob = async (job) => {
   console.log(`Sending verification Otp email to '${job.data.email}'`);
@@ -17,9 +17,10 @@ const processOtpJob = async (job) => {
       to: job.data.email,
       subject: `Registration OTP for ${APP_NAME}`,
       html: sendOtpTemplate(job.data),
-    };
+    }
     return await mailer.sendMail(message);
   } catch (error) {
+    console.log(error)
     console.log(`Failed to send Otp to '${job.data.email}'`);
   }
 };

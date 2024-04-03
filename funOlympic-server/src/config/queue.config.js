@@ -13,12 +13,12 @@ import {
   WELCOME,
 } from "../constants/mail.constant.js";
 
-const REDIS_HOST = process.env.REDIS_HOST;
-const REDIS_PORT = process.env.REDIS_PORT;
-const REDIS_PASSWORD = process.env.REDIS_PASSWORD;
+const REDIS_HOST = process.env.REDIS_HOST || 'localhost';
+const REDIS_PORT = process.env.REDIS_PORT || 6379;
+const REDIS_PASSWORD = process.env.REDIS_PASSWORD || '';
 
 const emailQueue = new Queue(MAIL_QUEUE, {
-  redis: { port: +REDIS_PORT, host: REDIS_HOST, password: REDIS_PASSWORD },
+  redis: { port: REDIS_PORT, host: REDIS_HOST, password: REDIS_PASSWORD },
 });
 
 emailQueue.on("active", (job) => {
@@ -32,7 +32,7 @@ emailQueue.on("completed", (job) => {
 emailQueue.on("failed", (job, error) => {
   console.log(
     `Failed job ${job.id} of type ${job.name}: ${error.message}`,
-    error.stack
+    error
   );
 });
 

@@ -17,6 +17,7 @@ const sendPasswordUpdate = (passwordUpdateDto) => {
 
 // { name, email, otp }
 const sendOtp = (otpDto) => {
+  console.log("*******SEND OTP******", otpDto)
   createJob(SENT_OTP, otpDto);
 };
 

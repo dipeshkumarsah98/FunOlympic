@@ -9,6 +9,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
 import Avatar from "boring-avatars";
+import ChatComponent from "@/components/livechat";
 
 function EventDetails() {
   const { id } = useParams();
@@ -29,7 +30,7 @@ function EventDetails() {
 
   if (isError) {
     Snackbar.error(
-      "Something went wrong, Please check your internet connection",
+      "Something went wrong, Please check your internet connection"
     );
     return;
   }
@@ -150,11 +151,11 @@ function EventDetails() {
 
             {/* right side view */}
             <div>
-              <h2 className=" text-xl mb-3 font-roboto font-bold leading-6 text-gray-900">
-                Recommended events
+              <h2 className=" text-xl mb-3 font-intel font-bold leading-6 text-gray-900">
+                Similar events
               </h2>
               <hr />
-              {filteredData && <EventCard events={filteredData} />}
+              {filteredData && <EventCard events={filteredData} />} */}
             </div>
           </div>
         </div>

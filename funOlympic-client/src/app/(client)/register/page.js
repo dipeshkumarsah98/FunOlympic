@@ -7,8 +7,10 @@ import Snackbar from "@/components/common/snackbar";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import VerifyModal from "@/components/verifyOpt";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { logoLink } from "@/constants/data";
+import ReCAPTCHA from "react-google-recaptcha";
+import { verifyCaptcha } from "@/action";
 
 const RegisterSection = () => {
   const { register, handleSubmit, formState, watch } = useForm();
@@ -17,11 +19,19 @@ const RegisterSection = () => {
   const router = useRouter();
   const [credentials, setCredentials] = useState(null);
   const [open, setOpen] = useState(false);
+  const [isVerified, setIsverified] = useState(false);
+  const recaptchaRef = useRef(null);
 
   const handleChange = (open) => {
     setOpen(open);
   };
 
+  async function handleCaptchaSubmission(token) {
+    // Server function to verify captcha
+    await verifyCaptcha(token)
+      .then(() => setIsverified(true))
+      .catch(() => setIsverified(false));
+  }
   const handleResendClick = async () => {
     try {
       const res = await axios.post("/auth/send-otp", {
@@ -45,7 +55,7 @@ const RegisterSection = () => {
       });
       if (res?.data?.payload) {
         Snackbar.success(
-          "Complete Verification Process by entering OTP sent to your email",
+          "Complete Verification Process by entering OTP sent to your email"
         );
         setCredentials(details);
         // router.push("/login");
@@ -84,7 +94,7 @@ const RegisterSection = () => {
     } catch (err) {
       if (err?.response?.status === 400) {
         Snackbar.error(
-          "The provided verification code is either expired or invalid. Please try again!",
+          "The provided verification code is either expired or invalid. Please try again!"
         );
         return;
       }
@@ -237,17 +247,25 @@ const RegisterSection = () => {
                         required: "Confirm password is required",
                       },
                       (value) =>
-                        value === password || "The passwords do not match",
+                        value === password || "The passwords do not match"
                     )}
                   />
                 </div>
               </div>
             </div>
+            <div className="my-2 w-full">
+              <ReCAPTCHA
+                className="min-w-full"
+                sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+                ref={recaptchaRef}
+                onChange={handleCaptchaSubmission}
+              />
+            </div>
             <div className="pt-4">
               <button
                 type="submit"
-                className="disabled:bg-orange-400 w-full justify-center btn-primary bg-orange-500"
-                disabled={isSubmitting}
+                className="flex disabled:bg-indigo-400 w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                disabled={!isVerified}
               >
                 {isSubmitting ? "Loading... " : "Create an account"}
               </button>
