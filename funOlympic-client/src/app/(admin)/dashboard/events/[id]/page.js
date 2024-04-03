@@ -1,54 +1,54 @@
-"use client";
+'use client'
 
-import clsx from "clsx";
-import { Fragment, useEffect, useRef, useState } from "react";
-import { Dialog, Transition } from "@headlessui/react";
-import { useParams, useRouter } from "next/navigation";
-import { Switch } from "@headlessui/react";
-import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { CategorySelect } from "../page";
-import { useQueryClient } from "@tanstack/react-query";
-import Snackbar from "@/components/common/snackbar";
-import Link from "next/link";
+import clsx from 'clsx'
+import { Fragment, useEffect, useRef, useState } from 'react'
+import { Dialog, Transition } from '@headlessui/react'
+import { useParams, useRouter } from 'next/navigation'
+import { Switch } from '@headlessui/react'
+import useAxiosAuth from '@/lib/hooks/useAxiosAuth'
+import { useMutation, useQuery } from '@tanstack/react-query'
+import { CategorySelect } from '../page'
+import { useQueryClient } from '@tanstack/react-query'
+import Snackbar from '@/components/common/snackbar'
+import Link from 'next/link'
 
 function EventDetails() {
-  const { id } = useParams();
-  const [updateState, setUpdateState] = useState(false);
-  const [updatedData, setUpdatedData] = useState({});
-  const [selectedKey, setSelectedKey] = useState("thumbnail");
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  const [data, setData] = useState({});
-  const [published, setPublished] = useState(true);
-  const [liveChat, setLiveChat] = useState(true);
-  const axios = useAxiosAuth();
-  const queryClient = useQueryClient();
-  const router = useRouter();
+  const { id } = useParams()
+  const [updateState, setUpdateState] = useState(false)
+  const [updatedData, setUpdatedData] = useState({})
+  const [selectedKey, setSelectedKey] = useState('thumbnail')
+  const [selectedCategory, setSelectedCategory] = useState(null)
+  const [data, setData] = useState({})
+  const [published, setPublished] = useState(true)
+  const [liveChat, setLiveChat] = useState(true)
+  const axios = useAxiosAuth()
+  const queryClient = useQueryClient()
+  const router = useRouter()
 
   const fetchData = async () => {
-    const { data } = await axios.get(`/event/${id}`);
-    return data?.payload.data;
-  };
+    const { data } = await axios.get(`/event/${id}`)
+    return data?.payload.data
+  }
 
   const updateDetails = async (data) => {
-    const res = await axios.patch(`/event/${id}`, data);
-    return res?.data?.payload.data;
-  };
+    const res = await axios.patch(`/event/${id}`, data)
+    return res?.data?.payload.data
+  }
 
   const deleteEvent = async () => {
-    const res = await axios.delete(`/event/${id}`);
-    return res?.data?.payload.data;
-  };
+    const res = await axios.delete(`/event/${id}`)
+    return res?.data?.payload.data
+  }
 
   const fetchCategories = async () => {
-    const { data } = await axios.get("/category");
-    return data?.payload.data;
-  };
+    const { data } = await axios.get('/category')
+    return data?.payload.data
+  }
 
   const { data: categories } = useQuery({
     queryFn: fetchCategories,
-    queryKey: ["fetch-categories"],
-  });
+    queryKey: ['fetch-categories'],
+  })
 
   const {
     data: eventDetail,
@@ -57,96 +57,97 @@ function EventDetails() {
   } = useQuery({
     queryKey: [`event-${id}`],
     queryFn: fetchData,
-  });
+  })
 
   const { isPending, mutate } = useMutation({
     mutationFn: updateDetails,
-    mutationKey: ["update-event"],
+    mutationKey: ['update-event'],
     onSuccess: () => {
-      Snackbar.success("Event updated successfully");
-      queryClient.invalidateQueries([`event-${id}`]);
-      router.push("/dashboard/events");
+      Snackbar.success('Event updated successfully')
+      queryClient.invalidateQueries([`event-${id}`])
+      router.push('/dashboard/events')
     },
     onError: () => {
       Snackbar.error(
-        "Something went wrong, Please check your internet connection"
-      );
+        'Something went wrong, Please check your internet connection'
+      )
     },
-  });
+  })
 
   const { mutate: deleteEventMutation, isPending: deleteLoading } = useMutation(
     {
       mutationFn: deleteEvent,
-      mutationKey: ["delete-event"],
+      mutationKey: ['delete-event'],
       onSuccess: () => {
-        Snackbar.success("Event deleted successfully");
-        queryClient.invalidateQueries(["fetch-events"]);
+        Snackbar.success('Event deleted successfully')
+        queryClient.invalidateQueries(['fetch-events'])
+        router.push('/dashboard/events')
       },
       onError: () => {
         Snackbar.error(
-          "Something went wrong, Please check your internet connection"
-        );
+          'Something went wrong, Please check your internet connection'
+        )
       },
     }
-  );
+  )
 
   if (isError) {
     Snackbar.error(
-      "Something went wrong, Please check your internet connection"
-    );
-    return;
+      'Something went wrong, Please check your internet connection'
+    )
+    return
   }
 
   useEffect(() => {
-    if (eventDetail === undefined || eventDetail === null) return;
+    if (eventDetail === undefined || eventDetail === null) return
     setData({
       category: eventDetail.category.sport,
       title: eventDetail.eventTitle,
       description: eventDetail.description,
       thumbnail: eventDetail.thumbnail,
-      "stream link": eventDetail.streamLink,
-      "start date": eventDetail.startDate,
-      "end date": eventDetail.endDate,
-    });
-    setPublished(eventDetail.published);
-    setLiveChat(eventDetail.liveChatEnabled);
-    setSelectedCategory(eventDetail.category);
-  }, [eventDetail]);
+      'stream link': eventDetail.streamLink,
+      'start date': eventDetail.startDate,
+      'end date': eventDetail.endDate,
+    })
+    setPublished(eventDetail.published)
+    setLiveChat(eventDetail.liveChatEnabled)
+    setSelectedCategory(eventDetail.category)
+  }, [eventDetail])
 
   useEffect(() => {
     setData((prev) => ({
       ...prev,
       category: selectedCategory?.sport,
-    }));
-  }, [selectedCategory]);
+    }))
+  }, [selectedCategory])
 
   const handleSubmit = async () => {
     if (Object.keys(updatedData).length < 1) {
-      Snackbar.info("No changes made");
-      return;
+      Snackbar.info('No changes made')
+      return
     }
     mutate({
       title: updatedData.title || data.eventTitle,
       description: updatedData.description || data.description,
       thumbnail: updatedData.thumbnail || data.thumbnail,
-      streamLink: updatedData["stream link"] || data["streamLink"],
-      startDate: updateDetails["start date"]
-        ? new Date(updatedData["start date"]).toISOString()
+      streamLink: updatedData['stream link'] || data['streamLink'],
+      startDate: updateDetails['start date']
+        ? new Date(updatedData['start date']).toISOString()
         : data.startDate,
-      endDate: updateDetails["end date"]
-        ? new Date(updatedData["end date"]).toISOString()
+      endDate: updateDetails['end date']
+        ? new Date(updatedData['end date']).toISOString()
         : data.endDate,
       published,
       liveChatEnabled: liveChat,
       category:
         selectedCategory?.id.toString() || eventDetail.category.id.toString(),
-    });
-  };
+    })
+  }
 
   const handleUpdateState = (key) => {
-    setSelectedKey(key);
-    setUpdateState(true);
-  };
+    setSelectedKey(key)
+    setUpdateState(true)
+  }
 
   const EventHeading = () => {
     return (
@@ -159,8 +160,8 @@ function EventDetails() {
           share.
         </p>
       </div>
-    );
-  };
+    )
+  }
 
   const ButtonGroup = () => {
     return (
@@ -169,12 +170,12 @@ function EventDetails() {
           Cancel
         </Link>
         <button className="btn-primary" onClick={() => handleSubmit()}>
-          {isPending ? "Saving changes..." : "Save changes"}
+          {isPending ? 'Saving changes...' : 'Save changes'}
         </button>
       </div>
-    );
-  };
-  if (isLoading) return <div className="font-sans text-2xl">Loading...</div>;
+    )
+  }
+  if (isLoading) return <div className="font-sans text-2xl">Loading...</div>
   return (
     <>
       <main className=" lg:flex-auto">
@@ -186,7 +187,7 @@ function EventDetails() {
                 onClick={() => deleteEventMutation()}
                 className="btn-danger"
               >
-                {deleteLoading ? "Deleting..." : "Delete"}
+                {deleteLoading ? 'Deleting...' : 'Delete'}
               </button>
             </div>
             {eventDetail && categories && (
@@ -206,7 +207,7 @@ function EventDetails() {
             {eventDetail && (
               <dl className="mt-6 space-y-6 divide-y divide-gray-100 border-t border-gray-200 text-sm leading-6">
                 {Object.keys(data).map((key) => {
-                  if (key === "thumbnail") {
+                  if (key === 'thumbnail') {
                     return (
                       <div key={key} className="pt-6 sm:flex">
                         <dt className="font-medium text-gray-900 sm:w-64 sm:flex-none sm:pr-6 capitalize">
@@ -218,7 +219,7 @@ function EventDetails() {
                             <img
                               className="h-full w-full object-cover object-center lg:h-full lg:w-full"
                               src={`${data[key]}`}
-                              alt={"Event thumbnail"}
+                              alt={'Event thumbnail'}
                             />
                           </div>
                           <button
@@ -230,7 +231,7 @@ function EventDetails() {
                           </button>
                         </dd>
                       </div>
-                    );
+                    )
                   }
                   return (
                     <div key={key} className="pt-6 sm:flex">
@@ -250,7 +251,7 @@ function EventDetails() {
                         </button>
                       </dd>
                     </div>
-                  );
+                  )
                 })}
               </dl>
             )}
@@ -272,7 +273,7 @@ function EventDetails() {
         </div>
       </main>
     </>
-  );
+  )
 }
 const ToggleSwitch = ({ enabled, setEnabled, children }) => {
   return (
@@ -289,28 +290,28 @@ const ToggleSwitch = ({ enabled, setEnabled, children }) => {
           checked={enabled}
           onChange={setEnabled}
           className={clsx(
-            "flex w-8 cursor-pointer rounded-full p-px ring-1 ring-inset ring-gray-900/5 transition-colors duration-200 ease-in-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600",
+            'flex w-8 cursor-pointer rounded-full p-px ring-1 ring-inset ring-gray-900/5 transition-colors duration-200 ease-in-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600',
             {
-              "bg-indigo-600": enabled,
-              "bg-gray-200": !enabled,
+              'bg-indigo-600': enabled,
+              'bg-gray-200': !enabled,
             }
           )}
         >
           <span
             aria-hidden="true"
             className={clsx(
-              "h-4 w-4 transform rounded-full bg-white shadow-sm ring-1 ring-gray-900/5 transition duration-200 ease-in-out",
+              'h-4 w-4 transform rounded-full bg-white shadow-sm ring-1 ring-gray-900/5 transition duration-200 ease-in-out',
               {
-                "translate-x-3.5": enabled,
-                "translate-x-0": !enabled,
+                'translate-x-3.5': enabled,
+                'translate-x-0': !enabled,
               }
             )}
           />
         </Switch>
       </dd>
     </Switch.Group>
-  );
-};
+  )
+}
 
 const EventUpdate = ({
   open,
@@ -323,33 +324,33 @@ const EventUpdate = ({
   selectedCategory,
   setSelectedCategory,
 }) => {
-  const cancelButtonRef = useRef(null);
-  const [changedData, setChangedData] = useState("");
+  const cancelButtonRef = useRef(null)
+  const [changedData, setChangedData] = useState('')
   useEffect(() => {
     return () => {
-      setChangedData("");
-    };
-  }, []);
+      setChangedData('')
+    }
+  }, [])
 
   const handelSubmit = () => {
     if (changedData !== data[selectedKey]) {
       setUpdatedData((prev) => ({
         ...prev,
         [selectedKey]: changedData,
-      }));
+      }))
     }
     if (updatedData[selectedKey] && updatedData[selectedKey] !== changedData) {
       setUpdatedData((prev) => ({
         ...prev,
         [selectedKey]: changedData,
-      }));
+      }))
     }
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   const handleUpdate = (e) => {
-    setChangedData(e.target.value);
-  };
+    setChangedData(e.target.value)
+  }
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -392,7 +393,7 @@ const EventUpdate = ({
                       Update {selectedKey}
                     </Dialog.Title>
                     <div className="mt-2">
-                      {selectedKey === "category" ? (
+                      {selectedKey === 'category' ? (
                         <CategorySelect
                           categories={categories}
                           selectedPerson={selectedCategory}
@@ -432,8 +433,8 @@ const EventUpdate = ({
         </div>
       </Dialog>
     </Transition.Root>
-  );
-};
+  )
+}
 
 const InputWithError = ({ data, selectedKey, updatedData, handleChange }) => {
   return (
@@ -449,10 +450,10 @@ const InputWithError = ({ data, selectedKey, updatedData, handleChange }) => {
           name={selectedKey}
           id={selectedKey}
           type={
-            selectedKey.toLocaleLowerCase() === "start date" ||
-            selectedKey.toLocaleLowerCase() === "end date"
-              ? "datetime-local"
-              : "text"
+            selectedKey.toLocaleLowerCase() === 'start date' ||
+            selectedKey.toLocaleLowerCase() === 'end date'
+              ? 'datetime-local'
+              : 'text'
           }
           onChange={handleChange}
           className="block w-full rounded-md border-0 py-1.5 pr-10 text-blue-900 ring-1 ring-inset ring-blue-300 placeholder:text-blue-300 focus:ring-2 
@@ -462,7 +463,7 @@ const InputWithError = ({ data, selectedKey, updatedData, handleChange }) => {
         />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default EventDetails;
+export default EventDetails

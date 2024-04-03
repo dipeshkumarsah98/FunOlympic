@@ -1,8 +1,9 @@
 export const navigation = [
-  { name: "Home", href: "/" },
-  { name: "Sports", href: "/sports" },
-  { name: "Live Events", href: "/live-events" },
-];
+  { name: 'Home', href: '/' },
+  { name: 'About', href: '/about' },
+  { name: 'Sports', href: '/sports' },
+  { name: 'Live Events', href: '/live-events' },
+]
 
 export const logoLink =
-  "https://res.cloudinary.com/dnxalejsk/image/upload/v1710999326/Fun_Olympic.png";
+  'https://res.cloudinary.com/dnxalejsk/image/upload/v1710999326/Fun_Olympic.png'

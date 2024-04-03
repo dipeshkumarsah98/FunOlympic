@@ -1,5 +1,5 @@
 import "../globals.css";
-import Footer from "@/components/footer";
+import Footer from "@/components/footer/index";
 import CenterNavbar from "@/components/centerNavbar";
 import Providers from "@/lib/providers";
 import { getServerSession } from "next-auth";

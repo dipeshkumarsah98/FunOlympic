@@ -1,114 +1,114 @@
-"use client";
+'use client'
 
-import { Fragment, useRef } from "react";
-import Link from "next/link";
-import { useForm } from "react-hook-form";
-import Snackbar from "@/components/common/snackbar";
-import Input from "@/components/common/input";
-import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { logoLink } from "@/constants/data";
-import VerifyModal from "@/components/verifyOpt";
-import { useMutation } from "@tanstack/react-query";
-import { Transition, Dialog } from "@headlessui/react";
-import axios from "@/lib/utils/axios";
-import ReCAPTCHA from "react-google-recaptcha";
-import { verifyCaptcha } from "@/action";
+import { Fragment, useRef } from 'react'
+import Link from 'next/link'
+import { useForm } from 'react-hook-form'
+import Snackbar from '@/components/common/snackbar'
+import Input from '@/components/common/input'
+import { signIn } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
+import { logoLink } from '@/constants/data'
+import VerifyModal from '@/components/verifyOpt'
+import { useMutation } from '@tanstack/react-query'
+import { Transition, Dialog } from '@headlessui/react'
+import axios from '@/lib/utils/axios'
+import ReCAPTCHA from 'react-google-recaptcha'
+import { verifyCaptcha } from '@/action'
 function LoginSection() {
-  const { register, handleSubmit, formState } = useForm();
-  const { errors, isSubmitting, isValid } = formState;
-  const [error, setError] = useState("");
-  const router = useRouter();
-  const [open, setOpen] = useState(false);
-  const [otpModal, setOtpModal] = useState(false);
-  const [credential, setCredential] = useState({});
-  const recaptchaRef = useRef(null);
-  const [isVerified, setIsverified] = useState(false);
+  const { register, handleSubmit, formState } = useForm()
+  const { errors, isSubmitting, isValid } = formState
+  const [error, setError] = useState('')
+  const router = useRouter()
+  const [open, setOpen] = useState(false)
+  const [otpModal, setOtpModal] = useState(false)
+  const [credential, setCredential] = useState({})
+  const recaptchaRef = useRef(null)
+  const [isVerified, setIsverified] = useState(false)
 
   async function handleCaptchaSubmission(token) {
     // Server function to verify captcha
     await verifyCaptcha(token)
       .then(() => setIsverified(true))
-      .catch(() => setIsverified(false));
+      .catch(() => setIsverified(false))
   }
 
   const handleChange = (val) => {
-    setOtpModal(val);
-  };
+    setOtpModal(val)
+  }
 
   const handleResendClick = async () => {
     try {
-      const res = await axios.post("/auth/send-reset-otp", {
+      const res = await axios.post('/auth/send-reset-otp', {
         email: credential.email,
-      });
+      })
       if (res?.status === 200) {
         Snackbar.success(
-          "Complete Verification Process by entering OTP sent to your email"
-        );
+          'Complete Verification Process by entering OTP sent to your email'
+        )
         setCredential({
           email,
-        });
-        return;
+        })
+        return
       }
     } catch {
-      Snackbar.error("Something went wrong, Please try again later");
+      Snackbar.error('Something went wrong, Please try again later')
     }
-  };
+  }
 
   const onSubmit = handleSubmit(async (credential) => {
     try {
-      const res = await signIn("credentials", {
+      const res = await signIn('credentials', {
         email: credential.email,
         password: credential.password,
         redirect: false,
-        callbackUrl: "/",
-      });
+        callbackUrl: '/',
+      })
 
       if (res?.error) {
-        setError("Invalid Email or Password");
-        Snackbar.error("Invalid Email or Password");
-        return;
+        setError('Invalid Email or Password')
+        Snackbar.error('Invalid Email or Password')
+        return
       }
       if (res?.ok) {
-        Snackbar.success("Login Successful");
-        router.push("/");
-        router.refresh();
-        return;
+        Snackbar.success('Login Successful')
+        router.push('/')
+        router.refresh()
+        return
       }
     } catch (error) {
       Snackbar.error(
-        "Something went wrong, Please check your internet connection"
-      );
+        'Something went wrong, Please check your internet connection'
+      )
     }
-  });
+  })
 
   const handleVerifyClick = async (otp) => {
     try {
       const payloadData = {
         email: credential.email,
         token: otp,
-      };
+      }
 
-      const res = await axios.post("/auth/verify-reset-otp", {
+      const res = await axios.post('/auth/verify-reset-otp', {
         ...payloadData,
-      });
+      })
       if (res?.status === 200) {
-        Snackbar.success("Password reset request send successfully!");
-        localStorage.removeItem("countdownSeconds");
-        setOpen(false);
-        setOtpModal(false);
+        Snackbar.success('Password reset request send successfully!')
+        localStorage.removeItem('countdownSeconds')
+        setOpen(false)
+        setOtpModal(false)
       }
     } catch (err) {
       if (err?.response?.status === 400) {
         Snackbar.error(
-          "The provided verification code is either expired or invalid. Please try again!"
-        );
-        return;
+          'The provided verification code is either expired or invalid. Please try again!'
+        )
+        return
       }
-      Snackbar.error("Something went wrong, Please try again later");
+      Snackbar.error('Something went wrong, Please try again later')
     }
-  };
+  }
 
   return (
     <>
@@ -117,7 +117,7 @@ function LoginSection() {
           <VerifyModal
             handleChange={handleChange}
             open={otpModal}
-            email={credential?.email ?? ""}
+            email={credential?.email ?? ''}
             handleResendLink={handleResendClick}
             handleVerifyClick={handleVerifyClick}
           />
@@ -152,7 +152,7 @@ function LoginSection() {
               type="email"
               autoComplete="email"
               errors={errors}
-              {...register("email", { required: "Email is required" })}
+              {...register('email', { required: 'Email is required' })}
             />
 
             <div>
@@ -182,18 +182,20 @@ function LoginSection() {
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 errors={errors}
                 {...register(
-                  "password",
+                  'password',
                   {
-                    required: "Password is required",
+                    required: 'Password is required',
                   },
                   { minLength: 6 }
                 )}
               />
-              <ReCAPTCHA
-                sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
-                ref={recaptchaRef}
-                onChange={handleCaptchaSubmission}
-              />
+              <div className="my-4">
+                <ReCAPTCHA
+                  sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+                  ref={recaptchaRef}
+                  onChange={handleCaptchaSubmission}
+                />
+              </div>
             </div>
 
             <div>
@@ -202,13 +204,13 @@ function LoginSection() {
                 disabled={!(isValid && isVerified)}
                 className="btn-primary"
               >
-                {isSubmitting ? "Loading.." : "Sign in"}
+                {isSubmitting ? 'Loading..' : 'Sign in'}
               </button>
             </div>
           </form>
 
           <p className="mt-10 text-center text-sm text-gray-500">
-            Not a member?{" "}
+            Not a member?{' '}
             <Link
               href="/register"
               className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
@@ -219,51 +221,51 @@ function LoginSection() {
         </div>
       </div>
     </>
-  );
+  )
 }
 
 function ResetModal({ setOpen, open, setCredential, setOtpModal }) {
-  const cancelButtonRef = useRef(null);
-  const [email, setEmail] = useState("");
+  const cancelButtonRef = useRef(null)
+  const [email, setEmail] = useState('')
 
   const sendOpt = async (email) => {
-    const res = await axios.post("/auth/send-reset-otp", {
+    const res = await axios.post('/auth/send-reset-otp', {
       email,
-    });
-    return res.data.payload;
-  };
+    })
+    return res.data.payload
+  }
 
   const { isPending, isError, error, mutate } = useMutation({
     mutationFn: (data) => sendOpt(data),
-    mutationKey: ["send-reset-otp"],
+    mutationKey: ['send-reset-otp'],
     onSuccess: () => {
       Snackbar.success(
         `Complete Verification Process by entering OTP sent to your email`
-      );
+      )
 
       setCredential({
         email,
-      });
-      setOpen(false);
-      setOtpModal(true);
+      })
+      setOpen(false)
+      setOtpModal(true)
     },
     onError: (error) => {
-      Snackbar.error(error.response?.data?.message || error.message);
+      Snackbar.error(error.response?.data?.message || error.message)
     },
-  });
+  })
 
   const handleOptSend = (email) => {
-    if (email === "") {
-      Snackbar.info("Please enter your email address");
+    if (email === '') {
+      Snackbar.info('Please enter your email address')
 
-      return;
+      return
     }
-    mutate(email);
-  };
+    mutate(email)
+  }
 
   const handleChange = (e) => {
-    setEmail(e.target.value);
-  };
+    setEmail(e.target.value)
+  }
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -320,7 +322,7 @@ function ResetModal({ setOpen, open, setCredential, setOtpModal }) {
                     onClick={() => handleOptSend(email)}
                     disabled={isPending}
                   >
-                    {isPending ? "Sending..." : "Send Otp"}
+                    {isPending ? 'Sending...' : 'Send Otp'}
                   </button>
                   <button
                     className="btn-normal"
@@ -337,7 +339,7 @@ function ResetModal({ setOpen, open, setCredential, setOtpModal }) {
         </div>
       </Dialog>
     </Transition.Root>
-  );
+  )
 }
 
 const InputWithError = ({ handleChange }) => {
@@ -362,9 +364,9 @@ const InputWithError = ({ handleChange }) => {
         />
       </div>
     </div>
-  );
-};
+  )
+}
 
 export default function Login() {
-  return <LoginSection />;
+  return <LoginSection />
 }

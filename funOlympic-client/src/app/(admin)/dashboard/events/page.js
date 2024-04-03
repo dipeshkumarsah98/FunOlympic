@@ -50,7 +50,7 @@ export default function EventPage() {
 
 const Event = ({ events }) => {
   return (
-    <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+    <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
       {events.map((event) => (
         <div key={event.id} className="group relative">
           <Link href={`events/${event.id}`}>
@@ -70,7 +70,7 @@ const Event = ({ events }) => {
                   </p>
                 </h3>
                 <p className="mt-1 text-justify text-sm text-gray-500">
-                  {event.description}
+                  {event.description.slice(0, 60)}
                 </p>
               </div>
             </div>

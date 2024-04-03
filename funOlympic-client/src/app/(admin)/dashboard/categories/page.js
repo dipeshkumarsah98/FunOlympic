@@ -1,69 +1,37 @@
-"use client";
+'use client'
 
-import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
-import Avatar from "react-avatar";
-import Snackbar from "@/components/common/snackbar";
-import { Dialog, Transition } from "@headlessui/react";
-import Input from "@/components/common/input";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Fragment, useRef, useState } from "react";
-import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
-import { useForm } from "react-hook-form";
-
-const projects = [
-  {
-    name: "Graph API",
-    initials: "GA",
-    href: "#",
-    members: 16,
-    bgColor: "bg-pink-600",
-  },
-  {
-    name: "Component Design",
-    initials: "CD",
-    href: "#",
-    members: 12,
-    bgColor: "bg-purple-600",
-  },
-  {
-    name: "Templates",
-    initials: "T",
-    href: "#",
-    members: 16,
-    bgColor: "bg-yellow-500",
-  },
-  {
-    name: "React Components",
-    initials: "RC",
-    href: "#",
-    members: 8,
-    bgColor: "bg-green-500",
-  },
-];
+import { EllipsisVerticalIcon } from '@heroicons/react/20/solid'
+import Snackbar from '@/components/common/snackbar'
+import { Dialog, Transition } from '@headlessui/react'
+import Input from '@/components/common/input'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { Fragment, useRef, useState } from 'react'
+import useAxiosAuth from '@/lib/hooks/useAxiosAuth'
+import { useForm } from 'react-hook-form'
 
 export default function Categories() {
-  const axios = useAxiosAuth();
-  const [open, setOpen] = useState(false);
+  const axios = useAxiosAuth()
+  const [open, setOpen] = useState(false)
 
   const fetchCategories = async () => {
-    const { data } = await axios.get("/category");
-    return data?.payload?.data;
-  };
+    const { data } = await axios.get('/category')
+    return data?.payload?.data
+  }
 
   const {
     data: categories,
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ["fetch-categories"],
+    queryKey: ['fetch-categories'],
     queryFn: fetchCategories,
-  });
+  })
 
   if (isError) {
-    Snackbar.error("Something went wrong!");
+    Snackbar.error('Something went wrong!')
   }
 
-  if (isLoading) return <div className="text-2xl font-sans">Loading...</div>;
+  if (isLoading) return <div className="text-2xl font-sans">Loading...</div>
 
   return (
     <div className="relative">
@@ -81,15 +49,6 @@ export default function Categories() {
             key={category.id}
             className="col-span-1 overflow-hidden flex rounded-md shadow-sm"
           >
-            <Avatar
-              color={Avatar.getRandomColor("sitebase", [
-                "red",
-                "green",
-                "blue",
-              ])}
-              name={category.sport}
-            />
-
             <div className="flex flex-1 items-center justify-between truncate rounded-r-md border-b border-r border-t border-gray-200 bg-white">
               <div className="flex-1 truncate px-4 py-2 text-sm">
                 <p className="font-medium text-gray-900 hover:text-gray-600">
@@ -119,39 +78,39 @@ export default function Categories() {
         </button>
       </div>
     </div>
-  );
+  )
 }
 
 const AddNewCategory = ({ open, setOpen }) => {
   const createCategory = async (details) => {
-    const { data } = await axios.post("/category", details);
-    return data?.payload?.data;
-  };
-  const axios = useAxiosAuth();
+    const { data } = await axios.post('/category', details)
+    return data?.payload?.data
+  }
+  const axios = useAxiosAuth()
 
   const { mutate, isPending } = useMutation({
     mutationFn: createCategory,
-    mutationKey: ["update-category"],
+    mutationKey: ['update-category'],
     onSuccess: () => {
-      queryClient.invalidateQueries("fetch-categories");
-      setOpen(false);
-      Snackbar.success("Category created successfully");
+      queryClient.invalidateQueries('fetch-categories')
+      setOpen(false)
+      Snackbar.success('Category created successfully')
     },
     onError: () => {
-      Snackbar.error("Something went wrong!");
+      Snackbar.error('Something went wrong!')
     },
-  });
+  })
 
-  const queryClient = useQueryClient();
-  const { register, handleSubmit, formState } = useForm();
-  const { errors, isSubmitting, isValid } = formState;
-  const cancelButtonRef = useRef(null);
+  const queryClient = useQueryClient()
+  const { register, handleSubmit, formState } = useForm()
+  const { errors, isSubmitting, isValid } = formState
+  const cancelButtonRef = useRef(null)
   const onSubmit = handleSubmit(async (data) => {
     mutate({
       sport: data.title,
       description: data.description,
-    });
-  });
+    })
+  })
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -160,7 +119,7 @@ const AddNewCategory = ({ open, setOpen }) => {
         className="relative z-50"
         initialFocus={cancelButtonRef}
         onClose={() => {
-          Snackbar.info("Please click on cancel button to close the dialog");
+          Snackbar.info('Please click on cancel button to close the dialog')
         }}
       >
         <Transition.Child
@@ -210,8 +169,8 @@ const AddNewCategory = ({ open, setOpen }) => {
                           type="text"
                           autoComplete="title"
                           errors={errors}
-                          {...register("title", {
-                            required: "Event title is required",
+                          {...register('title', {
+                            required: 'Event title is required',
                           })}
                         />
                         <Input
@@ -222,8 +181,8 @@ const AddNewCategory = ({ open, setOpen }) => {
                           type="text"
                           autoComplete="description"
                           errors={errors}
-                          {...register("description", {
-                            required: "Description is required",
+                          {...register('description', {
+                            required: 'Description is required',
                           })}
                         />
                       </div>
@@ -236,7 +195,7 @@ const AddNewCategory = ({ open, setOpen }) => {
                     className="btn-primary w-full sm:w-fit"
                     onClick={handleSubmit}
                   >
-                    {isPending ? "Creating..." : "Create Category"}
+                    {isPending ? 'Creating...' : 'Create Category'}
                   </button>
                   <button
                     type="button"
@@ -253,5 +212,5 @@ const AddNewCategory = ({ open, setOpen }) => {
         </div>
       </Dialog>
     </Transition.Root>
-  );
-};
+  )
+}

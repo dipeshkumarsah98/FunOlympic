@@ -1,11 +1,8 @@
 "use client";
 
-import { useState } from "react";
-import axios from "@/lib/utils/axios";
 import { useQuery } from "@tanstack/react-query";
-import clsx from "clsx";
 import Link from "next/link";
-import Snackbar from "@/components/common/snackbar";
+import axios from "@/lib/utils/axios";
 
 export default function EventPage() {
   const fetchData = async () => {
@@ -27,7 +24,7 @@ export default function EventPage() {
         <div className="px-4 sm:px-6 lg:px-8 ">
           <div className="flex items-center justify-between ">
             <div className="sm:flex-auto">
-              <h1 className="text-[20px] py-3 font-intel font-bold leading-6 text-gray-900">
+              <h1 className="text-[20px] py-3 font-roboto font-bold leading-6 text-gray-900">
                 Event List
               </h1>
               <hr />
@@ -43,7 +40,7 @@ export default function EventPage() {
 
 const Event = ({ events }) => {
   return (
-    <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+    <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
       {events.map((event) => (
         <div key={event.id} className="group relative">
           <Link href={`live-events/${event.id}`}>
@@ -56,14 +53,14 @@ const Event = ({ events }) => {
             </div>
             <div className="mt-4 flex gap-2 justify-between">
               <div>
-                <h3 className="text-sm font-bold text-gray-700">
+                <h3 className="text-sm font-roboto font-bold text-gray-700">
                   <p>
                     <span aria-hidden="true" className="absolute inset-0" />
                     {event.eventTitle}
                   </p>
                 </h3>
-                <p className="mt-1 text-sm text-gray-500">
-                  {event.description}
+                <p className="mt-1 font-roboto text-sm text-gray-500">
+                  {event.description.slice(0, 100)}
                 </p>
               </div>
             </div>
@@ -73,20 +70,3 @@ const Event = ({ events }) => {
     </div>
   );
 };
-
-function AboutPage() {
-  return (
-    <div className="bg-white h-full px-6 py-24 sm:py-32 lg:px-8">
-      <div className="mx-auto max-w-2xl text-center">
-        <h2 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-          About us
-        </h2>
-        <p className="mt-6 text-lg leading-8 text-gray-600">
-          Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem
-          cupidatat commodo. Elit sunt amet fugiat veniam occaecat fugiat
-          aliqua.
-        </p>
-      </div>
-    </div>
-  );
-}

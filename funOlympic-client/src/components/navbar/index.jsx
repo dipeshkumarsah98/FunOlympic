@@ -75,7 +75,7 @@ export default function Navbar() {
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="text-sm font-semibold leading-6 text-gray-900"
+                  className="text-sm min-w-fit font-semibold leading-6 text-gray-900"
                 >
                   {item.name}
                 </Link>
@@ -84,7 +84,7 @@ export default function Navbar() {
               {isAdmin && (
                 <Link
                   href="/dashboard/users"
-                  className="text-sm font-semibold leading-6 text-gray-900"
+                  className="text-sm min-w-fit font-semibold leading-6 text-gray-900"
                 >
                   Admin
                 </Link>
@@ -92,7 +92,7 @@ export default function Navbar() {
               {!isLoggedIn && (
                 <Link
                   href="/register"
-                  className="text-sm font-semibold leading-6 text-gray-900"
+                  className="text-sm min-w-fit font-semibold leading-6 text-gray-900"
                 >
                   Register
                 </Link>
@@ -100,7 +100,7 @@ export default function Navbar() {
               {!isLoggedIn && (
                 <Link
                   href="/login"
-                  className="text-sm font-semibold leading-6 text-gray-900"
+                  className="text-sm min-w-fit font-semibold leading-6 text-gray-900"
                 >
                   Log in
                 </Link>
