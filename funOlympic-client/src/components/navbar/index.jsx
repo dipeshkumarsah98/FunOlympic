@@ -38,7 +38,7 @@ export default function Navbar() {
   return (
     <header
       className={clsx(
-        `inset-x-0 font-intel top-0 z-50 fixed transition-all duration-100 ease-in-out pb-5 bg-c-gray-500 `,
+        `inset-x-0 font-intel top-0 z-50 fixed transition-all duration-100 ease-in-out pb-5 main-bg `,
         {
           "bg-white": isScrolling,
         }

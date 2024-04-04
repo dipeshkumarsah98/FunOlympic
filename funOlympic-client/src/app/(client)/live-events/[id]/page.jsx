@@ -8,7 +8,9 @@ import Snackbar from "@/components/common/snackbar";
 import Link from "next/link";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
+import { Popover } from "@headlessui/react";
 import Avatar from "boring-avatars";
+import { Transition, Fragment } from "@headlessui/react";
 
 function EventDetails() {
   const { id } = useParams();
@@ -89,20 +91,6 @@ function EventDetails() {
     </>
   );
 
-  const VideoSection = () => (
-    <div className="w-fit ">
-      <VideoDetails />
-
-      {/* Comments sections */}
-      <h3 className="mt-5 mb-2 font-roboto font-bold text-[20px]">
-        {eventDetail.comments[0]?.message?.length || 0} Comments
-      </h3>
-
-      <hr />
-      <CommentSection />
-    </div>
-  );
-
   const LoadingSection = () => (
     <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
       <div className="flex gap-5">
@@ -142,25 +130,94 @@ function EventDetails() {
 
   return (
     <>
-      <div className="bg-white">
-        <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-          <div className="flex flex-col lg:flex-row gap-5">
-            {/* left side view */}
-            <VideoSection />
+      <div className="min-h-full player-bg">
+            <>
+              <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
+                <div className="relative flex items-center justify-center py-5 lg:justify-between">
+                  <div className="absolute left-0 flex-shrink-0 lg:static">
+                  </div>
 
-            {/* right side view */}
-            <div>
-              <h2 className=" text-xl mb-3 font-intel font-bold leading-6 text-gray-900">
-                Similar events
-              </h2>
-              <hr />
-              {filteredData && <EventCard events={filteredData} />}
+                  {/* Right section on desktop */}
+                  <div className="hidden lg:ml-4 lg:flex lg:items-center lg:pr-0.5">
+                  </div>
+                  <div className="min-w-0 flex-1 px-12 lg:hidden">
+                    <div className="mx-auto w-full max-w-xs">
+                      <div className="relative text-white focus-within:text-gray-600">
+                        <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                          {/* <MagnifyingGlassIcon className="h-5 w-5" aria-hidden="true" /> */}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="hidden border-t border-white border-opacity-20 py-5 lg:block">
+                  <div className="grid grid-cols-3 items-center gap-8">
+                    <div className="col-span-2">
+                    </div>
+                    <div>
+                      <div className="mx-auto w-full max-w-md">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </>
+        <main className="-mt-24 pb-8 player-bg">
+          <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
+            {/* Main 3 column grid */}
+            <div className="grid grid-cols-1 items-start gap-4 lg:grid-cols-3 lg:gap-8">
+              {/* Left column */}
+              <div className="grid grid-cols-1 gap-4 lg:col-span-2 mt-10">
+                <section aria-labelledby="section-1-title">
+                  <div className="overflow-hidden rounded-lg bg-white shadow">
+                    <div className="p-6">
+                      <div className="w-fit ">
+                        <VideoDetails />
+
+                        {/* Comments sections */}
+                        <h3 className="mt-5 mb-2 font-roboto font-bold text-[20px]">
+                          {eventDetail.comments[0]?.message?.length || 0} Comments
+                        </h3>
+
+                        <hr />
+                        <CommentSection />
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              </div>
+
+              <div className="grid grid-cols-1 gap-4">
+                <section aria-labelledby="section-2-title">
+                  <div className="overflow-hidden rounded-lg bg-white shadow mt-10">
+                    <div className="p-6">
+                      <div>
+                        Live Chat Here
+                      </div>
+                    </div>
+                  </div>
+                </section>
+                <div className="grid grid-cols-1 gap-4">
+                <section aria-labelledby="section-2-title">
+                  <div className="overflow-hidden rounded-lg bg-white shadow mt-10">
+                    <div className="p-6">
+                      <div>
+                        <span className="p-3">
+                          Suggested Events
+                        </span>
+                        {filteredData && <EventCard events={filteredData.slice(0,4)} />}
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              </div>
+              </div>
             </div>
           </div>
-        </div>
+        </main>
       </div>
     </>
-  );
+  )
 }
 
 const EventCard = ({ events }) => {

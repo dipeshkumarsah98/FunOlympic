@@ -69,7 +69,7 @@ const Event = ({ events }) => {
                     {event.eventTitle}
                   </p>
                 </h3>
-                <p className="mt-1 text-justify text-sm text-gray-500">
+                <p className="mt-1 text-justify text-sm text-gray-500 text-ellipsis overflow-hidden">
                   {event.description}
                 </p>
               </div>

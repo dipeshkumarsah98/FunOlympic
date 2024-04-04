@@ -35,3 +35,11 @@ input::-webkit-inner-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
 }
+
+.main-bg {
+  background-color:  #fef0da;
+}
+
+.player-bg {
+  background-color: #f4f4f4
+}

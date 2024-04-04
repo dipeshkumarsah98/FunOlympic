@@ -57,29 +57,29 @@ const sportPage = ({ }) => {
               <div class="flex items-center space-x-6 lg:space-x-8">
                 <div class="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
                   <div class="h-64 w-44 overflow-hidden rounded-lg sm:opacity-0 lg:opacity-100">
-                    <img src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-01.jpg" alt="" class="h-full w-full object-cover object-center"/>
+                    <img src="https://www.hindustantimes.com/ht-img/img/2023/10/17/1600x900/LA-Games_1697511384133_1697511393925.jpg" alt="" class="h-full w-full object-cover object-center"/>
                   </div>
                   <div class="h-64 w-44 overflow-hidden rounded-lg">
-                    <img src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-02.jpg" alt="" class="h-full w-full object-cover object-center"/>
-                  </div>
-                </div>
-                <div class="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
-                  <div class="h-64 w-44 overflow-hidden rounded-lg">
-                    <img src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-03.jpg" alt="" class="h-full w-full object-cover object-center"/>
-                  </div>
-                  <div class="h-64 w-44 overflow-hidden rounded-lg">
-                    <img src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-04.jpg" alt="" class="h-full w-full object-cover object-center"/>
-                  </div>
-                  <div class="h-64 w-44 overflow-hidden rounded-lg">
-                    <img src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-05.jpg" alt="" class="h-full w-full object-cover object-center"/>
+                    <img src="https://cdn.vox-cdn.com/thumbor/cKsuPDxElRZJUtKOm1v-dS0O3Mc=/1400x1400/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/22732955/1330045904.jpg" alt="" class="h-full w-full object-cover object-center"/>
                   </div>
                 </div>
                 <div class="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
                   <div class="h-64 w-44 overflow-hidden rounded-lg">
-                    <img src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-06.jpg" alt="" class="h-full w-full object-cover object-center"/>
+                    <img src="https://www.recordonline.com/gcdn/authoring/2012/08/14/NTHR/ghows-TH-6a78c51d-d15b-4066-a7e5-874a5a2b9d3d-dbf17030.jpeg?width=1200&disable=upscale&format=pjpg&auto=webp" alt="" class="h-full w-full object-cover object-center"/>
                   </div>
                   <div class="h-64 w-44 overflow-hidden rounded-lg">
-                    <img src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-07.jpg" alt="" class="h-full w-full object-cover object-center"/>
+                    <img src="https://www.hindustantimes.com/ht-img/img/2023/10/18/1600x900/ARCHERY-ASIAD-2022-2023-HANGZHOU-4_1697595700238_1697595745470.jpg" alt="" class="h-full w-full object-cover object-center"/>
+                  </div>
+                  <div class="h-64 w-44 overflow-hidden rounded-lg">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQstDAz-hK0Zjiu2y4x_fO5mvdQjcokioJWvSzKaAtZ0VFkhFpKkAl7XnVpACijg_r4jXM&usqp=CAU" alt="" class="h-full w-full object-cover object-center"/>
+                  </div>
+                </div>
+                <div class="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
+                  <div class="h-64 w-44 overflow-hidden rounded-lg">
+                    <img src="https://w0.peakpx.com/wallpaper/990/661/HD-wallpaper-boxing-match-boxing-ropes-ring-boxer.jpg" alt="" class="h-full w-full object-cover object-center"/>
+                  </div>
+                  <div class="h-64 w-44 overflow-hidden rounded-lg">
+                    <img src="https://www.usatoday.com/gcdn/presto/2021/08/07/USAT/15ce8a09-0715-4376-9bee-83ebf4083d8e-USP_Olympics__Basketball-Men_Finals_-_Gold_Medal_M_28.jpg?crop=3615,4820,x1299,y0" alt="" class="h-full w-full object-cover object-center"/>
                   </div>
                 </div>
               </div>

@@ -21,7 +21,7 @@ export default function CenterNavbar() {
     isAdmin = session.user.role.toLocaleLowerCase() === "admin";
   }
   return (
-    <header className="bg-c-gray-500">
+    <header className="main-bg">
       <nav
         className="flex items-center font-intel justify-between p-6 lg:px-8"
         aria-label="Global"
