@@ -37,7 +37,7 @@ const EventsTable = ({eventData}) => {
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{event.time}</td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{event.eventTitle}</td>
                     <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                      <a href={`/live-events/${event.id}`} className="text-indigo-600 hover:text-indigo-900">
+                      <a href={`/live-events/${event.id}`} className="text-c-orange-600 hover:text-c-orange-900">
                         
                         Watch Live<span className="sr-only">, {event.streamlink}</span>
                       </a>

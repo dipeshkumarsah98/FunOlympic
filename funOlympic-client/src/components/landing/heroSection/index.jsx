@@ -6,9 +6,9 @@ export default function HeroSection() {
   return (
     <div className="bg-white">
 
-      <div className="relative isolate overflow-hidden bg-gradient-to-b from-indigo-100/20 pt-0">
+      <div className="relative isolate overflow-hidden bg-gradient-to-b from-c-orange-100/20 pt-0">
         <div
-          className="absolute inset-y-0 right-1/2 -z-10 -mr-96 w-[200%] origin-top-right skew-x-[-30deg] bg-white shadow-xl shadow-indigo-600/10 ring-1 ring-indigo-50 sm:-mr-80 lg:-mr-96"
+          className="absolute inset-y-0 right-1/2 -z-10 -mr-96 w-[200%] origin-top-right skew-x-[-30deg] bg-white shadow-xl shadow-c-orange-600/10 ring-1 ring-c-orange-50 sm:-mr-80 lg:-mr-96"
           aria-hidden="true"
         />
         <div className="mx-auto max-w-7xl px-6 py-32 sm:py-40 lg:px-8">
@@ -23,12 +23,12 @@ export default function HeroSection() {
                 lorem cupidatat commodo.
               </p>
               <div className="mt-10 flex items-center gap-x-6">
-                {/* <a
-                  href="live-events"
-                  className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                <a
+                  href="sports"
+                  className="rounded-md bg-c-orange-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-c-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-c-orange-600"
                 >
-                  View Live Events
-                </a> */}
+                  Explore Sport
+                </a>
                 <a href="live-events" className="text-sm font-semibold leading-6 text-gray-900">
                   Live Events <span aria-hidden="true">→</span>
                 </a>
@@ -56,19 +56,19 @@ export default function HeroSection() {
 // export default function HeroSection() {
 //   return (
 //     <div className="bg-white">
-//       <div className="relative isolate overflow-hidden bg-gradient-to-b from-indigo-100/20">
+//       <div className="relative isolate overflow-hidden bg-gradient-to-b from-c-orange-100/20">
 //         <div className="mx-auto max-w-7xl pb-24 pt-10 sm:pb-32 lg:grid lg:grid-cols-2 lg:gap-x-8 lg:px-8 lg:py-40">
 //           <div className="px-6 lg:px-0 lg:pt-4">
 //             <div className="mx-auto max-w-2xl">
 //               <div className="max-w-lg">
 //                 <img
 //                   className="h-11"
-//                   src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+//                   src="https://tailwindui.com/img/logos/mark.svg?color=c-orange&shade=600"
 //                   alt="Your Company"
 //                 />
 //                 <div className="mt-24 sm:mt-32 lg:mt-16">
 //                   <a href="#" className="inline-flex space-x-6">
-//                     <span className="rounded-full bg-indigo-600/10 px-3 py-1 text-sm font-semibold leading-6 text-indigo-600 ring-1 ring-inset ring-indigo-600/10">
+//                     <span className="rounded-full bg-c-orange-600/10 px-3 py-1 text-sm font-semibold leading-6 text-c-orange-600 ring-1 ring-inset ring-c-orange-600/10">
 //                       What's new
 //                     </span>
 //                     <span className="inline-flex items-center space-x-2 text-sm font-medium leading-6 text-gray-600">
@@ -87,7 +87,7 @@ export default function HeroSection() {
 //                 <div className="mt-10 flex items-center gap-x-6">
 //                   <a
 //                     href="#"
-//                     className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+//                     className="rounded-md bg-c-orange-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-c-orange-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-c-orange-600"
 //                   >
 //                     Documentation
 //                   </a>
@@ -100,13 +100,13 @@ export default function HeroSection() {
 //           </div>
 //           <div className="mt-20 sm:mt-24 md:mx-auto md:max-w-2xl lg:mx-0 lg:mt-0 lg:w-screen">
 //             <div
-//               className="absolute inset-y-0 right-1/2 -z-10 -mr-10 w-[200%] skew-x-[-30deg] bg-white shadow-xl shadow-indigo-600/10 ring-1 ring-indigo-50 md:-mr-20 lg:-mr-36"
+//               className="absolute inset-y-0 right-1/2 -z-10 -mr-10 w-[200%] skew-x-[-30deg] bg-white shadow-xl shadow-c-orange-600/10 ring-1 ring-c-orange-50 md:-mr-20 lg:-mr-36"
 //               aria-hidden="true"
 //             />
 //             <div className="shadow-lg md:rounded-3xl">
-//               <div className="bg-indigo-500 [clip-path:inset(0)] md:[clip-path:inset(0_round_theme(borderRadius.3xl))]">
+//               <div className="bg-c-orange-500 [clip-path:inset(0)] md:[clip-path:inset(0_round_theme(borderRadius.3xl))]">
 //                 <div
-//                   className="absolute -inset-y-px left-1/2 -z-10 ml-10 w-[200%] skew-x-[-30deg] bg-indigo-100 opacity-20 ring-1 ring-inset ring-white md:ml-20 lg:ml-36"
+//                   className="absolute -inset-y-px left-1/2 -z-10 ml-10 w-[200%] skew-x-[-30deg] bg-c-orange-100 opacity-20 ring-1 ring-inset ring-white md:ml-20 lg:ml-36"
 //                   aria-hidden="true"
 //                 />
 //                 <div className="relative px-6 pt-8 sm:pt-16 md:pl-16 md:pr-0">
@@ -188,7 +188,7 @@ export default function HeroSection() {
   //                   Global Celebration of Sports, Unity, and Excellence in 2024.
   //                   <Link
   //                     href="#"
-  //                     className="whitespace-nowrap font-semibold text-indigo-600"
+  //                     className="whitespace-nowrap font-semibold text-c-orange-600"
   //                   >
   //                     <span className="absolute inset-0" aria-hidden="true" />
   //                     See All Sports <span aria-hidden="true">&rarr;</span>
@@ -208,7 +208,7 @@ export default function HeroSection() {
   //               <div className="mt-10 flex items-center gap-x-6">
   //                 <Link
   //                   href="#"
-  //                   className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+  //                   className="rounded-md bg-c-orange-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-c-orange-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-c-orange-600"
   //                 >
   //                   Watch Livestream
   //                 </Link>

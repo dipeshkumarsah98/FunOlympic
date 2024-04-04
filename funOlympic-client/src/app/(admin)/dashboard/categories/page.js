@@ -84,8 +84,8 @@ export default function Categories() {
             <Avatar
               color={Avatar.getRandomColor("sitebase", [
                 "red",
-                "green",
                 "blue",
+                "green",
               ])}
               name={category.sport}
             />
@@ -99,7 +99,7 @@ export default function Categories() {
               <div className="flex-shrink-0 pr-2">
                 <button
                   type="button"
-                  className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-transparent bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                  className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-transparent bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-c-orange-500 focus:ring-offset-2"
                 >
                   <span className="sr-only">Open options</span>
                   <EllipsisVerticalIcon

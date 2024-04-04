@@ -1,10 +1,10 @@
 const navigation = {
   main: [
-    { name: "About", href: "#" },
-    { name: "Blog", href: "#" },
-    { name: "Press", href: "#" },
-    { name: "Accessibility", href: "#" },
-    { name: "Partners", href: "#" },
+    { name: "Home", href: "/" },
+    { name: "Sports", href: "sports" },
+    { name: "Live Events", href: "live-events" },
+    // { name: "Accessibility", href: "#" },
+    // { name: "Partners", href: "#" },
   ],
   social: [
     {

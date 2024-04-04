@@ -254,7 +254,7 @@ function CommentBox({ eventId, commentId }) {
       </div>
       <div className="min-w-0 flex-1">
         <form action="#" onSubmit={handleSubmit} className="relative">
-          <div className="overflow-hidden font-roboto rounded-lg shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-indigo-600">
+          <div className="overflow-hidden font-roboto rounded-lg shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-c-orange-600">
             <label htmlFor="comment" className="sr-only">
               Add your comment
             </label>
@@ -288,8 +288,8 @@ function CommentBox({ eventId, commentId }) {
               <button
                 type="submit"
                 className="inline-flex items-center font-roboto
-                 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline 
-                 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                 rounded-md bg-c-orange-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-c-orange-500 focus-visible:outline 
+                 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-c-orange-600"
               >
                 {isPending ? "Posting.." : "Post"}
               </button>

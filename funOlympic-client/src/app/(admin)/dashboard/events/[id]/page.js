@@ -224,7 +224,7 @@ function EventDetails() {
                           <button
                             onClick={() => handleUpdateState(key)}
                             type="button"
-                            className="font-semibold text-indigo-600 hover:text-indigo-500"
+                            className="font-semibold text-c-orange-600 hover:text-c-orange-500"
                           >
                             Update
                           </button>
@@ -244,7 +244,7 @@ function EventDetails() {
                         <button
                           onClick={() => handleUpdateState(key)}
                           type="button"
-                          className="font-semibold text-indigo-600 hover:text-indigo-500"
+                          className="font-semibold text-c-orange-600 hover:text-c-orange-500"
                         >
                           Update
                         </button>
@@ -289,9 +289,9 @@ const ToggleSwitch = ({ enabled, setEnabled, children }) => {
           checked={enabled}
           onChange={setEnabled}
           className={clsx(
-            "flex w-8 cursor-pointer rounded-full p-px ring-1 ring-inset ring-gray-900/5 transition-colors duration-200 ease-in-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600",
+            "flex w-8 cursor-pointer rounded-full p-px ring-1 ring-inset ring-gray-900/5 transition-colors duration-200 ease-in-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-c-orange-600",
             {
-              "bg-indigo-600": enabled,
+              "bg-c-orange-600": enabled,
               "bg-gray-200": !enabled,
             }
           )}
@@ -412,7 +412,7 @@ const EventUpdate = ({
                 <div className="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
                   <button
                     type="button"
-                    className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:col-start-2"
+                    className="inline-flex w-full justify-center rounded-md bg-c-orange-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-c-orange-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-c-orange-600 sm:col-start-2"
                     onClick={() => handelSubmit()}
                   >
                     Update

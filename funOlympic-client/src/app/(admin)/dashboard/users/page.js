@@ -141,7 +141,7 @@ const UserTableItem = ({ person, handleDelete }) => {
         <button
           href="#"
           onClick={() => handleDelete(id)}
-          className="block rounded-md bg-rose-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-rose-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          className="block rounded-md bg-rose-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-rose-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-c-orange-600"
         >
           Delete<span className="sr-only">, {name}</span>
         </button>

@@ -6,7 +6,7 @@
 @tailwind utilities;
 
 .input {
-  @apply block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1  ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6;
+  @apply block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1  ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-c-orange-500 sm:text-sm sm:leading-6;
 }
 
 .btn {
@@ -14,7 +14,7 @@
 }
 
 .btn-primary {
-  @apply btn  bg-indigo-600 hover:bg-indigo-500 focus-visible:outline-indigo-600 disabled:bg-indigo-400;
+  @apply btn  bg-c-orange-500 hover:bg-c-orange-400 focus-visible:outline-c-orange-600 disabled:bg-c-orange-400;
 }
 
 .btn-danger {

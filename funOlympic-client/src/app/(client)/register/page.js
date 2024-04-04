@@ -126,7 +126,7 @@ const RegisterSection = () => {
               label="Full name"
               type="text"
               autoComplete="name"
-              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-c-orange-600 sm:text-sm sm:leading-6"
               errors={errors}
               {...register("full-name", {
                 required: "Full name is required",
@@ -143,7 +143,7 @@ const RegisterSection = () => {
               name="email"
               type="email"
               autoComplete="email"
-              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-c-orange-600 sm:text-sm sm:leading-6"
               errors={errors}
               {...register("email", { required: "Email is required" })}
             />
@@ -155,7 +155,7 @@ const RegisterSection = () => {
                     id="country"
                     name="country"
                     type="text"
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-c-orange-600 sm:text-sm sm:leading-6"
                     errors={errors}
                     {...register("country", {
                       required: "Country is required",
@@ -173,7 +173,7 @@ const RegisterSection = () => {
                     name="contact"
                     type="tel"
                     autoComplete="tel"
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-c-orange-600 sm:text-sm sm:leading-6"
                     errors={errors}
                     {...register("contact", {
                       required: "contact is required",
@@ -191,7 +191,7 @@ const RegisterSection = () => {
               name="sport"
               label="Sport"
               type="text"
-              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-c-orange-600 sm:text-sm sm:leading-6"
               errors={errors}
               {...register("sport", {
                 required: "Sport is required",
@@ -210,7 +210,7 @@ const RegisterSection = () => {
                     name="password"
                     type="password"
                     autoComplete="current-password"
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-c-orange-600 sm:text-sm sm:leading-6"
                     errors={errors}
                     {...register("password", {
                       required: "Password is required",
@@ -227,7 +227,7 @@ const RegisterSection = () => {
                     name="cpassword"
                     type="password"
                     autoComplete="current-password"
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-c-orange-600 sm:text-sm sm:leading-6"
                     label="Confirm password"
                     errors={errors}
                     {...register(
@@ -245,7 +245,7 @@ const RegisterSection = () => {
             <div className="pt-4">
               <button
                 type="submit"
-                className="flex disabled:bg-indigo-400 w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                className="flex disabled:bg-c-orange-400 w-full justify-center rounded-md bg-c-orange-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-c-orange-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-c-orange-600"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? "Loading... " : "Create an account"}
@@ -257,7 +257,7 @@ const RegisterSection = () => {
             Already have an account?{" "}
             <Link
               href="/login"
-              className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+              className="font-semibold leading-6 text-c-orange-600 hover:text-c-orange-500"
             >
               Login now
             </Link>

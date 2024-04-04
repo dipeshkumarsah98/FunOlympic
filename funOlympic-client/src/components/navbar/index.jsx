@@ -8,11 +8,13 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { logoLink, navigation } from "@/constants/data";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isScrolling, setIsScrolling] = useState(false);
   const { data: session, status } = useSession();
+  const path = usePathname();
 
   const changeBackground = () => {
     if (window.scrollY >= 66) {
@@ -36,7 +38,7 @@ export default function Navbar() {
   return (
     <header
       className={clsx(
-        `inset-x-0 font-intel top-0 z-50 fixed transition-all duration-100 ease-in-out`,
+        `inset-x-0 font-intel top-0 z-50 fixed transition-all duration-100 ease-in-out pb-5 bg-c-gray-500 `,
         {
           "bg-white": isScrolling,
         }
@@ -75,7 +77,9 @@ export default function Navbar() {
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="text-sm font-semibold leading-6 text-gray-900"
+                  className={clsx("text-sm font-semibold leading-6 text-gray-900", {
+                    "text-c-orange-600": path === item.href,
+                  })}
                 >
                   {item.name}
                 </Link>
@@ -132,7 +136,7 @@ export default function Navbar() {
               <span className="sr-only">FunOlympic</span>
               <img
                 className="h-8 w-auto"
-                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+                src="https://tailwindui.com/img/logos/mark.svg?color=c-orange&shade=600"
                 alt=""
               />
             </a>

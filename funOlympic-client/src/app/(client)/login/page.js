@@ -145,7 +145,7 @@ function LoginSection() {
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form className="space-y-6" onSubmit={onSubmit} method="POST">
             <Input
-              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-c-orange-600 sm:text-sm sm:leading-6"
               label="Email address"
               id="email"
               name="email"
@@ -167,7 +167,7 @@ function LoginSection() {
                   <button
                     type="button"
                     onClick={() => setOpen(true)}
-                    className="font-semibold text-indigo-600 hover:text-indigo-500"
+                    className="font-semibold text-c-orange-600 hover:text-c-orange-500"
                   >
                     Forgot password?
                   </button>
@@ -179,7 +179,7 @@ function LoginSection() {
                 type="password"
                 autoComplete="current-password"
                 // required
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-c-orange-600 sm:text-sm sm:leading-6"
                 errors={errors}
                 {...register(
                   "password",
@@ -211,7 +211,7 @@ function LoginSection() {
             Not a member?{" "}
             <Link
               href="/register"
-              className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+              className="font-semibold leading-6 text-c-orange-600 hover:text-c-orange-500"
             >
               Register now
             </Link>

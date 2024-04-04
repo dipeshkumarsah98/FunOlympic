@@ -15,7 +15,7 @@ const Tab = ({ tabs, activeTab, onTabClick }) => {
         <select
           id="tabs"
           name="tabs"
-          className="block w-full rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
+          className="block w-full rounded-md border-gray-300 focus:border-c-orange-500 focus:ring-c-orange-500"
           defaultValue={tabs?.find((tab) => tab.current)?.name}
           onChange={(e) => onTabClick(parseInt(e.target.value))}
         >
@@ -45,7 +45,7 @@ const Tab = ({ tabs, activeTab, onTabClick }) => {
               <span
                 aria-hidden="true"
                 className={classNames(
-                  tab.current ? 'bg-indigo-500' : 'bg-transparent',
+                  tab.current ? 'bg-c-orange-500' : 'bg-transparent',
                   'absolute inset-x-0 bottom-0 h-0.5'
                 )}
               />

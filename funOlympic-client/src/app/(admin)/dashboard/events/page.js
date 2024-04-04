@@ -328,9 +328,9 @@ function ToggleButton({ children, enabled, setEnabled }) {
         checked={enabled}
         onChange={setEnabled}
         className={clsx(
-          "relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2",
+          "relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-c-orange-600 focus:ring-offset-2",
           {
-            "bg-indigo-600": enabled,
+            "bg-c-orange-600": enabled,
             "bg-gray-200": !enabled,
           }
         )}
@@ -360,7 +360,7 @@ export function CategorySelect({
     query === ""
       ? categories
       : categories.filter((category) => {
-          return category.id.toLowerCase().includes(query.toLowerCase());
+          return category?.id && category.id.toLowerCase().includes(query.toLowerCase());
         });
 
   return (
@@ -370,7 +370,7 @@ export function CategorySelect({
       </Combobox.Label>
       <div className="relative mt-2">
         <Combobox.Input
-          className="w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+          className="w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-c-orange-600 sm:text-sm sm:leading-6"
           onChange={(event) => setQuery(event.target.value)}
           displayValue={(category) => category?.sport}
         />
@@ -389,7 +389,7 @@ export function CategorySelect({
                 value={category}
                 className={({ active }) =>
                   clsx("relative cursor-default select-none py-2 pl-8 pr-4", {
-                    "bg-indigo-600 text-white": active,
+                    "bg-c-orange-600 text-white": active,
                     "text-gray-900": !active,
                   })
                 }
@@ -410,7 +410,7 @@ export function CategorySelect({
                           "absolute inset-y-0 left-0 flex items-center pl-1.5",
                           {
                             "text-white": active,
-                            "text-indigo-600": !active,
+                            "text-c-orange-600": !active,
                           }
                         )}
                       >

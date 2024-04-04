@@ -21,7 +21,7 @@ export default function CenterNavbar() {
     isAdmin = session.user.role.toLocaleLowerCase() === "admin";
   }
   return (
-    <header className="bg-white">
+    <header className="bg-c-gray-500">
       <nav
         className="flex items-center font-intel justify-between p-6 lg:px-8"
         aria-label="Global"
@@ -52,7 +52,7 @@ export default function CenterNavbar() {
               key={item.name}
               href={item.href}
               className={clsx("text-sm font-semibold leading-6 text-gray-900", {
-                "text-indigo-600": path === item.href,
+                "text-c-orange-600": path === item.href,
               })}
             >
               {item.name}
@@ -72,7 +72,7 @@ export default function CenterNavbar() {
             <Link
               href="/register"
               className={clsx("text-sm font-semibold leading-6 text-gray-900", {
-                "text-indigo-600": path === "/register",
+                "text-c-orange-600": path === "/register",
               })}
             >
               Register
@@ -82,7 +82,7 @@ export default function CenterNavbar() {
             <Link
               href="/login"
               className={clsx("text-sm font-semibold leading-6 text-gray-900", {
-                "text-indigo-600": path === "/login",
+                "text-c-orange-600": path === "/login",
               })}
             >
               Log in
@@ -115,7 +115,7 @@ export default function CenterNavbar() {
               <span className="sr-only">FunOlympic</span>
               <img
                 className="h-8 w-auto"
-                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+                src="https://tailwindui.com/img/logos/mark.svg?color=c-orange&shade=600"
                 alt=""
               />
             </a>
