@@ -155,7 +155,7 @@ function EventDetails() {
                 Similar events
               </h2>
               <hr />
-              {filteredData && <EventCard events={filteredData} />} */}
+              {filteredData && <EventCard events={filteredData} />}
             </div>
           </div>
         </div>
