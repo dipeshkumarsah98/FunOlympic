@@ -1,0 +1,66 @@
+version: "3.8"
+
+services:
+  redis:
+    container_name: redis
+    image: "redis/redis-stack-server:latest"
+    restart: always
+    ports:
+      - "6378:6379"
+    networks:
+      - fo
+
+  postgres:
+    image: postgres:13.5
+    container_name: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=funolympic
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    expose:
+      - 5432
+    ports:
+      - "5421:5432"
+    command: -p 5432
+    networks:
+      - fo
+
+  api:
+    container_name: funOlympic-api
+    build:
+      context: ./funOlympic-server
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+      - redis
+    env_file:
+      - ./funOlympic-server/.env
+    networks:
+      - fo
+
+  web:
+    container_name: funOlympic-web
+    build:
+      context: ./funOlympic-client
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./funOlympic-client/.env
+    depends_on:
+      - api
+    networks:
+      - fo
+
+volumes:
+  postgres:
+    name: fo-db
+
+networks:
+  fo:
+    driver: bridge
