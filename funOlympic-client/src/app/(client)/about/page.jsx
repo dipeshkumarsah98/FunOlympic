@@ -6,12 +6,13 @@ export default function AboutPage() {
           About us
         </h2>
         <p className="mt-6 text-lg leading-8 text-gray-600">
-          Get ready to witness the greatest athletes from around the globe
-          compete in the ultimate celebration of sportsmanship and skill.
-          Whether you're a die-hard fan or just looking for some excitement,
-          FunOlympic 2024 has something for everyone.
+          Welcome to FunOlympic 2024, the premier digital destination for sports
+          enthusiasts around the world. Born from a passion for athletic
+          excellence and a spirit of international camaraderie, FunOlympic 2024
+          is your ticket to experiencing the thrill of competition from the
+          comfort of your own home
         </p>
       </div>
     </div>
-  )
+  );
 }

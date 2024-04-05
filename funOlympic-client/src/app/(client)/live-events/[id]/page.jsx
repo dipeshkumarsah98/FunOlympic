@@ -64,7 +64,7 @@ function EventDetails() {
   const VideoDetails = () => (
     <>
       <ReactPlayer
-        // playing={true}
+        playing={true}
         controls={true}
         url={eventDetail?.streamLink}
         style={{ width: "100%", height: "100%" }}
@@ -151,7 +151,7 @@ function EventDetails() {
 
             {/* right side view */}
             <div>
-            <ChatComponent />
+              <ChatComponent />
               {/* <h2 className=" text-xl mb-3 font-intel font-bold leading-6 text-gray-900">
                 Similar events
               </h2>
